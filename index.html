@@ -81,7 +81,6 @@
             padding: 18px; font-family: 'Courier New', monospace; color: var(--gold-primary); margin-top: 15px; font-size: 0.88rem; line-height: 1.5;
         }
 
-        /* Unstoppable Background Video Box */
         .video-box { 
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
             border-radius: 15px; border: 2px solid var(--gold-primary); 
@@ -93,7 +92,6 @@
             object-fit: cover; pointer-events: none; 
         }
 
-        /* Floating Corner Audio Player Bar */
         .floating-audio {
             position: fixed; bottom: 15px; right: 15px; z-index: 999;
             background: rgba(15, 12, 5, 0.95); border: 2px solid var(--gold-primary);
@@ -103,8 +101,17 @@
         .floating-audio span { color: var(--gold-primary); font-size: 0.82rem; font-weight: bold; }
         .floating-audio audio { height: 30px; width: 190px; outline: none; }
 
+        .res-output {
+            margin-top: 12px; padding: 10px; background: rgba(0,0,0,0.6);
+            border: 1px solid var(--gold-primary); border-radius: 8px; word-break: break-all;
+            font-size: 0.85rem; text-align: center;
+        }
+
         footer { text-align: center; margin-top: 50px; color: #73623f; font-size: 0.85rem; }
     </style>
+    <!-- JS Libraries for QR Scan & Barcode -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
 
@@ -135,12 +142,10 @@
                 <h3>Contact Dilshan</h3>
                 <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
                 
-                <!-- Telegram Button -->
                 <a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn btn-telegram" style="margin-bottom: 12px;">
                     ✈️ Telegram (@dilshan7878)
                 </a>
 
-                <!-- WhatsApp Button -->
                 <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn btn-whatsapp">
                     💬 WhatsApp (0768864772)
                 </a>
@@ -178,7 +183,30 @@
                     <label style="font-size:0.8rem; color:var(--gold-primary);">QR Color:</label>
                     <input type="color" id="qrColor" value="#ffd700">
                     <button class="btn" onclick="genQR()">Generate QR</button>
-                    <div id="qrResult" style="text-align:center; margin-top:10px;"></div>
+                    <div id="qrResult" class="res-output"></div>
+                </div>
+            </div>
+
+            <!-- NEW Tool: QR Code Scanner -->
+            <div class="card">
+                <h3>📷 QR Code Scanner</h3>
+                <p>Scan & Decode Any QR Image File</p>
+                <button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
+                <div id="qrScannerTool" class="sub-tool">
+                    <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)">
+                    <div id="qrScanResult" class="res-output">Upload a QR image to scan</div>
+                </div>
+            </div>
+
+            <!-- NEW Tool: Barcode Generator -->
+            <div class="card">
+                <h3>🏷️ Barcode Maker</h3>
+                <p>Generate Custom Barcodes</p>
+                <button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
+                <div id="barcodeTool" class="sub-tool">
+                    <input type="text" id="bcText" placeholder="Enter text or number...">
+                    <button class="btn" onclick="genBarcode()">Generate Barcode</button>
+                    <div id="bcResult" class="res-output"></div>
                 </div>
             </div>
 
@@ -195,14 +223,15 @@
                 </div>
             </div>
 
-            <!-- Tool 4: TikTok / Media Downloader -->
+            <!-- Tool 4: TikTok / Media Downloader (UPDATED: VIDEO & PHOTO SLIDE SUPPORT) -->
             <div class="card">
-                <h3>Media / TikTok Downloader</h3>
-                <p>Download Videos without Watermark</p>
+                <h3>🎵 Media / TikTok Downloader</h3>
+                <p>Download Videos & Photos without Watermark</p>
                 <button class="btn" onclick="toggleTool('dlTool')">Open Downloader</button>
                 <div id="dlTool" class="sub-tool">
-                    <input type="text" placeholder="Paste TikTok Video Link...">
-                    <button class="btn" onclick="alert('Initiating HD Download...')">Download Video</button>
+                    <input type="text" id="ttUrl" placeholder="Paste TikTok Link here...">
+                    <button class="btn" onclick="fetchTikTokMedia()">Download Video / Photos</button>
+                    <div id="ttResult" class="res-output" style="display:none;"></div>
                 </div>
             </div>
 
@@ -215,6 +244,7 @@
                     <input type="text" id="waNum" placeholder="WhatsApp Number (947X...)">
                     <textarea id="waMsg" placeholder="Custom Pre-filled Message"></textarea>
                     <button class="btn" onclick="genWAUrl()">Generate Link</button>
+                    <div id="waUrlOut" class="res-output" style="display:none;"></div>
                 </div>
             </div>
 
@@ -226,7 +256,7 @@
                 <div id="groupQrTool" class="sub-tool">
                     <input type="text" id="grpUrl" placeholder="https://chat.whatsapp.com/...">
                     <button class="btn" onclick="genGroupQR()">Generate Group QR</button>
-                    <div id="grpQrOut" style="text-align:center; margin-top:10px;"></div>
+                    <div id="grpQrOut" class="res-output"></div>
                 </div>
             </div>
 
@@ -236,9 +266,9 @@
                 <p>Create Mock Status Banners</p>
                 <button class="btn" onclick="toggleTool('statusTool')">Open Tool</button>
                 <div id="statusTool" class="sub-tool">
-                    <input type="text" placeholder="Name (e.g. DILSHAN)">
-                    <input type="text" placeholder="Status Text Message">
-                    <button class="btn" onclick="alert('Mock Status PNG Created!')">Download Status PNG</button>
+                    <input type="text" id="stName" placeholder="Name (e.g. DILSHAN)">
+                    <input type="text" id="stMsg" placeholder="Status Text Message">
+                    <button class="btn" onclick="genStatusCard()">Download Status PNG</button>
                 </div>
             </div>
 
@@ -248,32 +278,33 @@
                 <p>Create WhatsApp Contact Cards</p>
                 <button class="btn" onclick="toggleTool('contactTool')">Open Tool</button>
                 <div id="contactTool" class="sub-tool">
-                    <input type="text" placeholder="Contact Name">
-                    <input type="text" placeholder="Phone Number">
-                    <button class="btn" onclick="alert('Contact PNG Card Generated!')">Download Contact PNG</button>
+                    <input type="text" id="ctName" placeholder="Contact Name">
+                    <input type="text" id="ctNum" placeholder="Phone Number">
+                    <button class="btn" onclick="genContactCard()">Download Contact PNG</button>
                 </div>
             </div>
 
-            <!-- Tool 9: Fake Chat & Group Generator -->
+            <!-- Tool 9: Fake Chat Generator -->
             <div class="card">
                 <h3>Fake Chat Generator</h3>
                 <p>Create Custom Chat Mockups</p>
                 <button class="btn" onclick="toggleTool('chatTool')">Open Tool</button>
                 <div id="chatTool" class="sub-tool">
-                    <input type="text" placeholder="Chat Title / Name">
-                    <textarea placeholder="Type chat messages..."></textarea>
-                    <button class="btn" onclick="alert('Chat Mockup Generated!')">Download Chat PNG</button>
+                    <input type="text" id="chTitle" placeholder="Chat Title / Name">
+                    <textarea id="chMsg" placeholder="Type chat message..."></textarea>
+                    <button class="btn" onclick="genChatMockup()">Download Chat PNG</button>
                 </div>
             </div>
 
             <!-- Tool 10: Catalogue Splitter -->
             <div class="card">
                 <h3>Catalogue Splitter</h3>
-                <p>Split Image into 6 Grid Tiles</p>
+                <p>Split Image into Grid Tiles</p>
                 <button class="btn" onclick="toggleTool('splitTool')">Open Tool</button>
                 <div id="splitTool" class="sub-tool">
-                    <input type="file" accept="image/*">
-                    <button class="btn" onclick="alert('Image cropped into 6 grid parts!')">Split Image</button>
+                    <input type="file" id="splitInput" accept="image/*">
+                    <button class="btn" onclick="splitCatalogImage()">Split & Download Image</button>
+                    <div id="splitOut" class="res-output" style="display:none;"></div>
                 </div>
             </div>
 
@@ -314,6 +345,9 @@
 
     <footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
 
+    <!-- Hidden Canvas for Graphic Tools -->
+    <canvas id="genCanvas" style="display:none;"></canvas>
+
     <script>
         function toggleTool(id) {
             let el = document.getElementById(id);
@@ -347,18 +381,177 @@
             document.getElementById('qrResult').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(txt)}&color=${col}" alt="QR">`;
         }
 
+        function scanQRImage(event) {
+            let file = event.target.files[0];
+            let resDiv = document.getElementById('qrScanResult');
+            if(!file) return;
+            resDiv.innerHTML = "Scanning image...";
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = new Image();
+                img.onload = function() {
+                    let cvs = document.createElement('canvas');
+                    let ctx = cvs.getContext('2d');
+                    cvs.width = img.width; cvs.height = img.height;
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let code = jsQR(imgData.data, imgData.width, imgData.height);
+                    if(code) {
+                        resDiv.innerHTML = `<b style="color:#00ff00;">Scanned Output:</b><br><a href="${code.data}" target="_blank" style="color:var(--gold-primary);">${code.data}</a>`;
+                    } else {
+                        resDiv.innerHTML = `<span style="color:red;">No valid QR code detected in image!</span>`;
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function genBarcode() {
+            let txt = document.getElementById('bcText').value;
+            let resDiv = document.getElementById('bcResult');
+            if(!txt) { alert("Please enter text or numbers!"); return; }
+            resDiv.innerHTML = '<svg id="bcSvg"></svg>';
+            try {
+                JsBarcode("#bcSvg", txt, {
+                    format: "CODE128",
+                    lineColor: "#ffd700",
+                    background: "#0a0804",
+                    width: 2, height: 70, displayValue: true
+                });
+            } catch(e) {
+                resDiv.innerHTML = '<span style="color:red;">Invalid code structure!</span>';
+            }
+        }
+
+        async function fetchTikTokMedia() {
+            let url = document.getElementById('ttUrl').value;
+            let resDiv = document.getElementById('ttResult');
+            if(!url) { alert("Please paste a TikTok Link!"); return; }
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Connecting to TikTok API...";
+
+            try {
+                let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
+                let data = await resp.json();
+                if(data.code === 0) {
+                    let html = `<p style="color:var(--gold-primary); font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
+                    if(data.data.images && data.data.images.length > 0) {
+                        html += `<p style="color:#00ff00; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
+                        data.data.images.forEach((img, idx) => {
+                            html += `<div style="margin: 5px 0;"><a href="${img}" target="_blank" class="btn" style="padding:6px; font-size:0.8rem;">Download Photo ${idx+1}</a></div>`;
+                        });
+                    } else if(data.data.play) {
+                        html += `<video controls src="${data.data.play}" style="width:100%; border-radius:8px; margin: 8px 0;"></video>`;
+                        html += `<a href="${data.data.play}" target="_blank" class="btn" style="display:block; text-decoration:none;">Download No-Watermark Video</a>`;
+                    }
+                    resDiv.innerHTML = html;
+                } else {
+                    resDiv.innerHTML = `<span style="color:red;">Failed to retrieve video. Ensure the TikTok link is public.</span>`;
+                }
+            } catch(err) {
+                resDiv.innerHTML = `<span style="color:red;">Error connecting to TikTok Downloader API.</span>`;
+            }
+        }
+
         function genWAUrl() {
             let num = document.getElementById('waNum').value;
             let msg = document.getElementById('waMsg').value;
+            let outDiv = document.getElementById('waUrlOut');
             if(!num) { alert("Enter phone number!"); return; }
             let link = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
-            alert(`WhatsApp Link Generated: ${link}`);
+            outDiv.style.display = "block";
+            outDiv.innerHTML = `Link Created:<br><a href="${link}" target="_blank" style="color:var(--gold-primary);">${link}</a>`;
         }
 
         function genGroupQR() {
             let url = document.getElementById('grpUrl').value;
             if(!url) { alert("Enter Group Link!"); return; }
             document.getElementById('grpQrOut').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}" alt="Group QR">`;
+        }
+
+        function downloadCanvasPNG(canvas, filename) {
+            let a = document.createElement('a');
+            a.download = filename;
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+        }
+
+        function genStatusCard() {
+            let name = document.getElementById('stName').value || 'DILSHAN';
+            let msg = document.getElementById('stMsg').value || 'Status Message';
+            let cvs = document.getElementById('genCanvas');
+            cvs.width = 600; cvs.height = 300;
+            let ctx = cvs.getContext('2d');
+            ctx.fillStyle = '#0a0804'; ctx.fillRect(0,0,600,300);
+            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 4; ctx.strokeRect(10,10,580,280);
+            ctx.fillStyle = '#ffd700'; ctx.font = 'bold 24px Segoe UI'; ctx.fillText(name, 30, 60);
+            ctx.fillStyle = '#ffffff'; ctx.font = '18px Segoe UI'; ctx.fillText(msg, 30, 140);
+            ctx.fillStyle = '#b8860b'; ctx.font = '14px Segoe UI'; ctx.fillText('Dilshan All In One Luxury Banner', 30, 250);
+            downloadCanvasPNG(cvs, 'Status_Banner.png');
+        }
+
+        function genContactCard() {
+            let name = document.getElementById('ctName').value || 'Contact Name';
+            let num = document.getElementById('ctNum').value || '+947X...';
+            let cvs = document.getElementById('genCanvas');
+            cvs.width = 500; cvs.height = 250;
+            let ctx = cvs.getContext('2d');
+            ctx.fillStyle = '#12100a'; ctx.fillRect(0,0,500,250);
+            ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 3; ctx.strokeRect(8,8,484,234);
+            ctx.fillStyle = '#ffd700'; ctx.font = 'bold 22px Segoe UI'; ctx.fillText('📇 CONTACT CARD', 30, 50);
+            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px Segoe UI'; ctx.fillText(name, 30, 110);
+            ctx.fillStyle = '#25D366'; ctx.font = '18px Segoe UI'; ctx.fillText('📱 ' + num, 30, 160);
+            downloadCanvasPNG(cvs, 'Contact_Card.png');
+        }
+
+        function genChatMockup() {
+            let title = document.getElementById('chTitle').value || 'Dilshan Dev';
+            let msg = document.getElementById('chMsg').value || 'Hello World!';
+            let cvs = document.getElementById('genCanvas');
+            cvs.width = 500; cvs.height = 350;
+            let ctx = cvs.getContext('2d');
+            ctx.fillStyle = '#07070a'; ctx.fillRect(0,0,500,350);
+            ctx.fillStyle = '#1e1e1e'; ctx.fillRect(0,0,500,60);
+            ctx.fillStyle = '#ffd700'; ctx.font = 'bold 20px Segoe UI'; ctx.fillText(title, 20, 38);
+            ctx.fillStyle = '#24A1DE'; ctx.fillRect(40, 100, 420, 150);
+            ctx.fillStyle = '#ffffff'; ctx.font = '16px Segoe UI'; ctx.fillText(msg, 60, 150);
+            downloadCanvasPNG(cvs, 'Chat_Mockup.png');
+        }
+
+        function splitCatalogImage() {
+            let file = document.getElementById('splitInput').files[0];
+            let out = document.getElementById('splitOut');
+            if(!file) { alert("Select an image first!"); return; }
+            out.style.display = "block";
+            out.innerHTML = "Processing and splitting image...";
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = new Image();
+                img.onload = function() {
+                    let tileW = img.width / 3;
+                    let tileH = img.height / 2;
+                    out.innerHTML = "<p style='color:var(--gold-primary);'>Split into 6 Parts:</p>";
+                    for(let r=0; r<2; r++) {
+                        for(let c=0; c<3; c++) {
+                            let cvs = document.createElement('canvas');
+                            cvs.width = tileW; cvs.height = tileH;
+                            let ctx = cvs.getContext('2d');
+                            ctx.drawImage(img, c*tileW, r*tileH, tileW, tileH, 0, 0, tileW, tileH);
+                            let a = document.createElement('a');
+                            a.href = cvs.toDataURL('image/png');
+                            a.download = `Grid_Tile_${r*3 + c + 1}.png`;
+                            a.innerText = `Download Tile ${r*3 + c + 1}`;
+                            a.className = "btn";
+                            a.style.display = "block";
+                            a.style.margin = "5px 0";
+                            out.appendChild(a);
+                        }
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     </script>
 </body>
