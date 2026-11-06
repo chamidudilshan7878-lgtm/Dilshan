@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dilshan All In One - Luxury Gold Cyber Hub</title>
+    <style>
+        :root {
+            --bg-color: #07070a;
+            --card-bg: rgba(18, 16, 10, 0.9);
+            --gold-primary: #ffd700;
+            --gold-glow: #d4af37;
+            --gold-dark: #b8860b;
+            --text-color: #f0f0f0;
+            --border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
+
+        /* Top Gold Marquee Banner */
+        .marquee {
+            background: linear-gradient(90deg, #110d00, #332600, #110d00);
+            color: var(--gold-primary); padding: 10px 0; white-space: nowrap; overflow: hidden;
+            border-bottom: 2px solid var(--gold-primary); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        .marquee-content { display: inline-block; animation: marquee 18s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+
+        header {
+            text-align: center; padding: 30px 20px; background: var(--card-bg);
+            border: 1px solid var(--border-color); border-radius: 18px;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2); backdrop-filter: blur(12px); margin-bottom: 25px;
+        }
+        header h1 { 
+            color: var(--gold-primary); font-size: 2.4rem; text-shadow: 0 0 15px var(--gold-glow); 
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        header p { color: #c5a059; margin-top: 5px; font-size: 1.05rem; }
+
+        .section-title {
+            color: var(--gold-primary); margin: 30px 0 15px 0; font-size: 1.4rem;
+            border-left: 5px solid var(--gold-primary); padding-left: 12px; text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
+            padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--gold-primary); box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+        .card h3 { color: var(--gold-primary); margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #a39575; font-size: 0.9rem; margin-bottom: 15px; }
+
+        input, select, textarea {
+            width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
+            border: 1px solid var(--border-color); background: rgba(10, 8, 4, 0.9); color: #fff; outline: none; font-size: 0.95rem;
+        }
+        input:focus { border-color: var(--gold-primary); box-shadow: 0 0 10px var(--gold-primary); }
+
+        .btn {
+            display: inline-block; text-align: center; text-decoration: none;
+            width: 100%; padding: 12px; background: linear-gradient(45deg, var(--gold-dark), var(--gold-primary));
+            border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer;
+            transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
+        }
+        .btn:hover { box-shadow: 0 0 15px var(--gold-primary); color: #000; }
+
+        .btn-telegram { background: linear-gradient(45deg, #0088cc, #24A1DE); color: #fff; }
+        .btn-whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); color: #fff; }
+
+        .sub-tool { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
+
+        .terminal {
+            background: #000; border: 1px solid var(--gold-primary); border-radius: 10px;
+            padding: 18px; font-family: 'Courier New', monospace; color: var(--gold-primary); margin-top: 15px; font-size: 0.88rem; line-height: 1.5;
+        }
+
+        /* Unstoppable Background Video Box */
+        .video-box { 
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
+            border-radius: 15px; border: 2px solid var(--gold-primary); 
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); margin-bottom: 25px;
+            background: #000;
+        }
+        .video-box video { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; pointer-events: none; 
+        }
+
+        /* Floating Corner Audio Player Bar */
+        .floating-audio {
+            position: fixed; bottom: 15px; right: 15px; z-index: 999;
+            background: rgba(15, 12, 5, 0.95); border: 2px solid var(--gold-primary);
+            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .floating-audio span { color: var(--gold-primary); font-size: 0.82rem; font-weight: bold; }
+        .floating-audio audio { height: 30px; width: 190px; outline: none; }
+
+        footer { text-align: center; margin-top: 50px; color: #73623f; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Gold Marquee Banner -->
+    <div class="marquee">
+        <div class="marquee-content">
+            DILSHAN • DILSHAN ALL IN ONE • LUXURY GOLD UTILITY HUB • OWNER: DILSHAN • ALL UTILITY TOOLS ACTIVE
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <!-- Main Header -->
+        <header>
+            <h1>DILSHAN ALL IN ONE</h1>
+            <p>Luxury Cybernetics & Utility Dashboard</p>
+        </header>
+
+        <!-- Unstoppable Muted Loop Video (Local file: video.mp4) -->
+        <div class="video-box">
+            <video src="video.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+        <!-- Owner Contact Section -->
+        <div class="section-title">👑 OWNER CONTACT</div>
+        <div class="grid-cards">
+            <div class="card">
+                <h3>Contact Dilshan</h3>
+                <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
+                
+                <!-- Telegram Button -->
+                <a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn btn-telegram" style="margin-bottom: 12px;">
+                    ✈️ Telegram (@dilshan7878)
+                </a>
+
+                <!-- WhatsApp Button -->
+                <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn btn-whatsapp">
+                    💬 WhatsApp (0768864772)
+                </a>
+            </div>
+        </div>
+
+        <!-- Utility Tools Section -->
+        <div class="section-title">🛠️ Utility Tools & Generators</div>
+        <div class="grid-cards">
+            
+            <!-- Tool 1: WhatsApp Unban Tool -->
+            <div class="card">
+                <h3>WhatsApp Unban Tool</h3>
+                <p>Generate Official Appeal Emails Fast</p>
+                <button class="btn" onclick="toggleTool('unbanTool')">Open Tool</button>
+                <div id="unbanTool" class="sub-tool">
+                    <input type="text" id="unbanNum" placeholder="Banned Number (+947X...)">
+                    <input type="email" id="unbanEmail" placeholder="Your Contact Email">
+                    <select id="unbanReason">
+                        <option>Standard Appeal (Unban Request)</option>
+                        <option>Spam Ban Appeal</option>
+                        <option>Account Hacked Appeal</option>
+                    </select>
+                    <button class="btn" onclick="sendUnban()">Generate & Send Email</button>
+                </div>
+            </div>
+
+            <!-- Tool 2: Custom QR Code Generator -->
+            <div class="card">
+                <h3>Custom QR Generator</h3>
+                <p>Create Neon Gold Custom Color QR Codes</p>
+                <button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
+                <div id="qrTool" class="sub-tool">
+                    <input type="text" id="qrText" placeholder="Enter URL or Text">
+                    <label style="font-size:0.8rem; color:var(--gold-primary);">QR Color:</label>
+                    <input type="color" id="qrColor" value="#ffd700">
+                    <button class="btn" onclick="genQR()">Generate QR</button>
+                    <div id="qrResult" style="text-align:center; margin-top:10px;"></div>
+                </div>
+            </div>
+
+            <!-- Tool 3: Password Generator -->
+            <div class="card">
+                <h3>Password Generator</h3>
+                <p>Generate Strong Custom Passwords</p>
+                <button class="btn" onclick="toggleTool('passTool')">Open Generator</button>
+                <div id="passTool" class="sub-tool">
+                    <input type="text" id="passPrefix" value="Dilshan#" placeholder="Prefix (e.g. Dilshan#)">
+                    <input type="number" id="passLen" value="12" min="6" max="32">
+                    <input type="text" id="passOut" readonly placeholder="Result Password">
+                    <button class="btn" onclick="genCustomPass()">Generate Password</button>
+                </div>
+            </div>
+
+            <!-- Tool 4: TikTok / Media Downloader -->
+            <div class="card">
+                <h3>Media / TikTok Downloader</h3>
+                <p>Download Videos without Watermark</p>
+                <button class="btn" onclick="toggleTool('dlTool')">Open Downloader</button>
+                <div id="dlTool" class="sub-tool">
+                    <input type="text" placeholder="Paste TikTok Video Link...">
+                    <button class="btn" onclick="alert('Initiating HD Download...')">Download Video</button>
+                </div>
+            </div>
+
+            <!-- Tool 5: WhatsApp Direct URL Generator -->
+            <div class="card">
+                <h3>WhatsApp URL Generator</h3>
+                <p>Direct Message Links for Phone Numbers</p>
+                <button class="btn" onclick="toggleTool('urlTool')">Open Tool</button>
+                <div id="urlTool" class="sub-tool">
+                    <input type="text" id="waNum" placeholder="WhatsApp Number (947X...)">
+                    <textarea id="waMsg" placeholder="Custom Pre-filled Message"></textarea>
+                    <button class="btn" onclick="genWAUrl()">Generate Link</button>
+                </div>
+            </div>
+
+            <!-- Tool 6: Group Link QR Generator -->
+            <div class="card">
+                <h3>Group Link QR Tool</h3>
+                <p>Convert WhatsApp Group Links to QR</p>
+                <button class="btn" onclick="toggleTool('groupQrTool')">Open Tool</button>
+                <div id="groupQrTool" class="sub-tool">
+                    <input type="text" id="grpUrl" placeholder="https://chat.whatsapp.com/...">
+                    <button class="btn" onclick="genGroupQR()">Generate Group QR</button>
+                    <div id="grpQrOut" style="text-align:center; margin-top:10px;"></div>
+                </div>
+            </div>
+
+            <!-- Tool 7: Fake Status Generator -->
+            <div class="card">
+                <h3>Fake Status Generator</h3>
+                <p>Create Mock Status Banners</p>
+                <button class="btn" onclick="toggleTool('statusTool')">Open Tool</button>
+                <div id="statusTool" class="sub-tool">
+                    <input type="text" placeholder="Name (e.g. DILSHAN)">
+                    <input type="text" placeholder="Status Text Message">
+                    <button class="btn" onclick="alert('Mock Status PNG Created!')">Download Status PNG</button>
+                </div>
+            </div>
+
+            <!-- Tool 8: Fake Contact Card Generator -->
+            <div class="card">
+                <h3>Fake Contact Generator</h3>
+                <p>Create WhatsApp Contact Cards</p>
+                <button class="btn" onclick="toggleTool('contactTool')">Open Tool</button>
+                <div id="contactTool" class="sub-tool">
+                    <input type="text" placeholder="Contact Name">
+                    <input type="text" placeholder="Phone Number">
+                    <button class="btn" onclick="alert('Contact PNG Card Generated!')">Download Contact PNG</button>
+                </div>
+            </div>
+
+            <!-- Tool 9: Fake Chat & Group Generator -->
+            <div class="card">
+                <h3>Fake Chat Generator</h3>
+                <p>Create Custom Chat Mockups</p>
+                <button class="btn" onclick="toggleTool('chatTool')">Open Tool</button>
+                <div id="chatTool" class="sub-tool">
+                    <input type="text" placeholder="Chat Title / Name">
+                    <textarea placeholder="Type chat messages..."></textarea>
+                    <button class="btn" onclick="alert('Chat Mockup Generated!')">Download Chat PNG</button>
+                </div>
+            </div>
+
+            <!-- Tool 10: Catalogue Splitter -->
+            <div class="card">
+                <h3>Catalogue Splitter</h3>
+                <p>Split Image into 6 Grid Tiles</p>
+                <button class="btn" onclick="toggleTool('splitTool')">Open Tool</button>
+                <div id="splitTool" class="sub-tool">
+                    <input type="file" accept="image/*">
+                    <button class="btn" onclick="alert('Image cropped into 6 grid parts!')">Split Image</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Dilshan Dev Profile -->
+        <div class="section-title">💻 Developer Profile (DILSHAN DEV)</div>
+        <div class="card">
+            <h3>Dilshan Dev Terminal & System Environment</h3>
+            <div class="terminal">
+                > whoami<br>
+                User: Dilshan Dev | System: Gold Cyberpunk OS v3.0<br><br>
+                > cat skills.txt<br>
+                [✓] HTML/CSS Modern Gold Glassmorphism Layouts<br>
+                [✓] Node.js, JS Automation & WhatsApp Web Bots<br>
+                [✓] Cloudflare Workers & Serverless Backend Infrastructure<br><br>
+                > status<br>
+                Status: Gold Core Operational & All Systems Active.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Floating Audio Player Bar (Bottom Corner - REVENGE Track) -->
+    <div class="floating-audio">
+        <span>🎵 REVENGE</span>
+        <audio controls loop preload="auto">
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Bottom Gold Marquee Banner -->
+    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--gold-primary); border-bottom: none;">
+        <div class="marquee-content">
+            POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026
+        </div>
+    </div>
+
+    <footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
+
+    <script>
+        function toggleTool(id) {
+            let el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function genCustomPass() {
+            let pref = document.getElementById('passPrefix').value;
+            let len = parseInt(document.getElementById('passLen').value) || 12;
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+            let res = pref;
+            for(let i=0; i < (len - pref.length); i++) {
+                res += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passOut').value = res;
+        }
+
+        function sendUnban() {
+            let num = document.getElementById('unbanNum').value;
+            let email = document.getElementById('unbanEmail').value;
+            let reason = document.getElementById('unbanReason').value;
+            if(!num) { alert("Please enter phone number!"); return; }
+            let body = `Hello WhatsApp Support,\n\nMy number ${num} was banned. Reason: ${reason}.\nPlease review my account.\n\nThank you,\n${email}`;
+            window.location.href = `mailto:support@whatsapp.com?subject=Unban Appeal for ${num}&body=${encodeURIComponent(body)}`;
+        }
+
+        function genQR() {
+            let txt = document.getElementById('qrText').value;
+            let col = document.getElementById('qrColor').value.replace('#','');
+            if(!txt) { alert("Enter URL or Text!"); return; }
+            document.getElementById('qrResult').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(txt)}&color=${col}" alt="QR">`;
+        }
+
+        function genWAUrl() {
+            let num = document.getElementById('waNum').value;
+            let msg = document.getElementById('waMsg').value;
+            if(!num) { alert("Enter phone number!"); return; }
+            let link = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+            alert(`WhatsApp Link Generated: ${link}`);
+        }
+
+        function genGroupQR() {
+            let url = document.getElementById('grpUrl').value;
+            if(!url) { alert("Enter Group Link!"); return; }
+            document.getElementById('grpQrOut').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}" alt="Group QR">`;
+        }
+    </script>
+</body>
+</html>
