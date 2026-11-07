@@ -3,38 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilshan All In One - Red Cyber Hub</title>
+    <title>Dilshan All In One - Purple Cyber Hub</title>
     <link rel="manifest" href="data:application/manifest+json,{
         &quot;name&quot;: &quot;Dilshan All In One&quot;,
         &quot;short_name&quot;: &quot;DilshanHub&quot;,
         &quot;start_url&quot;: &quot;/&quot;,
         &quot;display&quot;: &quot;standalone&quot;,
         &quot;background_color&quot;: &quot;#000000&quot;,
-        &quot;theme_color&quot;: &quot;#ff073a&quot;
+        &quot;theme_color&quot;: &quot;#8a2be2&quot;
     }">
     <style>
         :root {
             --bg-color: #000000;
-            --card-bg: #120303;
-            --neon-red: #ff073a;
-            --red-glow: rgba(255, 7, 58, 0.6);
+            --card-bg: #0d0314;
+            --neon-purple: #8a2be2;
+            --purple-glow: rgba(138, 43, 226, 0.6);
             --text-color: #f0f0f0;
-            --border-color: rgba(255, 7, 58, 0.5);
+            --border-color: rgba(138, 43, 226, 0.5);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
 
         .marquee {
-            background: #1a0005;
-            color: #ff8093; padding: 10px 0; white-space: nowrap; overflow: hidden;
-            border-bottom: 2px solid var(--neon-red); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
-            box-shadow: 0 0 15px var(--red-glow);
+            background: #0d001a;
+            color: #d8bfd8; padding: 10px 0; white-space: nowrap; overflow: hidden;
+            border-bottom: 2px solid var(--neon-purple); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--purple-glow);
         }
         .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* Small, Light and Soft Marquee for DILSHAN ALL IN ONE */
+        /* Soft Light Marquee for DILSHAN ALL IN ONE */
         .news-overlay-marquee {
             position: fixed;
             top: 48%;
@@ -50,9 +50,9 @@
             display: inline-block;
             font-size: 1.4rem;
             font-weight: 600;
-            color: #ff8093;
+            color: #d8bfd8;
             text-transform: uppercase;
-            text-shadow: 0 0 8px rgba(255, 128, 147, 0.5);
+            text-shadow: 0 0 8px rgba(216, 191, 216, 0.5);
             letter-spacing: 3px;
             padding-left: 100%;
             animation: newsSlide 12s linear infinite;
@@ -67,18 +67,18 @@
         header {
             text-align: center; padding: 30px 20px; background: var(--card-bg);
             border: 1px solid var(--border-color); border-radius: 18px;
-            box-shadow: 0 0 25px var(--red-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
+            box-shadow: 0 0 25px var(--purple-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
         }
         header h1 { 
-            color: #ff335f; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-red); 
+            color: #ba55d3; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-purple); 
             text-transform: uppercase; letter-spacing: 1px;
         }
-        header p { color: #ff8093; margin-top: 5px; font-size: 1.05rem; }
+        header p { color: #d8bfd8; margin-top: 5px; font-size: 1.05rem; }
 
         .section-title {
-            color: #ff335f; margin: 30px 0 15px 0; font-size: 1.4rem;
-            border-left: 5px solid var(--neon-red); padding-left: 12px; text-transform: uppercase;
-            text-shadow: 0 0 10px var(--red-glow);
+            color: #ba55d3; margin: 30px 0 15px 0; font-size: 1.4rem;
+            border-left: 5px solid var(--neon-purple); padding-left: 12px; text-transform: uppercase;
+            text-shadow: 0 0 10px var(--purple-glow);
         }
 
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
@@ -87,43 +87,57 @@
             background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
             padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.9);
         }
-        .card:hover { transform: translateY(-5px); border-color: #ff335f; box-shadow: 0 0 20px var(--red-glow); }
-        .card h3 { color: #ff335f; margin-bottom: 10px; font-size: 1.2rem; }
-        .card p { color: #ff8093; font-size: 0.9rem; margin-bottom: 15px; }
+        .card:hover { transform: translateY(-5px); border-color: #ba55d3; box-shadow: 0 0 20px var(--purple-glow); }
+        .card h3 { color: #ba55d3; margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #d8bfd8; font-size: 0.9rem; margin-bottom: 15px; }
 
         input, select, textarea {
             width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
             border: 1px solid var(--border-color); background: #000000; color: #fff; outline: none; font-size: 0.95rem;
         }
-        input:focus { border-color: #ff335f; box-shadow: 0 0 10px var(--neon-red); }
+        input:focus { border-color: #ba55d3; box-shadow: 0 0 10px var(--neon-purple); }
 
         .btn {
             display: inline-block; text-align: center; text-decoration: none;
-            width: 100%; padding: 12px; background: linear-gradient(45deg, #5c0011, var(--neon-red));
+            width: 100%; padding: 12px; background: linear-gradient(45deg, #30004f, var(--neon-purple));
             border: none; color: #fff; font-weight: bold; border-radius: 8px; cursor: pointer;
             transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
-            box-shadow: 0 0 10px rgba(255, 7, 58, 0.4);
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
         }
-        .btn:hover { box-shadow: 0 0 15px #ff335f; color: #fff; }
+        .btn:hover { box-shadow: 0 0 15px #ba55d3; color: #fff; }
 
         .btn-delete {
-            background: linear-gradient(45deg, #400, #ff1a40) !important;
+            background: linear-gradient(45deg, #300, #8b0000) !important;
             color: #fff !important;
             margin-top: 8px;
         }
-        .btn-delete:hover { box-shadow: 0 0 15px #ff1a40 !important; }
+        .btn-delete:hover { box-shadow: 0 0 15px #ff4d4d !important; }
 
         .sub-tool { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
 
+        /* Calculator Grid */
+        .calc-screen {
+            width: 100%; height: 50px; background: #000; border: 1px solid var(--neon-purple);
+            color: #ba55d3; font-size: 1.4rem; text-align: right; padding: 10px; border-radius: 8px;
+            margin-bottom: 10px; overflow-x: auto;
+        }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .calc-btn {
+            padding: 12px; background: #1a052e; border: 1px solid var(--border-color); color: #fff;
+            font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s;
+        }
+        .calc-btn:hover { background: var(--neon-purple); box-shadow: 0 0 10px var(--purple-glow); }
+        .calc-btn.op { background: #4b0082; color: #fff; }
+
         .uptime-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .uptime-box { background: rgba(255, 7, 58, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
-        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #ff335f; text-shadow: 0 0 10px var(--neon-red); }
-        .uptime-lbl { font-size: 0.75rem; color: #ff8093; text-transform: uppercase; margin-top: 4px; }
+        .uptime-box { background: rgba(138, 43, 226, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
+        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #ba55d3; text-shadow: 0 0 10px var(--neon-purple); }
+        .uptime-lbl { font-size: 0.75rem; color: #d8bfd8; text-transform: uppercase; margin-top: 4px; }
 
         .video-box { 
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
-            border-radius: 15px; border: 2px solid var(--neon-red); 
-            box-shadow: 0 0 20px var(--red-glow); margin-bottom: 25px; background: #000;
+            border-radius: 15px; border: 2px solid var(--neon-purple); 
+            box-shadow: 0 0 20px var(--purple-glow); margin-bottom: 25px; background: #000;
         }
         .video-box video { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -132,23 +146,23 @@
 
         .floating-audio {
             position: fixed; bottom: 15px; right: 15px; z-index: 999;
-            background: rgba(18, 3, 3, 0.95); border: 2px solid var(--neon-red);
-            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--red-glow);
+            background: rgba(13, 3, 20, 0.95); border: 2px solid var(--neon-purple);
+            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--purple-glow);
             display: flex; align-items: center; gap: 10px;
         }
-        .floating-audio span { color: #ff335f; font-size: 0.82rem; font-weight: bold; }
+        .floating-audio span { color: #ba55d3; font-size: 0.82rem; font-weight: bold; }
         .floating-audio audio { height: 30px; width: 190px; outline: none; }
 
         .res-output {
             margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.8);
-            border: 1px solid var(--neon-red); border-radius: 8px; word-break: break-all;
+            border: 1px solid var(--neon-purple); border-radius: 8px; word-break: break-all;
             font-size: 0.88rem; text-align: center;
         }
         .res-output img, .res-output canvas, .res-output video {
             max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
         }
 
-        footer { text-align: center; margin-top: 50px; color: #ff8093; font-size: 0.85rem; }
+        footer { text-align: center; margin-top: 50px; color: #d8bfd8; font-size: 0.85rem; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -162,7 +176,7 @@
 
     <div class="marquee">
         <div class="marquee-content">
-            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • RED CYBER HUB • OWNER: DILSHAN •
+            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • PURPLE CYBER HUB • OWNER: DILSHAN •
         </div>
     </div>
 
@@ -170,7 +184,7 @@
         
         <header>
             <h1>DILSHAN ALL IN ONE</h1>
-            <p>Red Cybernetics & Utility Dashboard</p>
+            <p>Purple Cybernetics & Utility Dashboard</p>
         </header>
 
         <div class="video-box">
@@ -206,7 +220,7 @@
                     <div class="uptime-lbl">Seconds</div>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 0.75rem; color: #ff8093; margin-top: 10px;">SYSTEM ONLINE SINCE 07 NOVEMBER 2026 • 08:30 AM</p>
+            <p style="text-align: center; font-size: 0.75rem; color: #d8bfd8; margin-top: 10px;">SYSTEM ONLINE SINCE 07 NOVEMBER 2026 • 08:30 AM</p>
         </div>
 
         <div class="section-title">👑 OWNER CONTACT</div>
@@ -226,6 +240,37 @@
         <div class="section-title">🛠️ Utility Tools & Generators</div>
         <div class="grid-cards">
             
+            <!-- Advanced Calculator Tool -->
+            <div class="card">
+                <h3>🧮 Advanced Cyber Calculator</h3>
+                <p>Full Featured Calculator for All Calculations</p>
+                <button class="btn" onclick="toggleTool('calcTool')">Open Tool</button>
+                <div id="calcTool" class="sub-tool">
+                    <div class="calc-screen" id="calcScreen">0</div>
+                    <div class="calc-grid">
+                        <button class="calc-btn" onclick="calcClear()">C</button>
+                        <button class="calc-btn" onclick="calcDel()">⌫</button>
+                        <button class="calc-btn op" onclick="calcAppend('%')">%</button>
+                        <button class="calc-btn op" onclick="calcAppend('/')">/</button>
+                        <button class="calc-btn" onclick="calcAppend('7')">7</button>
+                        <button class="calc-btn" onclick="calcAppend('8')">8</button>
+                        <button class="calc-btn" onclick="calcAppend('9')">9</button>
+                        <button class="calc-btn op" onclick="calcAppend('*')">×</button>
+                        <button class="calc-btn" onclick="calcAppend('4')">4</button>
+                        <button class="calc-btn" onclick="calcAppend('5')">5</button>
+                        <button class="calc-btn" onclick="calcAppend('6')">6</button>
+                        <button class="calc-btn op" onclick="calcAppend('-')">-</button>
+                        <button class="calc-btn" onclick="calcAppend('1')">1</button>
+                        <button class="calc-btn" onclick="calcAppend('2')">2</button>
+                        <button class="calc-btn" onclick="calcAppend('3')">3</button>
+                        <button class="calc-btn op" onclick="calcAppend('+')">+</button>
+                        <button class="calc-btn" onclick="calcAppend('0')" style="grid-column: span 2;">0</button>
+                        <button class="calc-btn" onclick="calcAppend('.')">.</button>
+                        <button class="calc-btn op" onclick="calcEvaluate()">=</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- WhatsApp Unban Tool -->
             <div class="card">
                 <h3>WhatsApp Unban Tool</h3>
@@ -250,8 +295,8 @@
                 <button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
                 <div id="qrTool" class="sub-tool">
                     <input type="text" id="qrText" placeholder="Enter URL or Text">
-                    <label style="font-size:0.8rem; color:#ff335f;">QR Color:</label>
-                    <input type="color" id="qrColor" value="#ff073a">
+                    <label style="font-size:0.8rem; color:#ba55d3;">QR Color:</label>
+                    <input type="color" id="qrColor" value="#8a2be2">
                     <button class="btn" onclick="genQR()">Generate QR</button>
                     <div id="qrResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -264,7 +309,7 @@
                 <button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
                 <div id="qrScannerTool" class="sub-tool">
                     <button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
-                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-red);" autoplay></video>
+                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-purple);" autoplay></video>
                     <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
                     <div id="qrScanResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -277,8 +322,8 @@
                 <button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
                 <div id="barcodeTool" class="sub-tool">
                     <input type="text" id="bcText" placeholder="Enter text or number...">
-                    <label style="font-size:0.8rem; color:#ff335f;">Barcode Color:</label>
-                    <input type="color" id="bcColor" value="#ff073a">
+                    <label style="font-size:0.8rem; color:#ba55d3;">Barcode Color:</label>
+                    <input type="color" id="bcColor" value="#8a2be2">
                     <button class="btn" onclick="genBarcode()">Generate Barcode</button>
                     <div id="bcResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -294,7 +339,7 @@
                     <input type="number" id="passLen" value="12" min="6" max="32">
                     <input type="text" id="passOut" readonly placeholder="Result Password">
                     <button class="btn" onclick="genCustomPass()">Generate Password</button>
-                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#2a050b; color:#fff;">📋 Copy Password</button>
+                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#1a052e; color:#fff;">📋 Copy Password</button>
                 </div>
             </div>
 
@@ -358,7 +403,7 @@
         </audio>
     </div>
 
-    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-red); border-bottom: none;">
+    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-purple); border-bottom: none;">
         <div class="marquee-content">
             POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026 •
         </div>
@@ -367,6 +412,37 @@
     <footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
 
     <script>
+        // Calculator Logic
+        let calcVal = "0";
+        function updateCalcScreen() {
+            document.getElementById('calcScreen').innerText = calcVal;
+        }
+        function calcAppend(char) {
+            if(calcVal === "0" && char !== '.') {
+                calcVal = char;
+            } else {
+                calcVal += char;
+            }
+            updateCalcScreen();
+        }
+        function calcClear() {
+            calcVal = "0";
+            updateCalcScreen();
+        }
+        function calcDel() {
+            calcVal = calcVal.slice(0, -1);
+            if(calcVal === "") calcVal = "0";
+            updateCalcScreen();
+        }
+        function calcEvaluate() {
+            try {
+                calcVal = eval(calcVal.replace(/×/g, '*')).toString();
+            } catch(e) {
+                calcVal = "Error";
+            }
+            updateCalcScreen();
+        }
+
         // Live Uptime Counter starting from 2026/11/07 08:30:00
         function updateUptime() {
             let start = new Date("2026-11-07T08:30:00");
@@ -463,7 +539,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}" id="qrImg"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'QR_Code.png')">⬇️ Download QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#2a050b; color:#fff;">📋 Copy Content/Link</button>
+                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#1a052e; color:#fff;">📋 Copy Content/Link</button>
                 <button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
             `;
         }
@@ -486,8 +562,8 @@
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
                         resDiv.innerHTML = `
-                            <b style="color:#00ff66;">Scanned Result:</b><br>
-                            <p style="color:#ff335f; margin:8px 0;">${code.data}</p>
+                            <b style="color:#ba55d3;">Scanned Result:</b><br>
+                            <p style="color:#d8bfd8; margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Result</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
@@ -530,8 +606,8 @@
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if (code) {
                         resDiv.innerHTML = `
-                            <b style="color:#00ff66;">Scanned Result:</b><br>
-                            <p style="color:#ff335f; margin:8px 0;">${code.data}</p>
+                            <b style="color:#ba55d3;">Scanned Result:</b><br>
+                            <p style="color:#d8bfd8; margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Link</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
@@ -584,9 +660,9 @@
                 let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
                 let data = await resp.json();
                 if(data.code === 0) {
-                    let html = `<p style="color:#ff335f; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
+                    let html = `<p style="color:#ba55d3; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
                     if(data.data.images && data.data.images.length > 0) {
-                        html += `<p style="color:#00ff66; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
+                        html += `<p style="color:#ba55d3; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
                         data.data.images.forEach((img, idx) => {
                             html += `
                                 <div style="margin: 10px 0;">
@@ -618,7 +694,7 @@
             outDiv.style.display = "block";
             outDiv.innerHTML = `
                 <a href="${link}" target="_blank" class="btn" style="margin-bottom:8px; display:block; text-decoration:none;">💬 Send WhatsApp Message</a>
-                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#2a050b; color:#fff;">📋 Copy WhatsApp Link</button>
+                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#1a052e; color:#fff;">📋 Copy WhatsApp Link</button>
                 <button class="btn btn-delete" onclick="clearResult('waUrlOut')">🗑️ Delete Result</button>
             `;
         }
@@ -632,7 +708,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#2a050b; color:#fff;">📋 Copy Group Link</button>
+                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#1a052e; color:#fff;">📋 Copy Group Link</button>
                 <button class="btn btn-delete" onclick="clearResult('grpQrOut')">🗑️ Delete Result</button>
             `;
         }
@@ -649,7 +725,7 @@
                 img.onload = function() {
                     let tileW = img.width / 3;
                     let tileH = img.height / 2;
-                    out.innerHTML = "<p style='color:#ff335f; margin-bottom:10px;'>Split into 6 Parts:</p>";
+                    out.innerHTML = "<p style='color:#ba55d3; margin-bottom:10px;'>Split into 6 Parts:</p>";
                     for(let r=0; r<2; r++) {
                         for(let c=0; c<3; c++) {
                             let cvs = document.createElement('canvas');
