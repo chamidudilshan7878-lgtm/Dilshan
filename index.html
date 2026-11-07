@@ -148,18 +148,31 @@
             color: var(--green-live);
         }
 
-        /* Header Card */
+        /* Header Card with Logo Style */
         header {
             text-align: center;
-            padding: 30px 15px;
+            padding: 25px 15px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 18px;
             margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 900;
             letter-spacing: 1px;
             line-height: 1.2;
@@ -452,6 +465,8 @@
         <div id="mainHubDashboard">
             
             <header>
+                <!-- Logo Image Added Above Title -->
+                <img src="icon-192.png" alt="Dilshan Logo" class="app-logo">
                 <h1>DILSHAN ALL IN ONE</h1>
             </header>
 
