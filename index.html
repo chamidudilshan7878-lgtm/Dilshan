@@ -118,7 +118,7 @@
             font-size: 0.9rem;
         }
 
-        /* Anime / Feature Box */
+        /* Video Feature Box */
         .feature-box {
             width: 100%;
             height: 220px;
@@ -132,10 +132,11 @@
             justify-content: center;
         }
 
-        .feature-box img, .feature-box video {
+        .feature-box video {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none;
         }
 
         /* General Section Title */
@@ -319,7 +320,7 @@
             margin: 10px 0;
         }
 
-        /* Floating Audio Controller (Matching Images) */
+        /* Floating Audio Controller */
         .floating-audio {
             position: fixed;
             bottom: 20px;
@@ -399,9 +400,9 @@
                 <p>Black Cybernetics & Utility Dashboard</p>
             </header>
 
-            <!-- Anime / Character Art Video/Image Container -->
+            <!-- Video Feature Container -->
             <div class="feature-box">
-                <img src="https://images.wallpapersden.com/image/download/satoru-gojo-jujutsu-kaisen-cool-art_bWlpZ26UmZqaraWkpJRmbmdlrWZlbWU.jpg" alt="Dark Anime Character">
+                <video src="video.mp4" autoplay loop muted playsinline></video>
             </div>
 
             <!-- Live System Uptime Card -->
@@ -782,7 +783,7 @@
                     let cvs = document.createElement('canvas');
                     let ctx = cvs.getContext('2d');
                     cvs.width = img.width; cvs.height = img.height;
-                    ctx.drawImage(img, 0, 0);
+                    cvs.drawImage(img, 0, 0);
                     let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
