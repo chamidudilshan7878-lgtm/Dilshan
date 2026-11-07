@@ -7,22 +7,23 @@
     <style>
         :root {
             --bg-color: #030308;
-            --card-bg: rgba(12, 8, 20, 0.9);
+            --card-bg: rgba(10, 10, 20, 0.85);
+            --neon-primary: #00f3ff;
             --neon-purple: #b026ff;
-            --purple-dark: #6a0dad;
-            --purple-glow: rgba(176, 38, 255, 0.5);
+            --neon-pink: #ff007f;
             --text-color: #f0f0f0;
-            --border-color: rgba(176, 38, 255, 0.4);
+            --border-color: rgba(0, 243, 255, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
 
+        /* Continuous Smooth Marquee */
         .marquee {
-            background: linear-gradient(90deg, #120024, #2a004f, #120024);
-            color: #e0b0ff; padding: 10px 0; white-space: nowrap; overflow: hidden;
+            background: linear-gradient(90deg, #050014, #1a0033, #050014);
+            color: var(--neon-primary); padding: 10px 0; white-space: nowrap; overflow: hidden;
             border-bottom: 2px solid var(--neon-purple); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
-            box-shadow: 0 0 15px var(--purple-glow);
+            box-shadow: 0 0 15px rgba(176, 38, 255, 0.4);
         }
         .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -32,18 +33,18 @@
         header {
             text-align: center; padding: 30px 20px; background: var(--card-bg);
             border: 1px solid var(--border-color); border-radius: 18px;
-            box-shadow: 0 0 25px var(--purple-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.2); backdrop-filter: blur(12px); margin-bottom: 25px;
         }
         header h1 { 
-            color: #e0b0ff; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-purple); 
+            color: var(--neon-primary); font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-primary); 
             text-transform: uppercase; letter-spacing: 1px;
         }
-        header p { color: #b892ff; margin-top: 5px; font-size: 1.05rem; }
+        header p { color: #b085f5; margin-top: 5px; font-size: 1.05rem; }
 
         .section-title {
-            color: #e0b0ff; margin: 30px 0 15px 0; font-size: 1.4rem;
+            color: var(--neon-primary); margin: 30px 0 15px 0; font-size: 1.4rem;
             border-left: 5px solid var(--neon-purple); padding-left: 12px; text-transform: uppercase;
-            text-shadow: 0 0 10px var(--purple-glow);
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
 
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
@@ -52,24 +53,23 @@
             background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
             padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.8);
         }
-        .card:hover { transform: translateY(-5px); border-color: #e0b0ff; box-shadow: 0 0 20px var(--purple-glow); }
-        .card h3 { color: #e0b0ff; margin-bottom: 10px; font-size: 1.2rem; }
-        .card p { color: #b892ff; font-size: 0.9rem; margin-bottom: 15px; }
+        .card:hover { transform: translateY(-5px); border-color: var(--neon-purple); box-shadow: 0 0 20px rgba(176, 38, 255, 0.4); }
+        .card h3 { color: var(--neon-primary); margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #a59ad5; font-size: 0.9rem; margin-bottom: 15px; }
 
         input, select, textarea {
             width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
-            border: 1px solid var(--border-color); background: rgba(8, 3, 15, 0.9); color: #fff; outline: none; font-size: 0.95rem;
+            border: 1px solid var(--border-color); background: rgba(5, 5, 15, 0.9); color: #fff; outline: none; font-size: 0.95rem;
         }
-        input:focus { border-color: #e0b0ff; box-shadow: 0 0 10px var(--neon-purple); }
+        input:focus { border-color: var(--neon-primary); box-shadow: 0 0 10px var(--neon-primary); }
 
         .btn {
             display: inline-block; text-align: center; text-decoration: none;
-            width: 100%; padding: 12px; background: linear-gradient(45deg, var(--purple-dark), var(--neon-purple));
-            border: none; color: #fff; font-weight: bold; border-radius: 8px; cursor: pointer;
+            width: 100%; padding: 12px; background: linear-gradient(45deg, var(--neon-purple), var(--neon-primary));
+            border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer;
             transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
-            box-shadow: 0 0 10px rgba(176, 38, 255, 0.3);
         }
-        .btn:hover { box-shadow: 0 0 15px #e0b0ff; color: #fff; }
+        .btn:hover { box-shadow: 0 0 15px var(--neon-primary); color: #000; }
 
         .btn-delete {
             background: linear-gradient(45deg, #8b0000, #ff4d4d) !important;
@@ -78,23 +78,26 @@
         }
         .btn-delete:hover { box-shadow: 0 0 15px #ff4d4d !important; }
 
+        .btn-telegram { background: linear-gradient(45deg, #0088cc, #24A1DE); color: #fff; }
+        .btn-whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); color: #fff; }
+
         .sub-tool { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
 
         .terminal {
-            background: #020105; border: 1px solid var(--neon-purple); border-radius: 10px;
-            padding: 18px; font-family: 'Courier New', monospace; color: #e0b0ff; margin-top: 15px; font-size: 0.85rem; line-height: 1.5;
-            box-shadow: inset 0 0 15px rgba(176, 38, 255, 0.15);
+            background: #020205; border: 1px solid var(--neon-primary); border-radius: 10px;
+            padding: 18px; font-family: 'Courier New', monospace; color: var(--neon-primary); margin-top: 15px; font-size: 0.85rem; line-height: 1.5;
+            box-shadow: inset 0 0 15px rgba(0, 243, 255, 0.15);
         }
 
         .uptime-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .uptime-box { background: rgba(176, 38, 255, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
-        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #e0b0ff; text-shadow: 0 0 10px var(--neon-purple); }
-        .uptime-lbl { font-size: 0.75rem; color: #b892ff; text-transform: uppercase; margin-top: 4px; }
+        .uptime-box { background: rgba(0, 243, 255, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
+        .uptime-num { font-size: 1.5rem; font-weight: bold; color: var(--neon-primary); text-shadow: 0 0 10px var(--neon-primary); }
+        .uptime-lbl { font-size: 0.75rem; color: #b085f5; text-transform: uppercase; margin-top: 4px; }
 
         .video-box { 
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
-            border-radius: 15px; border: 2px solid var(--neon-purple); 
-            box-shadow: 0 0 20px var(--purple-glow); margin-bottom: 25px; background: #000;
+            border-radius: 15px; border: 2px solid var(--neon-primary); 
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3); margin-bottom: 25px; background: #000;
         }
         .video-box video { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -103,23 +106,23 @@
 
         .floating-audio {
             position: fixed; bottom: 15px; right: 15px; z-index: 999;
-            background: rgba(12, 8, 20, 0.95); border: 2px solid var(--neon-purple);
-            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--purple-glow);
+            background: rgba(10, 10, 20, 0.95); border: 2px solid var(--neon-primary);
+            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
             display: flex; align-items: center; gap: 10px;
         }
-        .floating-audio span { color: #e0b0ff; font-size: 0.82rem; font-weight: bold; }
+        .floating-audio span { color: var(--neon-primary); font-size: 0.82rem; font-weight: bold; }
         .floating-audio audio { height: 30px; width: 190px; outline: none; }
 
         .res-output {
             margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.7);
-            border: 1px solid var(--neon-purple); border-radius: 8px; word-break: break-all;
+            border: 1px solid var(--neon-primary); border-radius: 8px; word-break: break-all;
             font-size: 0.88rem; text-align: center;
         }
         .res-output img, .res-output canvas, .res-output video {
             max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
         }
 
-        footer { text-align: center; margin-top: 50px; color: #b892ff; font-size: 0.85rem; }
+        footer { text-align: center; margin-top: 50px; color: #8a7abf; font-size: 0.85rem; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -172,7 +175,7 @@
                     <div class="uptime-lbl">Seconds</div>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 0.75rem; color: #b892ff; margin-top: 10px;">SYSTEM ONLINE SINCE 19 NOVEMBER 2025</p>
+            <p style="text-align: center; font-size: 0.75rem; color: #b085f5; margin-top: 10px;">SYSTEM ONLINE SINCE 19 NOVEMBER 2025</p>
         </div>
 
         <div class="section-title">👑 OWNER CONTACT</div>
@@ -180,11 +183,11 @@
             <div class="card">
                 <h3>Contact Dilshan</h3>
                 <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
-                <a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn" style="margin-bottom: 12px;">
+                <a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn btn-telegram" style="margin-bottom: 12px;">
                     ✈️ Telegram (@dilshan7878)
                 </a>
-                <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn">
-                    💬 WhatsApp Inbox
+                <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn btn-whatsapp">
+                    💬 WhatsApp (0768864772)
                 </a>
             </div>
         </div>
@@ -216,8 +219,8 @@
                 <button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
                 <div id="qrTool" class="sub-tool">
                     <input type="text" id="qrText" placeholder="Enter URL or Text">
-                    <label style="font-size:0.8rem; color:#e0b0ff;">QR Color:</label>
-                    <input type="color" id="qrColor" value="#b026ff">
+                    <label style="font-size:0.8rem; color:var(--neon-primary);">QR Color:</label>
+                    <input type="color" id="qrColor" value="#00f3ff">
                     <button class="btn" onclick="genQR()">Generate QR</button>
                     <div id="qrResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -230,7 +233,7 @@
                 <button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
                 <div id="qrScannerTool" class="sub-tool">
                     <button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
-                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-purple);" autoplay></video>
+                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-primary);" autoplay></video>
                     <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
                     <div id="qrScanResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -243,8 +246,8 @@
                 <button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
                 <div id="barcodeTool" class="sub-tool">
                     <input type="text" id="bcText" placeholder="Enter text or number...">
-                    <label style="font-size:0.8rem; color:#e0b0ff;">Barcode Color:</label>
-                    <input type="color" id="bcColor" value="#b026ff">
+                    <label style="font-size:0.8rem; color:var(--neon-primary);">Barcode Color:</label>
+                    <input type="color" id="bcColor" value="#00f3ff">
                     <button class="btn" onclick="genBarcode()">Generate Barcode</button>
                     <div id="bcResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -260,7 +263,7 @@
                     <input type="number" id="passLen" value="12" min="6" max="32">
                     <input type="text" id="passOut" readonly placeholder="Result Password">
                     <button class="btn" onclick="genCustomPass()">Generate Password</button>
-                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#221035; color:#fff;">📋 Copy Password</button>
+                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#333; color:#fff;">📋 Copy Password</button>
                 </div>
             </div>
 
@@ -276,7 +279,7 @@
                 </div>
             </div>
 
-            <!-- WhatsApp URL Generator (Hidden Number, Clean Button Style) -->
+            <!-- WhatsApp URL Generator -->
             <div class="card">
                 <h3>WhatsApp URL Generator</h3>
                 <p>Direct Message Links for Phone Numbers</p>
@@ -344,7 +347,7 @@
     <footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
 
     <script>
-        // Live Uptime Counter
+        // Live Uptime Counter Fix
         function updateUptime() {
             let start = new Date("2025-11-19T00:00:00");
             let now = new Date();
@@ -367,8 +370,9 @@
         setInterval(updateUptime, 1000);
         updateUptime();
 
-        // Local Device & Browser Scanner
+        // Fast Local Device & Browser Scanner (No API blocking issues)
         function loadVisitorInfo() {
+            let nVer = navigator.appVersion;
             let nAgt = navigator.userAgent;
             let browser = "Unknown";
             if (nAgt.indexOf("Chrome") != -1) browser = "Google Chrome";
@@ -463,7 +467,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}" id="qrImg"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'QR_Code.png')">⬇️ Download QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#221035; color:#fff;">📋 Copy Content/Link</button>
+                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#333; color:#fff;">📋 Copy Content/Link</button>
                 <button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
             `;
         }
@@ -487,7 +491,7 @@
                     if(code) {
                         resDiv.innerHTML = `
                             <b style="color:#00ff00;">Scanned Result:</b><br>
-                            <p style="color:#e0b0ff; margin:8px 0;">${code.data}</p>
+                            <p style="color:var(--neon-primary); margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Result</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
@@ -531,7 +535,7 @@
                     if (code) {
                         resDiv.innerHTML = `
                             <b style="color:#00ff00;">Scanned Result:</b><br>
-                            <p style="color:#e0b0ff; margin:8px 0;">${code.data}</p>
+                            <p style="color:var(--neon-primary); margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Link</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
@@ -584,7 +588,7 @@
                 let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
                 let data = await resp.json();
                 if(data.code === 0) {
-                    let html = `<p style="color:#e0b0ff; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
+                    let html = `<p style="color:var(--neon-primary); font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
                     if(data.data.images && data.data.images.length > 0) {
                         html += `<p style="color:#00ff00; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
                         data.data.images.forEach((img, idx) => {
@@ -617,8 +621,8 @@
             let link = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
             outDiv.style.display = "block";
             outDiv.innerHTML = `
-                <a href="${link}" target="_blank" class="btn" style="margin-bottom:8px; display:block; text-decoration:none;">💬 Send WhatsApp Message</a>
-                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#221035; color:#fff;">📋 Copy WhatsApp Link</button>
+                <p style="color:var(--neon-primary); margin-bottom:8px;">${link}</p>
+                <button class="btn" onclick="copyToClipboard('${link}')">📋 Copy WhatsApp Link</button>
                 <button class="btn btn-delete" onclick="clearResult('waUrlOut')">🗑️ Delete Result</button>
             `;
         }
@@ -632,7 +636,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#221035; color:#fff;">📋 Copy Group Link</button>
+                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#333; color:#fff;">📋 Copy Group Link</button>
                 <button class="btn btn-delete" onclick="clearResult('grpQrOut')">🗑️ Delete Result</button>
             `;
         }
@@ -649,7 +653,7 @@
                 img.onload = function() {
                     let tileW = img.width / 3;
                     let tileH = img.height / 2;
-                    out.innerHTML = "<p style='color:#e0b0ff; margin-bottom:10px;'>Split into 6 Parts:</p>";
+                    out.innerHTML = "<p style='color:var(--neon-primary); margin-bottom:10px;'>Split into 6 Parts:</p>";
                     for(let r=0; r<2; r++) {
                         for(let c=0; c<3; c++) {
                             let cvs = document.createElement('canvas');
