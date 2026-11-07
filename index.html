@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilshan All In One - Luxury Gold Cyber Hub</title>
+    <title>Dilshan All In One </title>
     <style>
         :root {
             --bg-color: #07070a;
@@ -18,7 +18,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
 
-        /* Top Gold Marquee Banner */
         .marquee {
             background: linear-gradient(90deg, #110d00, #332600, #110d00);
             color: var(--gold-primary); padding: 10px 0; white-space: nowrap; overflow: hidden;
@@ -71,6 +70,13 @@
         }
         .btn:hover { box-shadow: 0 0 15px var(--gold-primary); color: #000; }
 
+        .btn-delete {
+            background: linear-gradient(45deg, #8b0000, #ff4d4d) !important;
+            color: #fff !important;
+            margin-top: 8px;
+        }
+        .btn-delete:hover { box-shadow: 0 0 15px #ff4d4d !important; }
+
         .btn-telegram { background: linear-gradient(45deg, #0088cc, #24A1DE); color: #fff; }
         .btn-whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); color: #fff; }
 
@@ -84,8 +90,7 @@
         .video-box { 
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
             border-radius: 15px; border: 2px solid var(--gold-primary); 
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); margin-bottom: 25px;
-            background: #000;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); margin-bottom: 25px; background: #000;
         }
         .video-box video { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -102,20 +107,21 @@
         .floating-audio audio { height: 30px; width: 190px; outline: none; }
 
         .res-output {
-            margin-top: 12px; padding: 10px; background: rgba(0,0,0,0.6);
+            margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.7);
             border: 1px solid var(--gold-primary); border-radius: 8px; word-break: break-all;
-            font-size: 0.85rem; text-align: center;
+            font-size: 0.88rem; text-align: center;
+        }
+        .res-output img, .res-output canvas, .res-output video {
+            max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
         }
 
         footer { text-align: center; margin-top: 50px; color: #73623f; font-size: 0.85rem; }
     </style>
-    <!-- JS Libraries for QR Scan & Barcode -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
 
-    <!-- Top Gold Marquee Banner -->
     <div class="marquee">
         <div class="marquee-content">
             DILSHAN • DILSHAN ALL IN ONE • LUXURY GOLD UTILITY HUB • OWNER: DILSHAN • ALL UTILITY TOOLS ACTIVE
@@ -124,39 +130,33 @@
 
     <div class="container">
         
-        <!-- Main Header -->
         <header>
             <h1>DILSHAN ALL IN ONE</h1>
             <p>Luxury Cybernetics & Utility Dashboard</p>
         </header>
 
-        <!-- Unstoppable Muted Loop Video (Local file: video.mp4) -->
         <div class="video-box">
             <video src="video.mp4" autoplay loop muted playsinline></video>
         </div>
 
-        <!-- Owner Contact Section -->
         <div class="section-title">👑 OWNER CONTACT</div>
         <div class="grid-cards">
             <div class="card">
                 <h3>Contact Dilshan</h3>
                 <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
-                
                 <a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn btn-telegram" style="margin-bottom: 12px;">
                     ✈️ Telegram (@dilshan7878)
                 </a>
-
                 <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn btn-whatsapp">
                     💬 WhatsApp (0768864772)
                 </a>
             </div>
         </div>
 
-        <!-- Utility Tools Section -->
         <div class="section-title">🛠️ Utility Tools & Generators</div>
         <div class="grid-cards">
             
-            <!-- Tool 1: WhatsApp Unban Tool -->
+            <!-- WhatsApp Unban Tool -->
             <div class="card">
                 <h3>WhatsApp Unban Tool</h3>
                 <p>Generate Official Appeal Emails Fast</p>
@@ -173,44 +173,48 @@
                 </div>
             </div>
 
-            <!-- Tool 2: Custom QR Code Generator -->
+            <!-- Custom QR Generator -->
             <div class="card">
                 <h3>Custom QR Generator</h3>
-                <p>Create Neon Gold Custom Color QR Codes</p>
+                <p>Create Custom Color QR Codes</p>
                 <button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
                 <div id="qrTool" class="sub-tool">
                     <input type="text" id="qrText" placeholder="Enter URL or Text">
                     <label style="font-size:0.8rem; color:var(--gold-primary);">QR Color:</label>
                     <input type="color" id="qrColor" value="#ffd700">
                     <button class="btn" onclick="genQR()">Generate QR</button>
-                    <div id="qrResult" class="res-output"></div>
+                    <div id="qrResult" class="res-output" style="display:none;"></div>
                 </div>
             </div>
 
-            <!-- NEW Tool: QR Code Scanner -->
+            <!-- Live Camera & Image QR Scanner -->
             <div class="card">
-                <h3>📷 QR Code Scanner</h3>
-                <p>Scan & Decode Any QR Image File</p>
+                <h3>📷 Live & File QR Scanner</h3>
+                <p>Scan QR from Camera or Image File</p>
                 <button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
                 <div id="qrScannerTool" class="sub-tool">
-                    <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)">
-                    <div id="qrScanResult" class="res-output">Upload a QR image to scan</div>
+                    <button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
+                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--gold-primary);" autoplay></video>
+                    <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
+                    <div id="qrScanResult" class="res-output" style="display:none;"></div>
                 </div>
             </div>
 
-            <!-- NEW Tool: Barcode Generator -->
+            <!-- Custom Color Barcode Maker -->
             <div class="card">
                 <h3>🏷️ Barcode Maker</h3>
-                <p>Generate Custom Barcodes</p>
+                <p>Generate Custom Colored Barcodes</p>
                 <button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
                 <div id="barcodeTool" class="sub-tool">
                     <input type="text" id="bcText" placeholder="Enter text or number...">
+                    <label style="font-size:0.8rem; color:var(--gold-primary);">Barcode Color:</label>
+                    <input type="color" id="bcColor" value="#ffd700">
                     <button class="btn" onclick="genBarcode()">Generate Barcode</button>
-                    <div id="bcResult" class="res-output"></div>
+                    <div id="bcResult" class="res-output" style="display:none;"></div>
                 </div>
             </div>
 
-            <!-- Tool 3: Password Generator -->
+            <!-- Password Generator -->
             <div class="card">
                 <h3>Password Generator</h3>
                 <p>Generate Strong Custom Passwords</p>
@@ -220,13 +224,14 @@
                     <input type="number" id="passLen" value="12" min="6" max="32">
                     <input type="text" id="passOut" readonly placeholder="Result Password">
                     <button class="btn" onclick="genCustomPass()">Generate Password</button>
+                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#444; color:#fff;">📋 Copy Password</button>
                 </div>
             </div>
 
-            <!-- Tool 4: TikTok / Media Downloader (UPDATED: VIDEO & PHOTO SLIDE SUPPORT) -->
+            <!-- TikTok Downloader -->
             <div class="card">
                 <h3>🎵 Media / TikTok Downloader</h3>
-                <p>Download Videos & Photos without Watermark</p>
+                <p>Direct Download Videos & Photos</p>
                 <button class="btn" onclick="toggleTool('dlTool')">Open Downloader</button>
                 <div id="dlTool" class="sub-tool">
                     <input type="text" id="ttUrl" placeholder="Paste TikTok Link here...">
@@ -235,7 +240,7 @@
                 </div>
             </div>
 
-            <!-- Tool 5: WhatsApp Direct URL Generator -->
+            <!-- WhatsApp URL Generator -->
             <div class="card">
                 <h3>WhatsApp URL Generator</h3>
                 <p>Direct Message Links for Phone Numbers</p>
@@ -248,7 +253,7 @@
                 </div>
             </div>
 
-            <!-- Tool 6: Group Link QR Generator -->
+            <!-- Group Link QR Generator -->
             <div class="card">
                 <h3>Group Link QR Tool</h3>
                 <p>Convert WhatsApp Group Links to QR</p>
@@ -256,47 +261,11 @@
                 <div id="groupQrTool" class="sub-tool">
                     <input type="text" id="grpUrl" placeholder="https://chat.whatsapp.com/...">
                     <button class="btn" onclick="genGroupQR()">Generate Group QR</button>
-                    <div id="grpQrOut" class="res-output"></div>
+                    <div id="grpQrOut" class="res-output" style="display:none;"></div>
                 </div>
             </div>
 
-            <!-- Tool 7: Fake Status Generator -->
-            <div class="card">
-                <h3>Fake Status Generator</h3>
-                <p>Create Mock Status Banners</p>
-                <button class="btn" onclick="toggleTool('statusTool')">Open Tool</button>
-                <div id="statusTool" class="sub-tool">
-                    <input type="text" id="stName" placeholder="Name (e.g. DILSHAN)">
-                    <input type="text" id="stMsg" placeholder="Status Text Message">
-                    <button class="btn" onclick="genStatusCard()">Download Status PNG</button>
-                </div>
-            </div>
-
-            <!-- Tool 8: Fake Contact Card Generator -->
-            <div class="card">
-                <h3>Fake Contact Generator</h3>
-                <p>Create WhatsApp Contact Cards</p>
-                <button class="btn" onclick="toggleTool('contactTool')">Open Tool</button>
-                <div id="contactTool" class="sub-tool">
-                    <input type="text" id="ctName" placeholder="Contact Name">
-                    <input type="text" id="ctNum" placeholder="Phone Number">
-                    <button class="btn" onclick="genContactCard()">Download Contact PNG</button>
-                </div>
-            </div>
-
-            <!-- Tool 9: Fake Chat Generator -->
-            <div class="card">
-                <h3>Fake Chat Generator</h3>
-                <p>Create Custom Chat Mockups</p>
-                <button class="btn" onclick="toggleTool('chatTool')">Open Tool</button>
-                <div id="chatTool" class="sub-tool">
-                    <input type="text" id="chTitle" placeholder="Chat Title / Name">
-                    <textarea id="chMsg" placeholder="Type chat message..."></textarea>
-                    <button class="btn" onclick="genChatMockup()">Download Chat PNG</button>
-                </div>
-            </div>
-
-            <!-- Tool 10: Catalogue Splitter -->
+            <!-- Catalogue Splitter -->
             <div class="card">
                 <h3>Catalogue Splitter</h3>
                 <p>Split Image into Grid Tiles</p>
@@ -310,7 +279,6 @@
 
         </div>
 
-        <!-- Dilshan Dev Profile -->
         <div class="section-title">💻 Developer Profile (DILSHAN DEV)</div>
         <div class="card">
             <h3>Dilshan Dev Terminal & System Environment</h3>
@@ -328,7 +296,6 @@
 
     </div>
 
-    <!-- Floating Audio Player Bar (Bottom Corner - REVENGE Track) -->
     <div class="floating-audio">
         <span>🎵 REVENGE</span>
         <audio controls loop preload="auto">
@@ -336,7 +303,6 @@
         </audio>
     </div>
 
-    <!-- Bottom Gold Marquee Banner -->
     <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--gold-primary); border-bottom: none;">
         <div class="marquee-content">
             POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026
@@ -345,13 +311,47 @@
 
     <footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
 
-    <!-- Hidden Canvas for Graphic Tools -->
-    <canvas id="genCanvas" style="display:none;"></canvas>
-
     <script>
         function toggleTool(id) {
             let el = document.getElementById(id);
             el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function clearResult(id) {
+            let resDiv = document.getElementById(id);
+            resDiv.innerHTML = "";
+            resDiv.style.display = "none";
+        }
+
+        function copyToClipboard(text) {
+            if(!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Copied to Clipboard!");
+            }).catch(() => {
+                let txtArea = document.createElement("textarea");
+                txtArea.value = text;
+                document.body.appendChild(txtArea);
+                txtArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(txtArea);
+                alert("Copied to Clipboard!");
+            });
+        }
+
+        function directDownloadBlob(url, filename) {
+            fetch(url)
+                .then(res => res.blob())
+                .then(blob => {
+                    let a = document.createElement('a');
+                    let blobUrl = window.URL.createObjectURL(blob);
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(() => alert("Direct download failed. Please try again."));
         }
 
         function genCustomPass() {
@@ -377,14 +377,23 @@
         function genQR() {
             let txt = document.getElementById('qrText').value;
             let col = document.getElementById('qrColor').value.replace('#','');
+            let resDiv = document.getElementById('qrResult');
             if(!txt) { alert("Enter URL or Text!"); return; }
-            document.getElementById('qrResult').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(txt)}&color=${col}" alt="QR">`;
+            resDiv.style.display = "block";
+            let qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(txt)}&color=${col}`;
+            resDiv.innerHTML = `
+                <img src="${qrImgUrl}" id="qrImg"><br>
+                <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'QR_Code.png')">⬇️ Download QR Image</button>
+                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#333; color:#fff;">📋 Copy Content/Link</button>
+                <button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
+            `;
         }
 
         function scanQRImage(event) {
             let file = event.target.files[0];
             let resDiv = document.getElementById('qrScanResult');
             if(!file) return;
+            resDiv.style.display = "block";
             resDiv.innerHTML = "Scanning image...";
             let reader = new FileReader();
             reader.onload = function(e) {
@@ -397,9 +406,17 @@
                     let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
-                        resDiv.innerHTML = `<b style="color:#00ff00;">Scanned Output:</b><br><a href="${code.data}" target="_blank" style="color:var(--gold-primary);">${code.data}</a>`;
+                        resDiv.innerHTML = `
+                            <b style="color:#00ff00;">Scanned Result:</b><br>
+                            <p style="color:var(--gold-primary); margin:8px 0;">${code.data}</p>
+                            <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Result</button>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
+                        `;
                     } else {
-                        resDiv.innerHTML = `<span style="color:red;">No valid QR code detected in image!</span>`;
+                        resDiv.innerHTML = `
+                            <span style="color:red;">No valid QR code detected in image!</span>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete</button>
+                        `;
                     }
                 };
                 img.src = e.target.result;
@@ -407,18 +424,71 @@
             reader.readAsDataURL(file);
         }
 
+        function startCameraScan() {
+            let video = document.getElementById('camVideo');
+            let resDiv = document.getElementById('qrScanResult');
+            video.style.display = "block";
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Opening Camera...";
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true);
+                video.play();
+                requestAnimationFrame(tickCameraScan);
+            }).catch(function() {
+                resDiv.innerHTML = "<span style='color:red;'>Unable to access camera!</span>";
+            });
+
+            function tickCameraScan() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    let cvs = document.createElement('canvas');
+                    cvs.width = video.videoWidth;
+                    cvs.height = video.videoHeight;
+                    let ctx = cvs.getContext('2d');
+                    ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let code = jsQR(imgData.data, imgData.width, imgData.height);
+                    if (code) {
+                        resDiv.innerHTML = `
+                            <b style="color:#00ff00;">Scanned Result:</b><br>
+                            <p style="color:var(--gold-primary); margin:8px 0;">${code.data}</p>
+                            <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Link</button>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
+                        `;
+                        return;
+                    }
+                }
+                requestAnimationFrame(tickCameraScan);
+            }
+        }
+
         function genBarcode() {
             let txt = document.getElementById('bcText').value;
+            let col = document.getElementById('bcColor').value;
             let resDiv = document.getElementById('bcResult');
             if(!txt) { alert("Please enter text or numbers!"); return; }
-            resDiv.innerHTML = '<svg id="bcSvg"></svg>';
+            resDiv.style.display = "block";
+            resDiv.innerHTML = `
+                <svg id="bcSvg"></svg><br>
+                <button class="btn" id="bcDlBtn">⬇️ Download Barcode Image</button>
+                <button class="btn btn-delete" onclick="clearResult('bcResult')">🗑️ Delete Result</button>
+            `;
             try {
                 JsBarcode("#bcSvg", txt, {
                     format: "CODE128",
-                    lineColor: "#ffd700",
+                    lineColor: col,
                     background: "#0a0804",
                     width: 2, height: 70, displayValue: true
                 });
+                
+                document.getElementById('bcDlBtn').onclick = function() {
+                    let svg = document.getElementById('bcSvg');
+                    let xml = new XMLSerializer().serializeToString(svg);
+                    let svg64 = btoa(xml);
+                    let image64 = 'data:image/svg+xml;base64,' + svg64;
+                    directDownloadBlob(image64, 'Barcode.svg');
+                };
             } catch(e) {
                 resDiv.innerHTML = '<span style="color:red;">Invalid code structure!</span>';
             }
@@ -439,12 +509,18 @@
                     if(data.data.images && data.data.images.length > 0) {
                         html += `<p style="color:#00ff00; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
                         data.data.images.forEach((img, idx) => {
-                            html += `<div style="margin: 5px 0;"><a href="${img}" target="_blank" class="btn" style="padding:6px; font-size:0.8rem;">Download Photo ${idx+1}</a></div>`;
+                            html += `
+                                <div style="margin: 10px 0;">
+                                    <img src="${img}" style="width:100px; border-radius:6px;"><br>
+                                    <button class="btn" onclick="directDownloadBlob('${img}', 'TikTok_Photo_${idx+1}.jpg')">⬇️ Download Photo ${idx+1}</button>
+                                </div>
+                            `;
                         });
                     } else if(data.data.play) {
                         html += `<video controls src="${data.data.play}" style="width:100%; border-radius:8px; margin: 8px 0;"></video>`;
-                        html += `<a href="${data.data.play}" target="_blank" class="btn" style="display:block; text-decoration:none;">Download No-Watermark Video</a>`;
+                        html += `<button class="btn" onclick="directDownloadBlob('${data.data.play}', 'TikTok_Video.mp4')">⬇️ Download Video File</button>`;
                     }
+                    html += `<button class="btn btn-delete" onclick="clearResult('ttResult')">🗑️ Delete Results</button>`;
                     resDiv.innerHTML = html;
                 } else {
                     resDiv.innerHTML = `<span style="color:red;">Failed to retrieve video. Ensure the TikTok link is public.</span>`;
@@ -461,62 +537,25 @@
             if(!num) { alert("Enter phone number!"); return; }
             let link = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
             outDiv.style.display = "block";
-            outDiv.innerHTML = `Link Created:<br><a href="${link}" target="_blank" style="color:var(--gold-primary);">${link}</a>`;
+            outDiv.innerHTML = `
+                <p style="color:var(--gold-primary); margin-bottom:8px;">${link}</p>
+                <button class="btn" onclick="copyToClipboard('${link}')">📋 Copy WhatsApp Link</button>
+                <button class="btn btn-delete" onclick="clearResult('waUrlOut')">🗑️ Delete Result</button>
+            `;
         }
 
         function genGroupQR() {
             let url = document.getElementById('grpUrl').value;
+            let resDiv = document.getElementById('grpQrOut');
             if(!url) { alert("Enter Group Link!"); return; }
-            document.getElementById('grpQrOut').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}" alt="Group QR">`;
-        }
-
-        function downloadCanvasPNG(canvas, filename) {
-            let a = document.createElement('a');
-            a.download = filename;
-            a.href = canvas.toDataURL('image/png');
-            a.click();
-        }
-
-        function genStatusCard() {
-            let name = document.getElementById('stName').value || 'DILSHAN';
-            let msg = document.getElementById('stMsg').value || 'Status Message';
-            let cvs = document.getElementById('genCanvas');
-            cvs.width = 600; cvs.height = 300;
-            let ctx = cvs.getContext('2d');
-            ctx.fillStyle = '#0a0804'; ctx.fillRect(0,0,600,300);
-            ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 4; ctx.strokeRect(10,10,580,280);
-            ctx.fillStyle = '#ffd700'; ctx.font = 'bold 24px Segoe UI'; ctx.fillText(name, 30, 60);
-            ctx.fillStyle = '#ffffff'; ctx.font = '18px Segoe UI'; ctx.fillText(msg, 30, 140);
-            ctx.fillStyle = '#b8860b'; ctx.font = '14px Segoe UI'; ctx.fillText('Dilshan All In One Luxury Banner', 30, 250);
-            downloadCanvasPNG(cvs, 'Status_Banner.png');
-        }
-
-        function genContactCard() {
-            let name = document.getElementById('ctName').value || 'Contact Name';
-            let num = document.getElementById('ctNum').value || '+947X...';
-            let cvs = document.getElementById('genCanvas');
-            cvs.width = 500; cvs.height = 250;
-            let ctx = cvs.getContext('2d');
-            ctx.fillStyle = '#12100a'; ctx.fillRect(0,0,500,250);
-            ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 3; ctx.strokeRect(8,8,484,234);
-            ctx.fillStyle = '#ffd700'; ctx.font = 'bold 22px Segoe UI'; ctx.fillText('📇 CONTACT CARD', 30, 50);
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px Segoe UI'; ctx.fillText(name, 30, 110);
-            ctx.fillStyle = '#25D366'; ctx.font = '18px Segoe UI'; ctx.fillText('📱 ' + num, 30, 160);
-            downloadCanvasPNG(cvs, 'Contact_Card.png');
-        }
-
-        function genChatMockup() {
-            let title = document.getElementById('chTitle').value || 'Dilshan Dev';
-            let msg = document.getElementById('chMsg').value || 'Hello World!';
-            let cvs = document.getElementById('genCanvas');
-            cvs.width = 500; cvs.height = 350;
-            let ctx = cvs.getContext('2d');
-            ctx.fillStyle = '#07070a'; ctx.fillRect(0,0,500,350);
-            ctx.fillStyle = '#1e1e1e'; ctx.fillRect(0,0,500,60);
-            ctx.fillStyle = '#ffd700'; ctx.font = 'bold 20px Segoe UI'; ctx.fillText(title, 20, 38);
-            ctx.fillStyle = '#24A1DE'; ctx.fillRect(40, 100, 420, 150);
-            ctx.fillStyle = '#ffffff'; ctx.font = '16px Segoe UI'; ctx.fillText(msg, 60, 150);
-            downloadCanvasPNG(cvs, 'Chat_Mockup.png');
+            resDiv.style.display = "block";
+            let qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`;
+            resDiv.innerHTML = `
+                <img src="${qrImgUrl}"><br>
+                <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
+                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#333; color:#fff;">📋 Copy Group Link</button>
+                <button class="btn btn-delete" onclick="clearResult('grpQrOut')">🗑️ Delete Result</button>
+            `;
         }
 
         function splitCatalogImage() {
@@ -531,23 +570,29 @@
                 img.onload = function() {
                     let tileW = img.width / 3;
                     let tileH = img.height / 2;
-                    out.innerHTML = "<p style='color:var(--gold-primary);'>Split into 6 Parts:</p>";
+                    out.innerHTML = "<p style='color:var(--gold-primary); margin-bottom:10px;'>Split into 6 Parts:</p>";
                     for(let r=0; r<2; r++) {
                         for(let c=0; c<3; c++) {
                             let cvs = document.createElement('canvas');
                             cvs.width = tileW; cvs.height = tileH;
                             let ctx = cvs.getContext('2d');
                             ctx.drawImage(img, c*tileW, r*tileH, tileW, tileH, 0, 0, tileW, tileH);
-                            let a = document.createElement('a');
-                            a.href = cvs.toDataURL('image/png');
-                            a.download = `Grid_Tile_${r*3 + c + 1}.png`;
-                            a.innerText = `Download Tile ${r*3 + c + 1}`;
-                            a.className = "btn";
-                            a.style.display = "block";
-                            a.style.margin = "5px 0";
-                            out.appendChild(a);
+                            let imgDataUrl = cvs.toDataURL('image/png');
+                            
+                            let tileDiv = document.createElement('div');
+                            tileDiv.style.margin = "10px 0";
+                            tileDiv.innerHTML = `
+                                <img src="${imgDataUrl}" style="width:120px;"><br>
+                                <button class="btn" onclick="directDownloadBlob('${imgDataUrl}', 'Grid_Tile_${r*3 + c + 1}.png')">⬇️ Download Tile ${r*3 + c + 1}</button>
+                            `;
+                            out.appendChild(tileDiv);
                         }
                     }
+                    let delBtn = document.createElement('button');
+                    delBtn.className = "btn btn-delete";
+                    delBtn.innerText = "🗑️ Delete All Tiles";
+                    delBtn.onclick = function() { clearResult('splitOut'); };
+                    out.appendChild(delBtn);
                 };
                 img.src = e.target.result;
             };
