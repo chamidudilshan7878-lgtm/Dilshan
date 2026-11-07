@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dilshan All In One - Cyber Hub</title>
+    <!-- Manifest File Link -->
+    <link rel="manifest" href="manifest.json">
     <style>
         /* Default Dark Mode Theme Variables */
         :root {
@@ -112,18 +114,20 @@
             z-index: 5;
         }
 
-        /* Theme Toggle Switch Bar */
-        .theme-toggle-bar {
+        /* Top Action Bar (Install & Theme Switch) */
+        .top-action-bar {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 15px;
+            gap: 10px;
         }
 
-        .theme-btn {
+        .theme-btn, .install-btn {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -135,8 +139,13 @@
             transition: all 0.2s ease;
         }
 
-        .theme-btn:hover {
+        .theme-btn:hover, .install-btn:hover {
             background: var(--btn-hover);
+        }
+
+        .install-btn {
+            border-color: var(--green-live);
+            color: var(--green-live);
         }
 
         /* Header Card */
@@ -429,8 +438,11 @@
 
     <div class="container">
 
-        <!-- Theme Toggle Switch Button -->
-        <div class="theme-toggle-bar">
+        <!-- Top Action Bar -->
+        <div class="top-action-bar">
+            <button class="install-btn" id="installAppBtn" onclick="installApp()">
+                📥 Install App
+            </button>
             <button class="theme-btn" onclick="toggleTheme()" id="themeToggleBtn">
                 ☀️ Light Mode
             </button>
@@ -723,6 +735,27 @@
     </footer>
 
     <script>
+        // PWA Install Prompt Logic
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted install');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("To install this app, tap your browser menu (three dots) and select 'Add to Home Screen' or 'Install App'.");
+            }
+        }
+
         // Theme Toggle Logic with localStorage memory
         function toggleTheme() {
             const html = document.documentElement;
