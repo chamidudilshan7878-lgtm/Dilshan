@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilshan All In One </title>
+    <title>Dilshan All In One - Red Cyber Hub</title>
     <link rel="manifest" href="data:application/manifest+json,{
         &quot;name&quot;: &quot;Dilshan All In One&quot;,
         &quot;short_name&quot;: &quot;DilshanHub&quot;,
@@ -33,6 +33,35 @@
         }
         .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* News Channel Style Big Floating Marquee for DILSHAN */
+        .news-overlay-marquee {
+            position: fixed;
+            top: 45%;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.85;
+        }
+        .news-overlay-text {
+            display: inline-block;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #ff073a;
+            text-transform: uppercase;
+            font-family: 'Arial Black', Gadget, sans-serif;
+            text-shadow: 0 0 20px #ff073a, 0 0 40px #ff073a, 0 0 60px #000, 2px 2px 5px #000;
+            letter-spacing: 6px;
+            padding-left: 100%;
+            animation: newsSlide 10s linear infinite;
+        }
+        @keyframes newsSlide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
 
         .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
 
@@ -126,6 +155,11 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
+
+    <!-- News Channel Style Big Floating DILSHAN Marquee -->
+    <div class="news-overlay-marquee">
+        <div class="news-overlay-text">🔥 DILSHAN • LUXURY CYBER HUB • DILSHAN • ALL SYSTEMS OPERATIONAL •</div>
+    </div>
 
     <div class="marquee">
         <div class="marquee-content">
