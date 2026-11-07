@@ -3,38 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilshan All In One - Purple Cyber Hub</title>
+    <title>Dilshan All In One - Black Cyber Hub</title>
     <link rel="manifest" href="data:application/manifest+json,{
         &quot;name&quot;: &quot;Dilshan All In One&quot;,
         &quot;short_name&quot;: &quot;DilshanHub&quot;,
         &quot;start_url&quot;: &quot;/&quot;,
         &quot;display&quot;: &quot;standalone&quot;,
         &quot;background_color&quot;: &quot;#000000&quot;,
-        &quot;theme_color&quot;: &quot;#8a2be2&quot;
+        &quot;theme_color&quot;: &quot;#000000&quot;
     }">
     <style>
         :root {
             --bg-color: #000000;
-            --card-bg: #0d0314;
-            --neon-purple: #8a2be2;
-            --purple-glow: rgba(138, 43, 226, 0.6);
+            --card-bg: #000000;
+            --accent-color: #ffffff;
             --text-color: #f0f0f0;
-            --border-color: rgba(138, 43, 226, 0.5);
+            --border-color: #333333;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
 
         .marquee {
-            background: #0d001a;
-            color: #d8bfd8; padding: 10px 0; white-space: nowrap; overflow: hidden;
-            border-bottom: 2px solid var(--neon-purple); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
-            box-shadow: 0 0 15px var(--purple-glow);
+            background: #000000;
+            color: #aaaaaa; padding: 10px 0; white-space: nowrap; overflow: hidden;
+            border-bottom: 1px solid var(--border-color); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
         }
         .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* Soft Light Marquee for DILSHAN ALL IN ONE */
+        /* Soft Marquee for DILSHAN ALL IN ONE */
         .news-overlay-marquee {
             position: fixed;
             top: 48%;
@@ -44,15 +42,14 @@
             white-space: nowrap;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.45;
+            opacity: 0.35;
         }
         .news-overlay-text {
             display: inline-block;
             font-size: 1.4rem;
             font-weight: 600;
-            color: #d8bfd8;
+            color: #888888;
             text-transform: uppercase;
-            text-shadow: 0 0 8px rgba(216, 191, 216, 0.5);
             letter-spacing: 3px;
             padding-left: 100%;
             animation: newsSlide 12s linear infinite;
@@ -67,77 +64,75 @@
         header {
             text-align: center; padding: 30px 20px; background: var(--card-bg);
             border: 1px solid var(--border-color); border-radius: 18px;
-            box-shadow: 0 0 25px var(--purple-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
+            margin-bottom: 25px;
         }
         header h1 { 
-            color: #ba55d3; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-purple); 
+            color: #ffffff; font-size: 2.4rem; 
             text-transform: uppercase; letter-spacing: 1px;
         }
-        header p { color: #d8bfd8; margin-top: 5px; font-size: 1.05rem; }
+        header p { color: #888888; margin-top: 5px; font-size: 1.05rem; }
 
         .section-title {
-            color: #ba55d3; margin: 30px 0 15px 0; font-size: 1.4rem;
-            border-left: 5px solid var(--neon-purple); padding-left: 12px; text-transform: uppercase;
-            text-shadow: 0 0 10px var(--purple-glow);
+            color: #ffffff; margin: 30px 0 15px 0; font-size: 1.4rem;
+            border-left: 5px solid #ffffff; padding-left: 12px; text-transform: uppercase;
         }
 
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
         .card {
             background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
-            padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.9);
+            padding: 22px; transition: all 0.3s ease;
         }
-        .card:hover { transform: translateY(-5px); border-color: #ba55d3; box-shadow: 0 0 20px var(--purple-glow); }
-        .card h3 { color: #ba55d3; margin-bottom: 10px; font-size: 1.2rem; }
-        .card p { color: #d8bfd8; font-size: 0.9rem; margin-bottom: 15px; }
+        .card:hover { border-color: #777777; transform: translateY(-3px); }
+        .card h3 { color: #ffffff; margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #888888; font-size: 0.9rem; margin-bottom: 15px; }
 
         input, select, textarea {
             width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
             border: 1px solid var(--border-color); background: #000000; color: #fff; outline: none; font-size: 0.95rem;
         }
-        input:focus { border-color: #ba55d3; box-shadow: 0 0 10px var(--neon-purple); }
+        input:focus { border-color: #ffffff; }
 
         .btn {
             display: inline-block; text-align: center; text-decoration: none;
-            width: 100%; padding: 12px; background: linear-gradient(45deg, #30004f, var(--neon-purple));
-            border: none; color: #fff; font-weight: bold; border-radius: 8px; cursor: pointer;
+            width: 100%; padding: 12px; background: #1a1a1a;
+            border: 1px solid var(--border-color); color: #fff; font-weight: bold; border-radius: 8px; cursor: pointer;
             transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
-            box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
         }
-        .btn:hover { box-shadow: 0 0 15px #ba55d3; color: #fff; }
+        .btn:hover { background: #333333; border-color: #ffffff; }
 
         .btn-delete {
-            background: linear-gradient(45deg, #300, #8b0000) !important;
-            color: #fff !important;
+            background: #1a0000 !important;
+            border-color: #550000 !important;
+            color: #ff9999 !important;
             margin-top: 8px;
         }
-        .btn-delete:hover { box-shadow: 0 0 15px #ff4d4d !important; }
+        .btn-delete:hover { background: #330000 !important; }
 
         .sub-tool { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
 
-        /* Calculator Grid */
         .calc-screen {
-            width: 100%; height: 50px; background: #000; border: 1px solid var(--neon-purple);
-            color: #ba55d3; font-size: 1.4rem; text-align: right; padding: 10px; border-radius: 8px;
+            width: 100%; height: 50px; background: #000; border: 1px solid var(--border-color);
+            color: #ffffff; font-size: 1.4rem; text-align: right; padding: 10px; border-radius: 8px;
             margin-bottom: 10px; overflow-x: auto;
         }
         .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
         .calc-btn {
-            padding: 12px; background: #1a052e; border: 1px solid var(--border-color); color: #fff;
+            padding: 12px; background: #111111; border: 1px solid var(--border-color); color: #fff;
             font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s;
         }
-        .calc-btn:hover { background: var(--neon-purple); box-shadow: 0 0 10px var(--purple-glow); }
-        .calc-btn.op { background: #4b0082; color: #fff; }
+        .calc-btn:hover { background: #333333; }
+        .calc-btn.op { background: #222222; color: #ffffff; }
 
         .uptime-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .uptime-box { background: rgba(138, 43, 226, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
-        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #ba55d3; text-shadow: 0 0 10px var(--neon-purple); }
-        .uptime-lbl { font-size: 0.75rem; color: #d8bfd8; text-transform: uppercase; margin-top: 4px; }
+        .uptime-box { background: #000000; border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
+        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #ffffff; }
+        .uptime-lbl { font-size: 0.75rem; color: #888888; text-transform: uppercase; margin-top: 4px; }
 
         .video-box { 
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
-            border-radius: 15px; border: 2px solid var(--neon-purple); 
-            box-shadow: 0 0 20px var(--purple-glow); margin-bottom: 25px; background: #000;
+            border-radius: 15px; border: 1px solid var(--border-color); 
+            margin-bottom: 25px; background: #000;
         }
         .video-box video { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -146,37 +141,37 @@
 
         .floating-audio {
             position: fixed; bottom: 15px; right: 15px; z-index: 999;
-            background: rgba(13, 3, 20, 0.95); border: 2px solid var(--neon-purple);
-            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--purple-glow);
+            background: #000000; border: 1px solid var(--border-color);
+            padding: 10px 15px; border-radius: 30px;
             display: flex; align-items: center; gap: 10px;
         }
-        .floating-audio span { color: #ba55d3; font-size: 0.82rem; font-weight: bold; }
-        .floating-audio audio { height: 30px; width: 190px; outline: none; }
+        .floating-audio span { color: #ffffff; font-size: 0.82rem; font-weight: bold; }
+        .floating-audio audio { height: 30px; width: 190px; outline: none; filter: invert(1); }
 
         .res-output {
-            margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.8);
-            border: 1px solid var(--neon-purple); border-radius: 8px; word-break: break-all;
+            margin-top: 12px; padding: 12px; background: #000000;
+            border: 1px solid var(--border-color); border-radius: 8px; word-break: break-all;
             font-size: 0.88rem; text-align: center;
         }
         .res-output img, .res-output canvas, .res-output video {
             max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
         }
 
-        footer { text-align: center; margin-top: 50px; color: #d8bfd8; font-size: 0.85rem; }
+        footer { text-align: center; margin-top: 50px; color: #666666; font-size: 0.85rem; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
 
-    <!-- Soft Light Marquee for DILSHAN ALL IN ONE -->
+    <!-- Soft Marquee for DILSHAN ALL IN ONE -->
     <div class="news-overlay-marquee">
         <div class="news-overlay-text">DILSHAN ALL IN ONE &nbsp;&bull;&nbsp; DILSHAN ALL IN ONE &nbsp;&bull;&nbsp; DILSHAN ALL IN ONE</div>
     </div>
 
     <div class="marquee">
         <div class="marquee-content">
-            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • PURPLE CYBER HUB • OWNER: DILSHAN •
+            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • BLACK CYBER HUB • OWNER: DILSHAN •
         </div>
     </div>
 
@@ -184,14 +179,14 @@
         
         <header>
             <h1>DILSHAN ALL IN ONE</h1>
-            <p>Purple Cybernetics & Utility Dashboard</p>
+            <p>Black Cybernetics & Utility Dashboard</p>
         </header>
 
         <div class="video-box">
             <video src="video.mp4" autoplay loop muted playsinline></video>
         </div>
 
-        <!-- System Uptime Card (Starts from 2026/11/07 8:30 AM) -->
+        <!-- System Uptime Card -->
         <div class="card" style="margin-bottom: 25px;">
             <h3>🟢 SYSTEM UPTIME • LIVE</h3>
             <div class="uptime-grid">
@@ -220,7 +215,7 @@
                     <div class="uptime-lbl">Seconds</div>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 0.75rem; color: #d8bfd8; margin-top: 10px;">SYSTEM ONLINE SINCE 07 NOVEMBER 2026 • 08:30 AM</p>
+            <p style="text-align: center; font-size: 0.75rem; color: #666666; margin-top: 10px;">SYSTEM ONLINE SINCE 07 NOVEMBER 2026 • 08:30 AM</p>
         </div>
 
         <div class="section-title">👑 OWNER CONTACT</div>
@@ -295,8 +290,8 @@
                 <button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
                 <div id="qrTool" class="sub-tool">
                     <input type="text" id="qrText" placeholder="Enter URL or Text">
-                    <label style="font-size:0.8rem; color:#ba55d3;">QR Color:</label>
-                    <input type="color" id="qrColor" value="#8a2be2">
+                    <label style="font-size:0.8rem; color:#aaa;">QR Color:</label>
+                    <input type="color" id="qrColor" value="#ffffff">
                     <button class="btn" onclick="genQR()">Generate QR</button>
                     <div id="qrResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -309,7 +304,7 @@
                 <button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
                 <div id="qrScannerTool" class="sub-tool">
                     <button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
-                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-purple);" autoplay></video>
+                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid #333;" autoplay></video>
                     <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
                     <div id="qrScanResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -322,8 +317,8 @@
                 <button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
                 <div id="barcodeTool" class="sub-tool">
                     <input type="text" id="bcText" placeholder="Enter text or number...">
-                    <label style="font-size:0.8rem; color:#ba55d3;">Barcode Color:</label>
-                    <input type="color" id="bcColor" value="#8a2be2">
+                    <label style="font-size:0.8rem; color:#aaa;">Barcode Color:</label>
+                    <input type="color" id="bcColor" value="#ffffff">
                     <button class="btn" onclick="genBarcode()">Generate Barcode</button>
                     <div id="bcResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -339,7 +334,7 @@
                     <input type="number" id="passLen" value="12" min="6" max="32">
                     <input type="text" id="passOut" readonly placeholder="Result Password">
                     <button class="btn" onclick="genCustomPass()">Generate Password</button>
-                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#1a052e; color:#fff;">📋 Copy Password</button>
+                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)">📋 Copy Password</button>
                 </div>
             </div>
 
@@ -403,7 +398,7 @@
         </audio>
     </div>
 
-    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-purple); border-bottom: none;">
+    <div class="marquee" style="margin-top: 40px; border-top: 1px solid var(--border-color); border-bottom: none;">
         <div class="marquee-content">
             POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026 •
         </div>
@@ -539,7 +534,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}" id="qrImg"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'QR_Code.png')">⬇️ Download QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#1a052e; color:#fff;">📋 Copy Content/Link</button>
+                <button class="btn" onclick="copyToClipboard('${txt}')">📋 Copy Content/Link</button>
                 <button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
             `;
         }
@@ -562,14 +557,14 @@
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
                         resDiv.innerHTML = `
-                            <b style="color:#ba55d3;">Scanned Result:</b><br>
-                            <p style="color:#d8bfd8; margin:8px 0;">${code.data}</p>
+                            <b style="color:#ffffff;">Scanned Result:</b><br>
+                            <p style="color:#aaaaaa; margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Result</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
                     } else {
                         resDiv.innerHTML = `
-                            <span style="color:red;">No valid QR code detected in image!</span>
+                            <span style="color:#ff9999;">No valid QR code detected in image!</span>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete</button>
                         `;
                     }
@@ -592,7 +587,7 @@
                 video.play();
                 requestAnimationFrame(tickCameraScan);
             }).catch(function() {
-                resDiv.innerHTML = "<span style='color:red;'>Unable to access camera!</span>";
+                resDiv.innerHTML = "<span style='color:#ff9999;'>Unable to access camera!</span>";
             });
 
             function tickCameraScan() {
@@ -606,8 +601,8 @@
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if (code) {
                         resDiv.innerHTML = `
-                            <b style="color:#ba55d3;">Scanned Result:</b><br>
-                            <p style="color:#d8bfd8; margin:8px 0;">${code.data}</p>
+                            <b style="color:#ffffff;">Scanned Result:</b><br>
+                            <p style="color:#aaaaaa; margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Link</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
@@ -645,7 +640,7 @@
                     directDownloadBlob(image64, 'Barcode.svg');
                 };
             } catch(e) {
-                resDiv.innerHTML = '<span style="color:red;">Invalid code structure!</span>';
+                resDiv.innerHTML = '<span style="color:#ff9999;">Invalid code structure!</span>';
             }
         }
 
@@ -660,9 +655,9 @@
                 let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
                 let data = await resp.json();
                 if(data.code === 0) {
-                    let html = `<p style="color:#ba55d3; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
+                    let html = `<p style="color:#ffffff; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
                     if(data.data.images && data.data.images.length > 0) {
-                        html += `<p style="color:#ba55d3; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
+                        html += `<p style="color:#aaaaaa; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
                         data.data.images.forEach((img, idx) => {
                             html += `
                                 <div style="margin: 10px 0;">
@@ -678,10 +673,10 @@
                     html += `<button class="btn btn-delete" onclick="clearResult('ttResult')">🗑️ Delete Results</button>`;
                     resDiv.innerHTML = html;
                 } else {
-                    resDiv.innerHTML = `<span style="color:red;">Failed to retrieve video. Ensure the TikTok link is public.</span>`;
+                    resDiv.innerHTML = `<span style="color:#ff9999;">Failed to retrieve video. Ensure the TikTok link is public.</span>`;
                 }
             } catch(err) {
-                resDiv.innerHTML = `<span style="color:red;">Error connecting to TikTok Downloader API.</span>`;
+                resDiv.innerHTML = `<span style="color:#ff9999;">Error connecting to TikTok Downloader API.</span>`;
             }
         }
 
@@ -694,7 +689,7 @@
             outDiv.style.display = "block";
             outDiv.innerHTML = `
                 <a href="${link}" target="_blank" class="btn" style="margin-bottom:8px; display:block; text-decoration:none;">💬 Send WhatsApp Message</a>
-                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#1a052e; color:#fff;">📋 Copy WhatsApp Link</button>
+                <button class="btn" onclick="copyToClipboard('${link}')">📋 Copy WhatsApp Link</button>
                 <button class="btn btn-delete" onclick="clearResult('waUrlOut')">🗑️ Delete Result</button>
             `;
         }
@@ -708,7 +703,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#1a052e; color:#fff;">📋 Copy Group Link</button>
+                <button class="btn" onclick="copyToClipboard('${url}')">📋 Copy Group Link</button>
                 <button class="btn btn-delete" onclick="clearResult('grpQrOut')">🗑️ Delete Result</button>
             `;
         }
@@ -725,7 +720,7 @@
                 img.onload = function() {
                     let tileW = img.width / 3;
                     let tileH = img.height / 2;
-                    out.innerHTML = "<p style='color:#ba55d3; margin-bottom:10px;'>Split into 6 Parts:</p>";
+                    out.innerHTML = "<p style='color:#ffffff; margin-bottom:10px;'>Split into 6 Parts:</p>";
                     for(let r=0; r<2; r++) {
                         for(let c=0; c<3; c++) {
                             let cvs = document.createElement('canvas');
