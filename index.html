@@ -1,381 +1,737 @@
 <!DOCTYPE html>
-<html lang="si">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilshan All In One - Cyber Dashboard Hub</title>
+    <title>Dilshan All In One - Red Cyber Hub</title>
+    <link rel="manifest" href="data:application/manifest+json,{
+        &quot;name&quot;: &quot;Dilshan All In One&quot;,
+        &quot;short_name&quot;: &quot;DilshanHub&quot;,
+        &quot;start_url&quot;: &quot;/&quot;,
+        &quot;display&quot;: &quot;standalone&quot;,
+        &quot;background_color&quot;: &quot;#000000&quot;,
+        &quot;theme_color&quot;: &quot;#ff073a&quot;
+    }">
     <style>
         :root {
-            --bg-color: #040d08;
-            --card-bg: #0a1910;
-            --neon-green: #00ff88;
-            --accent-green: #00cc66;
-            --text-color: #ffffff;
-            --border-color: #00ff88;
+            --bg-color: #000000;
+            --card-bg: #120303;
+            --neon-red: #ff073a;
+            --red-glow: rgba(255, 7, 58, 0.6);
+            --text-color: #f0f0f0;
+            --border-color: rgba(255, 7, 58, 0.5);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 15px;
-            background-image: radial-gradient(circle at 50% 10%, #0d2818 0%, var(--bg-color) 70%);
+        .marquee {
+            background: #1a0005;
+            color: #ff8093; padding: 10px 0; white-space: nowrap; overflow: hidden;
+            border-bottom: 2px solid var(--neon-red); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--red-glow);
         }
+        .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* Floating Audio Controller */
-        .music-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            padding: 12px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 1000;
-            font-weight: bold;
+        /* Soft Marquee overlay */
+        .news-overlay-marquee {
+            position: fixed; top: 48%; left: 0; width: 100%; overflow: hidden;
+            white-space: nowrap; pointer-events: none; z-index: 9999; opacity: 0.45;
         }
+        .news-overlay-text {
+            display: inline-block; font-size: 1.4rem; font-weight: 600; color: #ff8093;
+            text-transform: uppercase; text-shadow: 0 0 8px rgba(255, 128, 147, 0.5);
+            letter-spacing: 3px; padding-left: 100%; animation: newsSlide 12s linear infinite;
+        }
+        @keyframes newsSlide { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
 
         header {
-            text-align: center;
-            margin-bottom: 25px;
-            width: 100%;
+            text-align: center; padding: 30px 20px; background: var(--card-bg);
+            border: 1px solid var(--border-color); border-radius: 18px;
+            box-shadow: 0 0 25px var(--red-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
+        }
+        header h1 { 
+            color: #ff335f; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-red); 
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        header p { color: #ff8093; margin-top: 5px; font-size: 1.05rem; }
+
+        .section-title {
+            color: #ff335f; margin: 30px 0 15px 0; font-size: 1.4rem;
+            border-left: 5px solid var(--neon-red); padding-left: 12px; text-transform: uppercase;
+            text-shadow: 0 0 10px var(--red-glow);
         }
 
-        h1 {
-            font-size: 2rem;
-            color: var(--neon-green);
-            margin-bottom: 5px;
-        }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
-        p.subtitle {
-            color: #7ab893;
-            font-size: 0.9rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        /* Main Menu Tool Cards */
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 18px;
-            text-align: center;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
+            padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.9);
         }
-
-        .card h2, .card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: var(--neon-green);
-        }
-
-        .card p {
-            font-size: 0.85rem;
-            color: #94d6b0;
-            margin-bottom: 12px;
-        }
-
-        /* Common Button Styling */
-        button.action-btn, .btn-secondary {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #00ff88, #00aa55);
-            border: none;
-            border-radius: 8px;
-            color: #040d08;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-secondary {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-        }
-
-        /* Video Box Component */
-        .custom-video-box {
-            width: 100%;
-            height: 180px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--neon-green);
-            background: #000;
-        }
-
-        .custom-video-box video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Dynamic Tool Dashboard View (Hidden by default) */
-        .tool-dashboard {
-            display: none;
-            width: 100%;
-            max-width: 480px;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .back-btn {
-            background: transparent;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            align-self: flex-start;
-            margin-bottom: 10px;
-        }
+        .card:hover { transform: translateY(-5px); border-color: #ff335f; box-shadow: 0 0 20px var(--red-glow); }
+        .card h3 { color: #ff335f; margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #ff8093; font-size: 0.9rem; margin-bottom: 15px; }
 
         input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            background: #06130b;
-            border: 1px solid #143d24;
-            border-radius: 8px;
-            color: #fff;
-            outline: none;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
+            border: 1px solid var(--border-color); background: #000000; color: #fff; outline: none; font-size: 0.95rem;
+        }
+        input:focus { border-color: #ff335f; box-shadow: 0 0 10px var(--neon-red); }
+
+        .btn {
+            display: inline-block; text-align: center; text-decoration: none;
+            width: 100%; padding: 12px; background: linear-gradient(45deg, #5c0011, var(--neon-red));
+            border: none; color: #fff; font-weight: bold; border-radius: 8px; cursor: pointer;
+            transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
+            box-shadow: 0 0 10px rgba(255, 7, 58, 0.4);
+        }
+        .btn:hover { box-shadow: 0 0 15px #ff335f; color: #fff; }
+
+        .btn-back {
+            background: transparent; border: 2px solid var(--neon-red); color: #ff335f;
+            width: auto; padding: 10px 20px; margin-bottom: 20px; box-shadow: 0 0 10px var(--red-glow);
+        }
+        .btn-back:hover { background: var(--neon-red); color: #fff; }
+
+        .btn-delete {
+            background: linear-gradient(45deg, #400, #ff1a40) !important; color: #fff !important; margin-top: 8px;
         }
 
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--neon-green);
+        /* Dedicated Separate Tool Dashboard Views */
+        .tool-dashboard-view { display: none; width: 100%; }
+
+        .uptime-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .uptime-box { background: rgba(255, 7, 58, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
+        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #ff335f; text-shadow: 0 0 10px var(--neon-red); }
+        .uptime-lbl { font-size: 0.75rem; color: #ff8093; text-transform: uppercase; margin-top: 4px; }
+
+        .video-box { 
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
+            border-radius: 15px; border: 2px solid var(--neon-red); 
+            box-shadow: 0 0 20px var(--red-glow); margin-bottom: 25px; background: #000;
+        }
+        .video-box video { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; pointer-events: none; 
         }
 
-        .result-box {
-            margin-top: 12px;
-            font-size: 0.85rem;
-            color: #94d6b0;
-            text-align: center;
-            word-break: break-all;
+        .floating-audio {
+            position: fixed; bottom: 15px; right: 15px; z-index: 999;
+            background: rgba(18, 3, 3, 0.95); border: 2px solid var(--neon-red);
+            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--red-glow);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .floating-audio span { color: #ff335f; font-size: 0.82rem; font-weight: bold; }
+        .floating-audio audio { height: 30px; width: 190px; outline: none; }
+
+        .res-output {
+            margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.8);
+            border: 1px solid var(--neon-red); border-radius: 8px; word-break: break-all;
+            font-size: 0.88rem; text-align: center;
+        }
+        .res-output img, .res-output canvas, .res-output video {
+            max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
         }
 
-        footer {
-            margin-top: 30px;
-            font-size: 0.85rem;
-            color: #00ff88;
-            text-align: center;
-        }
+        footer { text-align: center; margin-top: 50px; color: #ff8093; font-size: 0.85rem; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
 
-    <!-- Background Audio Element -->
-    <audio id="bgMusic" loop>
-        <source src="YOUR_MUSIC_LINK_HERE.mp3" type="audio/mpeg">
-    </audio>
+    <div class="news-overlay-marquee">
+        <div class="news-overlay-text">DILSHAN ALL IN ONE &nbsp;&bull;&nbsp; DILSHAN ALL IN ONE &nbsp;&bull;&nbsp; DILSHAN ALL IN ONE</div>
+    </div>
 
-    <button class="music-control" id="musicToggleBtn" onclick="toggleMusic()">🎵 Play Music</button>
+    <div class="marquee">
+        <div class="marquee-content">
+            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • RED CYBER HUB • OWNER: DILSHAN •
+        </div>
+    </div>
 
-    <header>
-        <h1>DILSHAN ALL IN ONE</h1>
-        <p class="subtitle">Your Ultimate Cyber & WhatsApp Tools Hub</p>
-    </header>
+    <div class="container">
+        
+        <!-- MAIN HUB DASHBOARD VIEW -->
+        <div id="mainHubDashboard">
+            
+            <header>
+                <h1>DILSHAN ALL IN ONE</h1>
+                <p>Red Cybernetics & Utility Dashboard</p>
+            </header>
 
-    <!-- MAIN HOME DASHBOARD VIEW -->
-    <div class="container" id="mainDashboard">
+            <div class="video-box">
+                <video src="video.mp4" autoplay loop muted playsinline></video>
+            </div>
 
-        <!-- Featured Video Box -->
-        <div class="card">
-            <h3>✨ Featured Video Box</h3>
-            <div class="custom-video-box">
-                <video autoplay muted loop playsinline>
-                    <source src="YOUR_VIDEO_LINK_HERE.mp4" type="video/mp4">
-                </video>
+            <!-- System Uptime Card -->
+            <div class="card" style="margin-bottom: 25px;">
+                <h3>🟢 SYSTEM UPTIME • LIVE</h3>
+                <div class="uptime-grid">
+                    <div class="uptime-box">
+                        <div class="uptime-num" id="upYears">0</div>
+                        <div class="uptime-lbl">Years</div>
+                    </div>
+                    <div class="uptime-box">
+                        <div class="uptime-num" id="upMonths">0</div>
+                        <div class="uptime-lbl">Months</div>
+                    </div>
+                    <div class="uptime-box">
+                        <div class="uptime-num" id="upDays">0</div>
+                        <div class="uptime-lbl">Days</div>
+                    </div>
+                    <div class="uptime-box">
+                        <div class="uptime-num" id="upHours">0</div>
+                        <div class="uptime-lbl">Hours</div>
+                    </div>
+                    <div class="uptime-box">
+                        <div class="uptime-num" id="upMins">0</div>
+                        <div class="uptime-lbl">Minutes</div>
+                    </div>
+                    <div class="uptime-box">
+                        <div class="uptime-num" id="upSecs">0</div>
+                        <div class="uptime-lbl">Seconds</div>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.75rem; color: #ff8093; margin-top: 10px;">SYSTEM ONLINE SINCE 07 NOVEMBER 2026 • 08:30 AM</p>
+            </div>
+
+            <div class="section-title">👑 OWNER CONTACT</div>
+            <div class="grid-cards">
+                <div class="card">
+                    <h3>Contact Dilshan</h3>
+                    <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
+                    <a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn" style="margin-bottom: 12px;">
+                        ✈️ Telegram (@dilshan7878)
+                    </a>
+                    <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn">
+                        💬 WhatsApp Inbox
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-title">🛠️ Utility Tools & Generators</div>
+            <div class="grid-cards">
+                
+                <!-- Tool Cards linking to dedicated Dashboards -->
+                <div class="card">
+                    <h3>WhatsApp Unban Tool</h3>
+                    <p>Generate Official Appeal Emails Fast</p>
+                    <button class="btn" onclick="openToolDashboard('unbanTool')">Open Tool Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>Custom QR Generator</h3>
+                    <p>Create Custom Color QR Codes</p>
+                    <button class="btn" onclick="openToolDashboard('qrTool')">Open Generator Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>📷 Live & File QR Scanner</h3>
+                    <p>Scan QR from Camera or Image File</p>
+                    <button class="btn" onclick="openToolDashboard('qrScannerTool')">Open Scanner Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>🏷️ Barcode Maker</h3>
+                    <p>Generate Custom Colored Barcodes</p>
+                    <button class="btn" onclick="openToolDashboard('barcodeTool')">Open Maker Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>Password Generator</h3>
+                    <p>Generate Strong Custom Passwords</p>
+                    <button class="btn" onclick="openToolDashboard('passTool')">Open Generator Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>🎵 Media / TikTok Downloader</h3>
+                    <p>Direct Download Videos & Photos</p>
+                    <button class="btn" onclick="openToolDashboard('dlTool')">Open Downloader Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>WhatsApp URL Generator</h3>
+                    <p>Direct Message Links for Phone Numbers</p>
+                    <button class="btn" onclick="openToolDashboard('urlTool')">Open Tool Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>Group Link QR Tool</h3>
+                    <p>Convert WhatsApp Group Links to QR</p>
+                    <button class="btn" onclick="openToolDashboard('groupQrTool')">Open Tool Dashboard →</button>
+                </div>
+
+                <div class="card">
+                    <h3>Catalogue Splitter</h3>
+                    <p>Split Image into Grid Tiles</p>
+                    <button class="btn" onclick="openToolDashboard('splitTool')">Open Tool Dashboard →</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SEPARATE TOOL DASHBOARD 1: WhatsApp Unban Tool -->
+        <div id="unbanTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>WhatsApp Unban Tool</h3>
+                <p>Enter banned phone details to construct official appeal email.</p>
+                <input type="text" id="unbanNum" placeholder="Banned Number (+947X...)">
+                <input type="email" id="unbanEmail" placeholder="Your Contact Email">
+                <select id="unbanReason">
+                    <option>Standard Appeal (Unban Request)</option>
+                    <option>Spam Ban Appeal</option>
+                    <option>Account Hacked Appeal</option>
+                </select>
+                <button class="btn" onclick="sendUnban()">Generate & Send Email</button>
             </div>
         </div>
 
-        <!-- Tool 1 Card -->
-        <div class="card">
-            <h2>📥 TikTok Downloader</h2>
-            <p>Download TikTok Videos (No Watermark) & Photo Slideshows.</p>
-            <button class="action-btn" onclick="openTool('tiktokTool')">OPEN TOOL →</button>
+        <!-- SEPARATE TOOL DASHBOARD 2: Custom QR Generator -->
+        <div id="qrTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>Custom QR Generator</h3>
+                <p>Enter text or URL and choose custom color.</p>
+                <input type="text" id="qrText" placeholder="Enter URL or Text">
+                <label style="font-size:0.8rem; color:#ff335f;">QR Color:</label>
+                <input type="color" id="qrColor" value="#ff073a">
+                <button class="btn" onclick="genQR()">Generate QR</button>
+                <div id="qrResult" class="res-output" style="display:none;"></div>
+            </div>
         </div>
 
-        <!-- Tool 2 Card -->
-        <div class="card">
-            <h2>🔓 WhatsApp Unban Tool</h2>
-            <p>Generate Official Appeal Emails to Unban WhatsApp Numbers Fast.</p>
-            <button class="action-btn" onclick="openTool('unbanTool')">OPEN TOOL →</button>
+        <!-- SEPARATE TOOL DASHBOARD 3: Live Camera & Image QR Scanner -->
+        <div id="qrScannerTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📷 Live & File QR Scanner</h3>
+                <p>Scan using live camera feed or upload a photo.</p>
+                <button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
+                <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-red);" autoplay></video>
+                <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
+                <div id="qrScanResult" class="res-output" style="display:none;"></div>
+            </div>
         </div>
 
-        <!-- Tool 3 Card -->
-        <div class="card">
-            <h2>🔳 Custom Green QR Generator</h2>
-            <p>Create Custom Green QR Codes for URLs and Text.</p>
-            <button class="action-btn" onclick="openTool('qrTool')">OPEN GENERATOR →</button>
+        <!-- SEPARATE TOOL DASHBOARD 4: Custom Barcode Maker -->
+        <div id="barcodeTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🏷️ Barcode Maker</h3>
+                <p>Generate barcode for numbers or text.</p>
+                <input type="text" id="bcText" placeholder="Enter text or number...">
+                <label style="font-size:0.8rem; color:#ff335f;">Barcode Color:</label>
+                <input type="color" id="bcColor" value="#ff073a">
+                <button class="btn" onclick="genBarcode()">Generate Barcode</button>
+                <div id="bcResult" class="res-output" style="display:none;"></div>
+            </div>
         </div>
 
-        <!-- Tool 4 Card -->
-        <div class="card">
-            <h2>🔐 Custom Password Generator</h2>
-            <p>Generate Strong Custom Passwords with Prefix Options.</p>
-            <button class="action-btn" onclick="openTool('passTool')">OPEN GENERATOR →</button>
+        <!-- SEPARATE TOOL DASHBOARD 5: Password Generator -->
+        <div id="passTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>Password Generator</h3>
+                <p>Build custom secure passwords with prefixes.</p>
+                <input type="text" id="passPrefix" value="Dilshan#" placeholder="Prefix (e.g. Dilshan#)">
+                <input type="number" id="passLen" value="12" min="6" max="32">
+                <input type="text" id="passOut" readonly placeholder="Result Password">
+                <button class="btn" onclick="genCustomPass()">Generate Password</button>
+                <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#2a050b; color:#fff;">📋 Copy Password</button>
+            </div>
+        </div>
+
+        <!-- SEPARATE TOOL DASHBOARD 6: TikTok Downloader -->
+        <div id="dlTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🎵 Media / TikTok Downloader</h3>
+                <p>Paste link to download videos or image slides.</p>
+                <input type="text" id="ttUrl" placeholder="Paste TikTok Link here...">
+                <button class="btn" onclick="fetchTikTokMedia()">Download Video / Photos</button>
+                <div id="ttResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- SEPARATE TOOL DASHBOARD 7: WhatsApp URL Generator -->
+        <div id="urlTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>WhatsApp URL Generator</h3>
+                <p>Create direct chat link for phone numbers.</p>
+                <input type="text" id="waNum" placeholder="WhatsApp Number (947X...)">
+                <textarea id="waMsg" placeholder="Custom Pre-filled Message"></textarea>
+                <button class="btn" onclick="genWAUrl()">Generate Link</button>
+                <div id="waUrlOut" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- SEPARATE TOOL DASHBOARD 8: Group Link QR Tool -->
+        <div id="groupQrTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>Group Link QR Tool</h3>
+                <p>Convert group invite links into downloadable QR.</p>
+                <input type="text" id="grpUrl" placeholder="https://chat.whatsapp.com/...">
+                <button class="btn" onclick="genGroupQR()">Generate Group QR</button>
+                <div id="grpQrOut" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- SEPARATE TOOL DASHBOARD 9: Catalogue Splitter -->
+        <div id="splitTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>Catalogue Splitter</h3>
+                <p>Split images into 6 downloadable grid tiles.</p>
+                <input type="file" id="splitInput" accept="image/*">
+                <button class="btn" onclick="splitCatalogImage()">Split & Download Image</button>
+                <div id="splitOut" class="res-output" style="display:none;"></div>
+            </div>
         </div>
 
     </div>
 
-    <!-- SEPARATE TOOL DASHBOARD 1: TikTok Downloader -->
-    <div class="tool-dashboard" id="tiktokTool">
-        <button class="back-btn" onclick="closeTool()">← BACK TO DASHBOARD</button>
-        <div class="card">
-            <h2>📥 TikTok Video & Photo Downloader</h2>
-            <p>Paste your link below to download high quality content.</p>
-            <input type="text" id="tiktokUrl" placeholder="Paste TikTok Link here...">
-            <button class="action-btn" onclick="fetchTikTokMedia()">Download Media</button>
-            <div class="result-box" id="tiktokResult"></div>
+    <div class="floating-audio">
+        <span>🎵 REVENGE</span>
+        <audio controls loop preload="auto">
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-red); border-bottom: none;">
+        <div class="marquee-content">
+            POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026 •
         </div>
     </div>
 
-    <!-- SEPARATE TOOL DASHBOARD 2: WhatsApp Unban Tool -->
-    <div class="tool-dashboard" id="unbanTool">
-        <button class="back-btn" onclick="closeTool()">← BACK TO DASHBOARD</button>
-        <div class="card">
-            <h2>🔓 WhatsApp Unban Appeal Tool</h2>
-            <p>Enter banned number details to auto-generate support email.</p>
-            <input type="text" id="bannedNum" placeholder="Banned Phone Number (+947...)">
-            <input type="email" id="userEmail" placeholder="Your Contact Email">
-            <select id="appealReason">
-                <option value="standard">Standard Appeal (Unban Request)</option>
-                <option value="mistake">System Error / Number banned by mistake</option>
-            </select>
-            <button class="action-btn" onclick="generateAppeal()">Generate & Send Email</button>
-            <div class="result-box" id="appealResult"></div>
-        </div>
-    </div>
-
-    <!-- SEPARATE TOOL DASHBOARD 3: QR Generator -->
-    <div class="tool-dashboard" id="qrTool">
-        <button class="back-btn" onclick="closeTool()">← BACK TO DASHBOARD</button>
-        <div class="card">
-            <h2>🔳 Custom Green QR Generator</h2>
-            <p>Generate downloadable QR code for any link.</p>
-            <input type="text" id="qrText" placeholder="Enter URL or Text...">
-            <button class="action-btn" onclick="generateQR()">Generate QR Code</button>
-            <div class="result-box" id="qrResult"></div>
-        </div>
-    </div>
-
-    <!-- SEPARATE TOOL DASHBOARD 4: Password Generator -->
-    <div class="tool-dashboard" id="passTool">
-        <button class="back-btn" onclick="closeTool()">← BACK TO DASHBOARD</button>
-        <div class="card">
-            <h2>🔐 Custom Password Generator</h2>
-            <p>Build secure randomized passwords.</p>
-            <input type="text" id="passPrefix" placeholder="Custom Prefix (e.g., Dilshan#)">
-            <input type="number" id="passLength" value="12" min="6" max="32">
-            <button class="action-btn" onclick="generatePassword()">Generate Password</button>
-            <div class="result-box" id="passResult"></div>
-        </div>
-    </div>
-
-    <footer>
-        © Powered by Dilshan
-    </footer>
+    <footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
 
     <script>
-        // Separate Tool Dashboard Switching Logic
-        function openTool(toolId) {
-            document.getElementById('mainDashboard').style.display = 'none';
-            document.querySelectorAll('.tool-dashboard').forEach(el => el.style.display = 'none');
-            document.getElementById(toolId).style.display = 'flex';
+        // Dedicated Tool Dashboard Routing Logic
+        function openToolDashboard(toolId) {
+            document.getElementById('mainHubDashboard').style.display = 'none';
+            document.querySelectorAll('.tool-dashboard-view').forEach(view => view.style.display = 'none');
+            document.getElementById(toolId).style.display = 'block';
             window.scrollTo(0, 0);
         }
 
-        function closeTool() {
-            document.querySelectorAll('.tool-dashboard').forEach(el => el.style.display = 'none');
-            document.getElementById('mainDashboard').style.display = 'flex';
+        function closeToolDashboard() {
+            document.querySelectorAll('.tool-dashboard-view').forEach(view => view.style.display = 'none');
+            document.getElementById('mainHubDashboard').style.display = 'block';
             window.scrollTo(0, 0);
         }
 
-        // Music Control Logic
-        const bgMusic = document.getElementById('bgMusic');
-        const musicToggleBtn = document.getElementById('musicToggleBtn');
-        let isPlaying = false;
+        // Live Uptime Counter
+        function updateUptime() {
+            let start = new Date("2026-11-07T08:30:00");
+            let now = new Date();
+            let diff = now - start;
+            if(diff < 0) diff = 0;
 
-        function toggleMusic() {
-            if (!isPlaying) {
-                bgMusic.play().then(() => {
-                    isPlaying = true;
-                    musicToggleBtn.textContent = "⏸ Pause Music";
-                }).catch(() => {
-                    alert("සංගීතය වාදනය කිරීමට පිටුව මත ක්ලික් කරන්න.");
-                });
-            } else {
-                bgMusic.pause();
-                isPlaying = false;
-                musicToggleBtn.textContent = "🎵 Play Music";
-            }
+            let years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            let months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+            let days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('upYears').innerText = years;
+            document.getElementById('upMonths').innerText = months;
+            document.getElementById('upDays').innerText = days;
+            document.getElementById('upHours').innerText = hours;
+            document.getElementById('upMins').innerText = mins;
+            document.getElementById('upSecs').innerText = secs;
+        }
+        setInterval(updateUptime, 1000);
+        updateUptime();
+
+        function clearResult(id) {
+            let resDiv = document.getElementById(id);
+            resDiv.innerHTML = "";
+            resDiv.style.display = "none";
         }
 
-        // Tool Functions
-        function fetchTikTokMedia() {
-            const url = document.getElementById('tiktokUrl').value.trim();
-            const res = document.getElementById('tiktokResult');
-            if(!url) { res.innerHTML = "<span style='color:#ff4444;'>ලින්ක් එකක් දෙන්න!</span>"; return; }
-            res.innerHTML = "🔍 දත්ත සකස් කරමින් පවතී...";
-            setTimeout(() => {
-                res.innerHTML = `
-                    <div style="color:var(--neon-green); margin-bottom:8px;">සාර්ථකයි! ඩවුන්ලෝඩ් කරන්න:</div>
-                    <div style="display:flex; gap:10px;">
-                        <a href="#" class="btn-secondary">📥 Video (No WM)</a>
-                        <a href="#" class="btn-secondary">🖼️ Photos / Slides</a>
-                    </div>
-                `;
-            }, 1000);
-        }
-
-        function generateAppeal() {
-            const num = document.getElementById('bannedNum').value.trim();
-            if(!num) return;
-            const mailto = `mailto:support@whatsapp.com?subject=Unban Request for ${num}&body=Hello Support, My number ${num} was banned by mistake. Please restore it.`;
-            document.getElementById('appealResult').innerHTML = `<a href="${mailto}" class="btn-secondary" style="width:100%;">✉️ Mail App හරහා යවන්න</a>`;
-        }
-
-        function generateQR() {
-            const text = document.getElementById('qrText').value.trim();
+        function copyToClipboard(text) {
             if(!text) return;
-            const url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(text)}`;
-            document.getElementById('qrResult').innerHTML = `<img src="${url}" style="border-radius:8px; margin-top:8px;"><br><a href="${url}" target="_blank" class="btn-secondary" style="margin-top:8px;">Download QR</a>`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Copied to Clipboard!");
+            }).catch(() => {
+                let txtArea = document.createElement("textarea");
+                txtArea.value = text;
+                document.body.appendChild(txtArea);
+                txtArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(txtArea);
+                alert("Copied to Clipboard!");
+            });
         }
 
-        function generatePassword() {
-            const prefix = document.getElementById('passPrefix').value.trim();
-            const len = parseInt(document.getElementById('passLength').value) || 12;
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-            let pass = prefix;
-            for (let i = 0; i < (len - prefix.length); i++) {
-                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+        function directDownloadBlob(url, filename) {
+            fetch(url)
+                .then(res => res.blob())
+                .then(blob => {
+                    let a = document.createElement('a');
+                    let blobUrl = window.URL.createObjectURL(blob);
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(() => alert("Direct download failed. Please try again."));
+        }
+
+        function genCustomPass() {
+            let pref = document.getElementById('passPrefix').value;
+            let len = parseInt(document.getElementById('passLen').value) || 12;
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+            let res = pref;
+            for(let i=0; i < (len - pref.length); i++) {
+                res += chars.charAt(Math.floor(Math.random() * chars.length));
             }
-            document.getElementById('passResult').innerHTML = `<strong style="color:var(--neon-green); font-size:1.1rem;">${pass}</strong>`;
+            document.getElementById('passOut').value = res;
+        }
+
+        function sendUnban() {
+            let num = document.getElementById('unbanNum').value;
+            let email = document.getElementById('unbanEmail').value;
+            let reason = document.getElementById('unbanReason').value;
+            if(!num) { alert("Please enter phone number!"); return; }
+            let body = `Hello WhatsApp Support,\n\nMy number ${num} was banned. Reason: ${reason}.\nPlease review my account.\n\nThank you,\n${email}`;
+            window.location.href = `mailto:support@whatsapp.com?subject=Unban Appeal for ${num}&body=${encodeURIComponent(body)}`;
+        }
+
+        function genQR() {
+            let txt = document.getElementById('qrText').value;
+            let col = document.getElementById('qrColor').value.replace('#','');
+            let resDiv = document.getElementById('qrResult');
+            if(!txt) { alert("Enter URL or Text!"); return; }
+            resDiv.style.display = "block";
+            let qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(txt)}&color=${col}`;
+            resDiv.innerHTML = `
+                <img src="${qrImgUrl}" id="qrImg"><br>
+                <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'QR_Code.png')">⬇️ Download QR Image</button>
+                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#2a050b; color:#fff;">📋 Copy Content/Link</button>
+                <button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
+            `;
+        }
+
+        function scanQRImage(event) {
+            let file = event.target.files[0];
+            let resDiv = document.getElementById('qrScanResult');
+            if(!file) return;
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Scanning image...";
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = new Image();
+                img.onload = function() {
+                    let cvs = document.createElement('canvas');
+                    let ctx = cvs.getContext('2d');
+                    cvs.width = img.width; cvs.height = img.height;
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let code = jsQR(imgData.data, imgData.width, imgData.height);
+                    if(code) {
+                        resDiv.innerHTML = `
+                            <b style="color:#00ff66;">Scanned Result:</b><br>
+                            <p style="color:#ff335f; margin:8px 0;">${code.data}</p>
+                            <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Result</button>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
+                        `;
+                    } else {
+                        resDiv.innerHTML = `
+                            <span style="color:red;">No valid QR code detected in image!</span>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete</button>
+                        `;
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function startCameraScan() {
+            let video = document.getElementById('camVideo');
+            let resDiv = document.getElementById('qrScanResult');
+            video.style.display = "block";
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Opening Camera...";
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true);
+                video.play();
+                requestAnimationFrame(tickCameraScan);
+            }).catch(function() {
+                resDiv.innerHTML = "<span style='color:red;'>Unable to access camera!</span>";
+            });
+
+            function tickCameraScan() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    let cvs = document.createElement('canvas');
+                    cvs.width = video.videoWidth;
+                    cvs.height = video.videoHeight;
+                    let ctx = cvs.getContext('2d');
+                    ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let code = jsQR(imgData.data, imgData.width, imgData.height);
+                    if (code) {
+                        resDiv.innerHTML = `
+                            <b style="color:#00ff66;">Scanned Result:</b><br>
+                            <p style="color:#ff335f; margin:8px 0;">${code.data}</p>
+                            <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Link</button>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
+                        `;
+                        return;
+                    }
+                }
+                requestAnimationFrame(tickCameraScan);
+            }
+        }
+
+        function genBarcode() {
+            let txt = document.getElementById('bcText').value;
+            let col = document.getElementById('bcColor').value;
+            let resDiv = document.getElementById('bcResult');
+            if(!txt) { alert("Please enter text or numbers!"); return; }
+            resDiv.style.display = "block";
+            resDiv.innerHTML = `
+                <svg id="bcSvg"></svg><br>
+                <button class="btn" id="bcDlBtn">⬇️ Download Barcode Image</button>
+                <button class="btn btn-delete" onclick="clearResult('bcResult')">🗑️ Delete Result</button>
+            `;
+            try {
+                JsBarcode("#bcSvg", txt, {
+                    format: "CODE128",
+                    lineColor: col,
+                    background: "#000000",
+                    width: 2, height: 70, displayValue: true
+                });
+                
+                document.getElementById('bcDlBtn').onclick = function() {
+                    let svg = document.getElementById('bcSvg');
+                    let xml = new XMLSerializer().serializeToString(svg);
+                    let svg64 = btoa(xml);
+                    let image64 = 'data:image/svg+xml;base64,' + svg64;
+                    directDownloadBlob(image64, 'Barcode.svg');
+                };
+            } catch(e) {
+                resDiv.innerHTML = '<span style="color:red;">Invalid code structure!</span>';
+            }
+        }
+
+        async function fetchTikTokMedia() {
+            let url = document.getElementById('ttUrl').value;
+            let resDiv = document.getElementById('ttResult');
+            if(!url) { alert("Please paste a TikTok Link!"); return; }
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Connecting to TikTok API...";
+
+            try {
+                let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
+                let data = await resp.json();
+                if(data.code === 0) {
+                    let html = `<p style="color:#ff335f; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
+                    if(data.data.images && data.data.images.length > 0) {
+                        html += `<p style="color:#00ff66; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
+                        data.data.images.forEach((img, idx) => {
+                            html += `
+                                <div style="margin: 10px 0;">
+                                    <img src="${img}" style="width:100px; border-radius:6px;"><br>
+                                    <button class="btn" onclick="directDownloadBlob('${img}', 'TikTok_Photo_${idx+1}.jpg')">⬇️ Download Photo ${idx+1}</button>
+                                </div>
+                            `;
+                        });
+                    } else if(data.data.play) {
+                        html += `<video controls src="${data.data.play}" style="width:100%; border-radius:8px; margin: 8px 0;"></video>`;
+                        html += `<button class="btn" onclick="directDownloadBlob('${data.data.play}', 'TikTok_Video.mp4')">⬇️ Download Video File</button>`;
+                    }
+                    html += `<button class="btn btn-delete" onclick="clearResult('ttResult')">🗑️ Delete Results</button>`;
+                    resDiv.innerHTML = html;
+                } else {
+                    resDiv.innerHTML = `<span style="color:red;">Failed to retrieve video. Ensure the TikTok link is public.</span>`;
+                }
+            } catch(err) {
+                resDiv.innerHTML = `<span style="color:red;">Error connecting to TikTok Downloader API.</span>`;
+            }
+        }
+
+        function genWAUrl() {
+            let num = document.getElementById('waNum').value;
+            let msg = document.getElementById('waMsg').value;
+            let outDiv = document.getElementById('waUrlOut');
+            if(!num) { alert("Enter phone number!"); return; }
+            let link = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+            outDiv.style.display = "block";
+            outDiv.innerHTML = `
+                <a href="${link}" target="_blank" class="btn" style="margin-bottom:8px; display:block; text-decoration:none;">💬 Send WhatsApp Message</a>
+                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#2a050b; color:#fff;">📋 Copy WhatsApp Link</button>
+                <button class="btn btn-delete" onclick="clearResult('waUrlOut')">🗑️ Delete Result</button>
+            `;
+        }
+
+        function genGroupQR() {
+            let url = document.getElementById('grpUrl').value;
+            let resDiv = document.getElementById('grpQrOut');
+            if(!url) { alert("Enter Group Link!"); return; }
+            resDiv.style.display = "block";
+            let qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`;
+            resDiv.innerHTML = `
+                <img src="${qrImgUrl}"><br>
+                <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
+                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#2a050b; color:#fff;">📋 Copy Group Link</button>
+                <button class="btn btn-delete" onclick="clearResult('grpQrOut')">🗑️ Delete Result</button>
+            `;
+        }
+
+        function splitCatalogImage() {
+            let file = document.getElementById('splitInput').files[0];
+            let out = document.getElementById('splitOut');
+            if(!file) { alert("Select an image first!"); return; }
+            out.style.display = "block";
+            out.innerHTML = "Processing and splitting image...";
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = new Image();
+                img.onload = function() {
+                    let tileW = img.width / 3;
+                    let tileH = img.height / 2;
+                    out.innerHTML = "<p style='color:#ff335f; margin-bottom:10px;'>Split into 6 Parts:</p>";
+                    for(let r=0; r<2; r++) {
+                        for(let c=0; c<3; c++) {
+                            let cvs = document.createElement('canvas');
+                            cvs.width = tileW; cvs.height = tileH;
+                            let ctx = cvs.getContext('2d');
+                            ctx.drawImage(img, c*tileW, r*tileH, tileW, tileH, 0, 0, tileW, tileH);
+                            let imgDataUrl = cvs.toDataURL('image/png');
+                            
+                            let tileDiv = document.createElement('div');
+                            tileDiv.style.margin = "10px 0";
+                            tileDiv.innerHTML = `
+                                <img src="${imgDataUrl}" style="width:120px;"><br>
+                                <button class="btn" onclick="directDownloadBlob('${imgDataUrl}', 'Grid_Tile_${r*3 + c + 1}.png')">⬇️ Download Tile ${r*3 + c + 1}</button>
+                            `;
+                            out.appendChild(tileDiv);
+                        }
+                    }
+                    let delBtn = document.createElement('button');
+                    delBtn.className = "btn btn-delete";
+                    delBtn.innerText = "🗑️ Delete All Tiles";
+                    delBtn.onclick = function() { clearResult('splitOut'); };
+                    out.appendChild(delBtn);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     </script>
 </body>
