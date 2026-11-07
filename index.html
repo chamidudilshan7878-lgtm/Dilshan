@@ -1,630 +1,682 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dilshan All In One - Cyber Hub</title>
-<style>
-:root {
---bg-color: #030308;
---card-bg: rgba(10, 10, 20, 0.85);
---neon-primary: #00f3ff;
---neon-purple: #b026ff;
---neon-pink: #ff007f;
---text-color: #f0f0f0;
---border-color: rgba(0, 243, 255, 0.4);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dilshan All In One - Cyber Hub</title>
+    <style>
+        :root {
+            --bg-color: #030308;
+            --card-bg: rgba(12, 8, 20, 0.9);
+            --neon-purple: #b026ff;
+            --purple-dark: #6a0dad;
+            --purple-glow: rgba(176, 38, 255, 0.5);
+            --text-color: #f0f0f0;
+            --border-color: rgba(176, 38, 255, 0.4);
+        }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
 
-/* Continuous Smooth Marquee */
-.marquee {
-background: linear-gradient(90deg, #050014, #1a0033, #050014);
-color: var(--neon-primary); padding: 10px 0; white-space: nowrap; overflow: hidden;
-border-bottom: 2px solid var(--neon-purple); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
-box-shadow: 0 0 15px rgba(176, 38, 255, 0.4);
-}
-.marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
-@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .marquee {
+            background: linear-gradient(90deg, #120024, #2a004f, #120024);
+            color: #e0b0ff; padding: 10px 0; white-space: nowrap; overflow: hidden;
+            border-bottom: 2px solid var(--neon-purple); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--purple-glow);
+        }
+        .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-.container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
 
-header {
-text-align: center; padding: 30px 20px; background: var(--card-bg);
-border: 1px solid var(--border-color); border-radius: 18px;
-box-shadow: 0 0 25px rgba(0, 243, 255, 0.2); backdrop-filter: blur(12px); margin-bottom: 25px;
-}
-header h1 {
-color: var(--neon-primary); font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-primary);
-text-transform: uppercase; letter-spacing: 1px;
-}
-header p { color: #b085f5; margin-top: 5px; font-size: 1.05rem; }
+        header {
+            text-align: center; padding: 30px 20px; background: var(--card-bg);
+            border: 1px solid var(--border-color); border-radius: 18px;
+            box-shadow: 0 0 25px var(--purple-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
+        }
+        header h1 { 
+            color: #e0b0ff; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-purple); 
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        header p { color: #b892ff; margin-top: 5px; font-size: 1.05rem; }
 
-.section-title {
-color: var(--neon-primary); margin: 30px 0 15px 0; font-size: 1.4rem;
-border-left: 5px solid var(--neon-purple); padding-left: 12px; text-transform: uppercase;
-text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
-}
+        .section-title {
+            color: #e0b0ff; margin: 30px 0 15px 0; font-size: 1.4rem;
+            border-left: 5px solid var(--neon-purple); padding-left: 12px; text-transform: uppercase;
+            text-shadow: 0 0 10px var(--purple-glow);
+        }
 
-.grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
-.card {
-background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
-padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.8);
-}
-.card:hover { transform: translateY(-5px); border-color: var(--neon-purple); box-shadow: 0 0 20px rgba(176, 38, 255, 0.4); }
-.card h3 { color: var(--neon-primary); margin-bottom: 10px; font-size: 1.2rem; }
-.card p { color: #a59ad5; font-size: 0.9rem; margin-bottom: 15px; }
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
+            padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+        .card:hover { transform: translateY(-5px); border-color: #e0b0ff; box-shadow: 0 0 20px var(--purple-glow); }
+        .card h3 { color: #e0b0ff; margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #b892ff; font-size: 0.9rem; margin-bottom: 15px; }
 
-input, select, textarea {
-width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
-border: 1px solid var(--border-color); background: rgba(5, 5, 15, 0.9); color: #fff; outline: none; font-size: 0.95rem;
-}
-input:focus { border-color: var(--neon-primary); box-shadow: 0 0 10px var(--neon-primary); }
+        input, select, textarea {
+            width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
+            border: 1px solid var(--border-color); background: rgba(8, 3, 15, 0.9); color: #fff; outline: none; font-size: 0.95rem;
+        }
+        input:focus { border-color: #e0b0ff; box-shadow: 0 0 10px var(--neon-purple); }
 
-.btn {
-display: inline-block; text-align: center; text-decoration: none;
-width: 100%; padding: 12px; background: linear-gradient(45deg, var(--neon-purple), var(--neon-primary));
-border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer;
-transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
-}
-.btn:hover { box-shadow: 0 0 15px var(--neon-primary); color: #000; }
+        .btn {
+            display: inline-block; text-align: center; text-decoration: none;
+            width: 100%; padding: 12px; background: linear-gradient(45deg, var(--purple-dark), var(--neon-purple));
+            border: none; color: #fff; font-weight: bold; border-radius: 8px; cursor: pointer;
+            transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
+            box-shadow: 0 0 10px rgba(176, 38, 255, 0.3);
+        }
+        .btn:hover { box-shadow: 0 0 15px #e0b0ff; color: #fff; }
 
-.btn-delete {
-background: linear-gradient(45deg, #8b0000, #ff4d4d) !important;
-color: #fff !important;
-margin-top: 8px;
-}
-.btn-delete:hover { box-shadow: 0 0 15px #ff4d4d !important; }
+        .btn-delete {
+            background: linear-gradient(45deg, #8b0000, #ff4d4d) !important;
+            color: #fff !important;
+            margin-top: 8px;
+        }
+        .btn-delete:hover { box-shadow: 0 0 15px #ff4d4d !important; }
 
-.btn-telegram { background: linear-gradient(45deg, #0088cc, #24A1DE); color: #fff; }
-.btn-whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); color: #fff; }
+        .sub-tool { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
 
-.sub-tool { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
+        .terminal {
+            background: #020105; border: 1px solid var(--neon-purple); border-radius: 10px;
+            padding: 18px; font-family: 'Courier New', monospace; color: #e0b0ff; margin-top: 15px; font-size: 0.85rem; line-height: 1.5;
+            box-shadow: inset 0 0 15px rgba(176, 38, 255, 0.15);
+        }
 
-/* Cyber Terminal Box */
-.terminal {
-background: #020205; border: 1px solid var(--neon-primary); border-radius: 10px;
-padding: 18px; font-family: 'Courier New', monospace; color: var(--neon-primary); margin-top: 15px; font-size: 0.85rem; line-height: 1.5;
-box-shadow: inset 0 0 15px rgba(0, 243, 255, 0.15);
-}
-/* Uptime Grid */
-.uptime-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-.uptime-box { background: rgba(0, 243, 255, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
-.uptime-num { font-size: 1.5rem; font-weight: bold; color: var(--neon-primary); text-shadow: 0 0 10px var(--neon-primary); }
-.uptime-lbl { font-size: 0.75rem; color: #b085f5; text-transform: uppercase; margin-top: 4px; }
+        .uptime-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .uptime-box { background: rgba(176, 38, 255, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
+        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #e0b0ff; text-shadow: 0 0 10px var(--neon-purple); }
+        .uptime-lbl { font-size: 0.75rem; color: #b892ff; text-transform: uppercase; margin-top: 4px; }
 
-.video-box {
-position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
-border-radius: 15px; border: 2px solid var(--neon-primary);
-box-shadow: 0 0 20px rgba(0, 243, 255, 0.3); margin-bottom: 25px; background: #000;
-}
-.video-box video {
-position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-object-fit: cover; pointer-events: none;
-}
+        .video-box { 
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
+            border-radius: 15px; border: 2px solid var(--neon-purple); 
+            box-shadow: 0 0 20px var(--purple-glow); margin-bottom: 25px; background: #000;
+        }
+        .video-box video { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; pointer-events: none; 
+        }
 
-.floating-audio {
-position: fixed; bottom: 15px; right: 15px; z-index: 999;
-background: rgba(10, 10, 20, 0.95); border: 2px solid var(--neon-primary);
-padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
-display: flex; align-items: center; gap: 10px;
-}
-.floating-audio span { color: var(--neon-primary); font-size: 0.82rem; font-weight: bold; }
-.floating-audio audio { height: 30px; width: 190px; outline: none; }
+        .floating-audio {
+            position: fixed; bottom: 15px; right: 15px; z-index: 999;
+            background: rgba(12, 8, 20, 0.95); border: 2px solid var(--neon-purple);
+            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--purple-glow);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .floating-audio span { color: #e0b0ff; font-size: 0.82rem; font-weight: bold; }
+        .floating-audio audio { height: 30px; width: 190px; outline: none; }
 
-.res-output {
-margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.7);
-border: 1px solid var(--neon-primary); border-radius: 8px; word-break: break-all;
-font-size: 0.88rem; text-align: center;
-}
-.res-output img, .res-output canvas, .res-output video {
-max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
-}
+        .res-output {
+            margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.7);
+            border: 1px solid var(--neon-purple); border-radius: 8px; word-break: break-all;
+            font-size: 0.88rem; text-align: center;
+        }
+        .res-output img, .res-output canvas, .res-output video {
+            max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
+        }
 
-footer { text-align: center; margin-top: 50px; color: #8a7abf; font-size: 0.85rem; }
-</style>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+        footer { text-align: center; margin-top: 50px; color: #b892ff; font-size: 0.85rem; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
 
-<div class="marquee">
-<div class="marquee-content">
-DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • LUXURY CYBER HUB • OWNER: DILSHAN •
-</div>
-</div>
+    <div class="marquee">
+        <div class="marquee-content">
+            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • LUXURY CYBER HUB • OWNER: DILSHAN •
+        </div>
+    </div>
 
-<div class="container">
+    <div class="container">
+        
+        <header>
+            <h1>DILSHAN ALL IN ONE</h1>
+            <p>Luxury Cybernetics & Utility Dashboard</p>
+        </header>
 
-<header>
-<h1>DILSHAN ALL IN ONE</h1>
-<p>Luxury Cybernetics & Utility Dashboard</p>
-</header>
+        <div class="video-box">
+            <video src="video.mp4" autoplay loop muted playsinline></video>
+        </div>
 
-<div class="video-box">
-<video src="video.mp4" autoplay loop muted playsinline></video>
-</div>
+        <!-- System Uptime Card -->
+        <div class="card" style="margin-bottom: 25px;">
+            <h3>🟢 SYSTEM UPTIME • LIVE</h3>
+            <div class="uptime-grid">
+                <div class="uptime-box">
+                    <div class="uptime-num" id="upYears">0</div>
+                    <div class="uptime-lbl">Years</div>
+                </div>
+                <div class="uptime-box">
+                    <div class="uptime-num" id="upMonths">0</div>
+                    <div class="uptime-lbl">Months</div>
+                </div>
+                <div class="uptime-box">
+                    <div class="uptime-num" id="upDays">0</div>
+                    <div class="uptime-lbl">Days</div>
+                </div>
+                <div class="uptime-box">
+                    <div class="uptime-num" id="upHours">0</div>
+                    <div class="uptime-lbl">Hours</div>
+                </div>
+                <div class="uptime-box">
+                    <div class="uptime-num" id="upMins">0</div>
+                    <div class="uptime-lbl">Minutes</div>
+                </div>
+                <div class="uptime-box">
+                    <div class="uptime-num" id="upSecs">0</div>
+                    <div class="uptime-lbl">Seconds</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 0.75rem; color: #b892ff; margin-top: 10px;">SYSTEM ONLINE SINCE 19 NOVEMBER 2025</p>
+        </div>
 
-<!-- System Uptime Card -->
-<div class="card" style="margin-bottom: 25px;">
-<h3>🟢 SYSTEM UPTIME • LIVE</h3>
-<div class="uptime-grid">
-<div class="uptime-box">
-<div class="uptime-num" id="upYears">0</div>
-<div class="uptime-lbl">Years</div>
-</div>
-<div class="uptime-box">
-<div class="uptime-num" id="upMonths">0</div>
-<div class="uptime-lbl">Months</div>
-</div>
-<div class="uptime-box">
-<div class="uptime-num" id="upDays">0</div>
-<div class="uptime-lbl">Days</div>
-</div>
-<div class="uptime-box">
-<div class="uptime-num" id="upHours">0</div>
-<div class="uptime-lbl">Hours</div>
-</div>
-<div class="uptime-box">
-<div class="uptime-num" id="upMins">0</div>
-<div class="uptime-lbl">Minutes</div>
-</div>
-<div class="uptime-box">
-<div class="uptime-num" id="upSecs">0</div>
-<div class="uptime-lbl">Seconds</div>
-</div>
-</div>
-<p style="text-align: center; font-size: 0.75rem; color: #b085f5; margin-top: 10px;">SYSTEM ONLINE SINCE 19 NOVEMBER 2025</p>
-</div>
+        <div class="section-title">👑 OWNER CONTACT</div>
+        <div class="grid-cards">
+            <div class="card">
+                <h3>Contact Dilshan</h3>
+                <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
+                <a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn" style="margin-bottom: 12px;">
+                    ✈️ Telegram (@dilshan7878)
+                </a>
+                <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn">
+                    💬 WhatsApp Inbox
+                </a>
+            </div>
+        </div>
 
-<div class="section-title">👑 OWNER CONTACT</div>
-<div class="grid-cards">
-<div class="card">
-<h3>Contact Dilshan</h3>
-<p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
-<a href="https://t.me/dilshan7878?text=Hi" target="_blank" class="btn btn-telegram" style="margin-bottom: 12px;">
-✈️ Telegram 
-</a>
-<a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn btn-whatsapp">
-💬 WhatsApp 
-</a>
-</div>
-</div>
+        <div class="section-title">🛠️ Utility Tools & Generators</div>
+        <div class="grid-cards">
+            
+            <!-- WhatsApp Unban Tool -->
+            <div class="card">
+                <h3>WhatsApp Unban Tool</h3>
+                <p>Generate Official Appeal Emails Fast</p>
+                <button class="btn" onclick="toggleTool('unbanTool')">Open Tool</button>
+                <div id="unbanTool" class="sub-tool">
+                    <input type="text" id="unbanNum" placeholder="Banned Number (+947X...)">
+                    <input type="email" id="unbanEmail" placeholder="Your Contact Email">
+                    <select id="unbanReason">
+                        <option>Standard Appeal (Unban Request)</option>
+                        <option>Spam Ban Appeal</option>
+                        <option>Account Hacked Appeal</option>
+                    </select>
+                    <button class="btn" onclick="sendUnban()">Generate & Send Email</button>
+                </div>
+            </div>
 
-<div class="section-title">🛠️ Utility Tools & Generators</div>
-<div class="grid-cards">
+            <!-- Custom QR Generator -->
+            <div class="card">
+                <h3>Custom QR Generator</h3>
+                <p>Create Custom Color QR Codes</p>
+                <button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
+                <div id="qrTool" class="sub-tool">
+                    <input type="text" id="qrText" placeholder="Enter URL or Text">
+                    <label style="font-size:0.8rem; color:#e0b0ff;">QR Color:</label>
+                    <input type="color" id="qrColor" value="#b026ff">
+                    <button class="btn" onclick="genQR()">Generate QR</button>
+                    <div id="qrResult" class="res-output" style="display:none;"></div>
+                </div>
+            </div>
 
-<!-- WhatsApp Unban Tool -->
-<div class="card">
-<h3>WhatsApp Unban Tool</h3>
-<p>Generate Official Appeal Emails Fast</p>
-<button class="btn" onclick="toggleTool('unbanTool')">Open Tool</button>
-<div id="unbanTool" class="sub-tool">
-<input type="text" id="unbanNum" placeholder="Banned Number (+947X...)">
-<input type="email" id="unbanEmail" placeholder="Your Contact Email">
-<select id="unbanReason">
-<option>Standard Appeal (Unban Request)</option>
-<option>Spam Ban Appeal</option>
-<option>Account Hacked Appeal</option>
-</select>
-<button class="btn" onclick="sendUnban()">Generate & Send Email</button>
-</div>
-</div>
+            <!-- Live Camera & Image QR Scanner -->
+            <div class="card">
+                <h3>📷 Live & File QR Scanner</h3>
+                <p>Scan QR from Camera or Image File</p>
+                <button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
+                <div id="qrScannerTool" class="sub-tool">
+                    <button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
+                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-purple);" autoplay></video>
+                    <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
+                    <div id="qrScanResult" class="res-output" style="display:none;"></div>
+                </div>
+            </div>
 
-<!-- Custom QR Generator -->
-<div class="card">
-<h3>Custom QR Generator</h3>
-<p>Create Custom Color QR Codes</p>
-<button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
-<div id="qrTool" class="sub-tool">
-<input type="text" id="qrText" placeholder="Enter URL or Text">
-<label style="font-size:0.8rem; color:var(--neon-primary);">QR Color:</label>
-<input type="color" id="qrColor" value="#00f3ff">
-<button class="btn" onclick="genQR()">Generate QR</button>
-<div id="qrResult" class="res-output" style="display:none;"></div>
-</div>
-</div>
+            <!-- Custom Color Barcode Maker -->
+            <div class="card">
+                <h3>🏷️ Barcode Maker</h3>
+                <p>Generate Custom Colored Barcodes</p>
+                <button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
+                <div id="barcodeTool" class="sub-tool">
+                    <input type="text" id="bcText" placeholder="Enter text or number...">
+                    <label style="font-size:0.8rem; color:#e0b0ff;">Barcode Color:</label>
+                    <input type="color" id="bcColor" value="#b026ff">
+                    <button class="btn" onclick="genBarcode()">Generate Barcode</button>
+                    <div id="bcResult" class="res-output" style="display:none;"></div>
+                </div>
+            </div>
 
-<!-- Live Camera & Image QR Scanner -->
-<div class="card">
-<h3>📷 Live & File QR Scanner</h3>
-<p>Scan QR from Camera or Image File</p>
-<button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
-<div id="qrScannerTool" class="sub-tool">
-<button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
-<video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-primary);" autoplay></video>
-<input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
-<div id="qrScanResult" class="res-output" style="display:none;"></div>
-</div>
-</div>
+            <!-- Password Generator -->
+            <div class="card">
+                <h3>Password Generator</h3>
+                <p>Generate Strong Custom Passwords</p>
+                <button class="btn" onclick="toggleTool('passTool')">Open Generator</button>
+                <div id="passTool" class="sub-tool">
+                    <input type="text" id="passPrefix" value="Dilshan#" placeholder="Prefix (e.g. Dilshan#)">
+                    <input type="number" id="passLen" value="12" min="6" max="32">
+                    <input type="text" id="passOut" readonly placeholder="Result Password">
+                    <button class="btn" onclick="genCustomPass()">Generate Password</button>
+                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#221035; color:#fff;">📋 Copy Password</button>
+                </div>
+            </div>
 
-<!-- Custom Color Barcode Maker -->
-<div class="card">
-<h3>🏷️ Barcode Maker</h3>
-<p>Generate Custom Colored Barcodes</p>
-<button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
-<div id="barcodeTool" class="sub-tool">
-<input type="text" id="bcText" placeholder="Enter text or number...">
-<label style="font-size:0.8rem; color:var(--neon-primary);">Barcode Color:</label>
-<input type="color" id="bcColor" value="#00f3ff">
-<button class="btn" onclick="genBarcode()">Generate Barcode</button>
-<div id="bcResult" class="res-output" style="display:none;"></div>
-</div>
-</div>
+            <!-- TikTok Downloader -->
+            <div class="card">
+                <h3>🎵 Media / TikTok Downloader</h3>
+                <p>Direct Download Videos & Photos</p>
+                <button class="btn" onclick="toggleTool('dlTool')">Open Downloader</button>
+                <div id="dlTool" class="sub-tool">
+                    <input type="text" id="ttUrl" placeholder="Paste TikTok Link here...">
+                    <button class="btn" onclick="fetchTikTokMedia()">Download Video / Photos</button>
+                    <div id="ttResult" class="res-output" style="display:none;"></div>
+                </div>
+            </div>
 
-<!-- Password Generator -->
-<div class="card">
-<h3>Password Generator</h3>
-<p>Generate Strong Custom Passwords</p>
-<button class="btn" onclick="toggleTool('passTool')">Open Generator</button>
-<div id="passTool" class="sub-tool">
-<input type="text" id="passPrefix" value="Dilshan#" placeholder="Prefix (e.g. Dilshan#)">
-<input type="number" id="passLen" value="12" min="6" max="32">
-<input type="text" id="passOut" readonly placeholder="Result Password">
-<button class="btn" onclick="genCustomPass()">Generate Password</button>
-<button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#333; color:#fff;">📋 Copy Password</button>
-</div>
-</div>
+            <!-- WhatsApp URL Generator (Hidden Number, Clean Button Style) -->
+            <div class="card">
+                <h3>WhatsApp URL Generator</h3>
+                <p>Direct Message Links for Phone Numbers</p>
+                <button class="btn" onclick="toggleTool('urlTool')">Open Tool</button>
+                <div id="urlTool" class="sub-tool">
+                    <input type="text" id="waNum" placeholder="WhatsApp Number (947X...)">
+                    <textarea id="waMsg" placeholder="Custom Pre-filled Message"></textarea>
+                    <button class="btn" onclick="genWAUrl()">Generate Link</button>
+                    <div id="waUrlOut" class="res-output" style="display:none;"></div>
+                </div>
+            </div>
 
-<!-- TikTok Downloader -->
-<div class="card">
-<h3>🎵 Media / TikTok Downloader</h3>
-<p>Direct Download Videos & Photos</p>
-<button class="btn" onclick="toggleTool('dlTool')">Open Downloader</button>
-<div id="dlTool" class="sub-tool">
-<input type="text" id="ttUrl" placeholder="Paste TikTok Link here...">
-<button class="btn" onclick="fetchTikTokMedia()">Download Video / Photos</button>
-<div id="ttResult" class="res-output" style="display:none;"></div>
-</div>
-</div>
+            <!-- Group Link QR Generator -->
+            <div class="card">
+                <h3>Group Link QR Tool</h3>
+                <p>Convert WhatsApp Group Links to QR</p>
+                <button class="btn" onclick="toggleTool('groupQrTool')">Open Tool</button>
+                <div id="groupQrTool" class="sub-tool">
+                    <input type="text" id="grpUrl" placeholder="https://chat.whatsapp.com/...">
+                    <button class="btn" onclick="genGroupQR()">Generate Group QR</button>
+                    <div id="grpQrOut" class="res-output" style="display:none;"></div>
+                </div>
+            </div>
 
-<!-- WhatsApp URL Generator -->
-<div class="card">
-<h3>WhatsApp URL Generator</h3>
-<p>Direct Message Links for Phone Numbers</p>
-<button class="btn" onclick="toggleTool('urlTool')">Open Tool</button>
-<div id="urlTool" class="sub-tool">
-<input type="text" id="waNum" placeholder="WhatsApp Number (947X...)">
-<textarea id="waMsg" placeholder="Custom Pre-filled Message"></textarea>
-<button class="btn" onclick="genWAUrl()">Generate Link</button>
-<div id="waUrlOut" class="res-output" style="display:none;"></div>
-</div>
-</div>
+            <!-- Catalogue Splitter -->
+            <div class="card">
+                <h3>Catalogue Splitter</h3>
+                <p>Split Image into Grid Tiles</p>
+                <button class="btn" onclick="toggleTool('splitTool')">Open Tool</button>
+                <div id="splitTool" class="sub-tool">
+                    <input type="file" id="splitInput" accept="image/*">
+                    <button class="btn" onclick="splitCatalogImage()">Split & Download Image</button>
+                    <div id="splitOut" class="res-output" style="display:none;"></div>
+                </div>
+            </div>
 
-<!-- Group Link QR Generator -->
-<div class="card">
-<h3>Group Link QR Tool</h3>
-<p>Convert WhatsApp Group Links to QR</p>
-<button class="btn" onclick="toggleTool('groupQrTool')">Open Tool</button>
-<div id="groupQrTool" class="sub-tool">
-<input type="text" id="grpUrl" placeholder="https://chat.whatsapp.com/...">
-<button class="btn" onclick="genGroupQR()">Generate Group QR</button>
-<div id="grpQrOut" class="res-output" style="display:none;"></div>
-</div>
-</div>
+        </div>
 
-<!-- Catalogue Splitter -->
-<div class="card">
-<h3>Catalogue Splitter</h3>
-<p>Split Image into Grid Tiles</p>
-<button class="btn" onclick="toggleTool('splitTool')">Open Tool</button>
-<div id="splitTool" class="sub-tool">
-<input type="file" id="splitInput" accept="image/*">
-<button class="btn" onclick="splitCatalogImage()">Split & Download Image</button>
-<div id="splitOut" class="res-output" style="display:none;"></div>
-</div>
-</div>
+        <div class="section-title">💻 Developer Profile (DILSHAN DEV)</div>
+        <div class="card">
+            <h3>Visitor & System Scanner</h3>
+            <div class="terminal" id="terminalBox">
+                > whoami<br>
+                User: Dilshan Dev | System: Cyberpunk OS v3.0<br><br>
+                > scan --device<br>
+                <span id="visitorInfo">Analyzing hardware & browser specs...</span>
+            </div>
+        </div>
 
-</div>
+    </div>
 
-<div class="section-title">💻 Developer Profile (DILSHAN DEV)</div>
-<div class="card">
-<h3>Visitor & System Scanner</h3>
-<div class="terminal" id="terminalBox">
-> whoami<br>
-User: Dilshan Dev | System: Cyberpunk OS v3.0<br><br>
-> scan --device<br>
-Scanning your device... please wait...<br>
-<span id="visitorInfo">Loading network info...</span>
-</div>
-</div>
+    <div class="floating-audio">
+        <span>🎵 REVENGE</span>
+        <audio controls loop preload="auto">
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
-</div>
+    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-purple); border-bottom: none;">
+        <div class="marquee-content">
+            POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026 •
+        </div>
+    </div>
 
-<div class="floating-audio">
-<span>🎵 REVENGE</span>
-<audio controls loop preload="auto">
-<source src="song.mp3" type="audio/mpeg">
-</audio>
-</div>
+    <footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
 
-<div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-purple); border-bottom: none;">
-<div class="marquee-content">
-POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026 •
-</div>
-</div>
+    <script>
+        // Live Uptime Counter
+        function updateUptime() {
+            let start = new Date("2025-11-19T00:00:00");
+            let now = new Date();
+            let diff = now - start;
 
-<footer>© 2026 Dilshan All In One. Built for Luxury & Customization.</footer>
+            let years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            let months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+            let days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-<script>
-// Live Uptime Counter
-setInterval(() => {
-let start = new Date("2026-10-07T00:00:00");
-let now = new Date();
-let diff = now - start;
+            document.getElementById('upYears').innerText = years;
+            document.getElementById('upMonths').innerText = months;
+            document.getElementById('upDays').innerText = days;
+            document.getElementById('upHours').innerText = hours;
+            document.getElementById('upMins').innerText = mins;
+            document.getElementById('upSecs').innerText = secs;
+        }
+        setInterval(updateUptime, 1000);
+        updateUptime();
 
-let years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-let months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-let days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-let secs = Math.floor((diff % (1000 * 60)) / 1000);
+        // Local Device & Browser Scanner
+        function loadVisitorInfo() {
+            let nAgt = navigator.userAgent;
+            let browser = "Unknown";
+            if (nAgt.indexOf("Chrome") != -1) browser = "Google Chrome";
+            else if (nAgt.indexOf("Safari") != -1) browser = "Apple Safari";
+            else if (nAgt.indexOf("Firefox") != -1) browser = "Mozilla Firefox";
+            else if (nAgt.indexOf("Edge") != -1) browser = "Microsoft Edge";
 
-document.getElementById('upYears').innerText = years;
-document.getElementById('upMonths').innerText = months;
-document.getElementById('upDays').innerText = days;
-document.getElementById('upHours').innerText = hours;
-document.getElementById('upMins').innerText = mins;
-document.getElementById('upSecs').innerText = secs;
-}, 1000);
+            let deviceType = /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(nAgt) ? "Mobile Device" : "Desktop Computer";
+            
+            let infoHTML = `
+                💻 Device Type : ${deviceType}<br>
+                🌐 Browser : ${browser}<br>
+                🖥️ Platform : ${navigator.platform}<br>
+                📐 Screen Resolution : ${window.screen.width} x ${window.screen.height}<br>
+                🌐 Language : ${navigator.language}<br>
+                ⏰ Timezone : ${Intl.DateTimeFormat().resolvedOptions().timeZone}<br>
+                🟢 Connection Status : Online
+            `;
+            document.getElementById('visitorInfo').innerHTML = infoHTML;
+        }
+        loadVisitorInfo();
 
-// Visitor Info fetch
-fetch('https://ipapi.co/json/')
-.then(res => res.json())
-.then(data => {
-document.getElementById('visitorInfo').innerHTML = 🌍 IP : ${data.ip}<br>
-📍 Location : ${data.city}, ${data.region}, ${data.country_name}&lt;br&gt; 🌐 ISP : ${data.org}<br>
-💻 Browser : ${navigator.userAgent.includes('Mobile') ? 'Mobile Device' : 'Desktop'} (${navigator.platform})
-`;
-}).catch(() => {
-document.getElementById('visitorInfo').innerHTML = "Device: " + navigator.platform;
-});
+        function toggleTool(id) {
+            let el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
 
-function toggleTool(id) {
-let el = document.getElementById(id);
-el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-}
+        function clearResult(id) {
+            let resDiv = document.getElementById(id);
+            resDiv.innerHTML = "";
+            resDiv.style.display = "none";
+        }
 
-function clearResult(id) {
-let resDiv = document.getElementById(id);
-resDiv.innerHTML = "";
-resDiv.style.display = "none";
-}
+        function copyToClipboard(text) {
+            if(!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Copied to Clipboard!");
+            }).catch(() => {
+                let txtArea = document.createElement("textarea");
+                txtArea.value = text;
+                document.body.appendChild(txtArea);
+                txtArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(txtArea);
+                alert("Copied to Clipboard!");
+            });
+        }
 
-function copyToClipboard(text) {
-if(!text) return;
-navigator.clipboard.writeText(text).then(() => {
-alert("Copied to Clipboard!");
-}).catch(() => {
-let txtArea = document.createElement("textarea");
-txtArea.value = text;
-document.body.appendChild(txtArea);
-txtArea.select();
-document.execCommand("copy");
-document.body.removeChild(txtArea);
-alert("Copied to Clipboard!");
-});
-}
+        function directDownloadBlob(url, filename) {
+            fetch(url)
+                .then(res => res.blob())
+                .then(blob => {
+                    let a = document.createElement('a');
+                    let blobUrl = window.URL.createObjectURL(blob);
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(() => alert("Direct download failed. Please try again."));
+        }
 
-function directDownloadBlob(url, filename) {
-fetch(url)
-.then(res => res.blob())
-.then(blob => {
-let a = document.createElement('a');
-let blobUrl = window.URL.createObjectURL(blob);
-a.href = blobUrl;
-a.download = filename;
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-window.URL.revokeObjectURL(blobUrl);
-})
-.catch(() => alert("Direct download failed. Please try again."));
-}
+        function genCustomPass() {
+            let pref = document.getElementById('passPrefix').value;
+            let len = parseInt(document.getElementById('passLen').value) || 12;
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+            let res = pref;
+            for(let i=0; i < (len - pref.length); i++) {
+                res += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passOut').value = res;
+        }
 
-function genCustomPass() {
-let pref = document.getElementById('passPrefix').value;
-let len = parseInt(document.getElementById('passLen').value) || 12;
-let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#`$%";
-let res = pref;
-for(let i=0; i < (len - pref.length); i++) {
-res += chars.charAt(Math.floor(Math.random() * chars.length));
-}
-document.getElementById('passOut').value = res;
-}
+        function sendUnban() {
+            let num = document.getElementById('unbanNum').value;
+            let email = document.getElementById('unbanEmail').value;
+            let reason = document.getElementById('unbanReason').value;
+            if(!num) { alert("Please enter phone number!"); return; }
+            let body = `Hello WhatsApp Support,\n\nMy number ${num} was banned. Reason: ${reason}.\nPlease review my account.\n\nThank you,\n${email}`;
+            window.location.href = `mailto:support@whatsapp.com?subject=Unban Appeal for ${num}&body=${encodeURIComponent(body)}`;
+        }
 
-function sendUnban() {
-let num = document.getElementById('unbanNum').value;
-let email = document.getElementById('unbanEmail').value;
-let reason = document.getElementById('unbanReason').value;
-if(!num) { alert("Please enter phone number!"); return; }
-let body = Hello WhatsApp Support,\n\nMy number ${num} was banned. Reason: ${reason}.\nPlease review my account.\n\nThank you,\n${email}; window.location.href =mailto:support@whatsapp.com?subject=Unban Appeal for ${num}&body=${encodeURIComponent(body)}`;
-}
+        function genQR() {
+            let txt = document.getElementById('qrText').value;
+            let col = document.getElementById('qrColor').value.replace('#','');
+            let resDiv = document.getElementById('qrResult');
+            if(!txt) { alert("Enter URL or Text!"); return; }
+            resDiv.style.display = "block";
+            let qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(txt)}&color=${col}`;
+            resDiv.innerHTML = `
+                <img src="${qrImgUrl}" id="qrImg"><br>
+                <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'QR_Code.png')">⬇️ Download QR Image</button>
+                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#221035; color:#fff;">📋 Copy Content/Link</button>
+                <button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
+            `;
+        }
 
-function genQR() {
-let txt = document.getElementById('qrText').value;
-let col = document.getElementById('qrColor').value.replace('#','');
-let resDiv = document.getElementById('qrResult');
-if(!txt) { alert("Enter URL or Text!"); return; }
-resDiv.style.display = "block";
-let qrImgUrl = https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(txt)}&color= {qrImgUrl}" id="qrImg"><br>
-<button class="btn" onclick="directDownloadBlob(' {txt}')" style="background:#333; color:#fff;">📋 Copy Content/Link</button>
-<button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
-`;
-}
+        function scanQRImage(event) {
+            let file = event.target.files[0];
+            let resDiv = document.getElementById('qrScanResult');
+            if(!file) return;
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Scanning image...";
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = new Image();
+                img.onload = function() {
+                    let cvs = document.createElement('canvas');
+                    let ctx = cvs.getContext('2d');
+                    cvs.width = img.width; cvs.height = img.height;
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let code = jsQR(imgData.data, imgData.width, imgData.height);
+                    if(code) {
+                        resDiv.innerHTML = `
+                            <b style="color:#00ff00;">Scanned Result:</b><br>
+                            <p style="color:#e0b0ff; margin:8px 0;">${code.data}</p>
+                            <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Result</button>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
+                        `;
+                    } else {
+                        resDiv.innerHTML = `
+                            <span style="color:red;">No valid QR code detected in image!</span>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete</button>
+                        `;
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
 
-function scanQRImage(event) {
-let file = event.target.files[0];
-let resDiv = document.getElementById('qrScanResult');
-if(!file) return;
-resDiv.style.display = "block";
-resDiv.innerHTML = "Scanning image...";
-let reader = new FileReader();
-reader.onload = function(e) {
-let img = new Image();
-img.onload = function() {
-let cvs = document.createElement('canvas');
-let ctx = cvs.getContext('2d');
-cvs.width = img.width; cvs.height = img.height;
-ctx.drawImage(img, 0, 0, img.width, img.height);
-let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
-let code = jsQR(imgData.data, imgData.width, imgData.height);
-if(code) {
-resDiv.innerHTML = &lt;b style="color:#00ff00;"&gt;Scanned Result:&lt;/b&gt;&lt;br&gt; &lt;p style="color:var(--neon-primary); margin:8px 0;"&gt;${code.data}</p>
-<button class="btn" onclick="copyToClipboard('${code.data}')"&gt;📋 Copy Scanned Result&lt;/button&gt; &lt;button class="btn btn-delete" onclick="clearResult('qrScanResult')"&gt;🗑️ Delete Result&lt;/button&gt;;
-} else {
-resDiv.innerHTML = &lt;span style="color:red;"&gt;No valid QR code detected in image!&lt;/span&gt; &lt;button class="btn btn-delete" onclick="clearResult('qrScanResult')"&gt;🗑️ Delete&lt;/button&gt;;
-}
-};
-img.src = e.target.result;
-};
-reader.readAsDataURL(file);
-}
+        function startCameraScan() {
+            let video = document.getElementById('camVideo');
+            let resDiv = document.getElementById('qrScanResult');
+            video.style.display = "block";
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Opening Camera...";
 
-function startCameraScan() {
-let video = document.getElementById('camVideo');
-let resDiv = document.getElementById('qrScanResult');
-video.style.display = "block";
-resDiv.style.display = "block";
-resDiv.innerHTML = "Opening Camera...";
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true);
+                video.play();
+                requestAnimationFrame(tickCameraScan);
+            }).catch(function() {
+                resDiv.innerHTML = "<span style='color:red;'>Unable to access camera!</span>";
+            });
 
-navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
-video.srcObject = stream;
-video.setAttribute("playsinline", true);
-video.play();
-requestAnimationFrame(tickCameraScan);
-}).catch(function() {
-resDiv.innerHTML = "<span style='color:red;'>Unable to access camera!</span>";
-});
+            function tickCameraScan() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    let cvs = document.createElement('canvas');
+                    cvs.width = video.videoWidth;
+                    cvs.height = video.videoHeight;
+                    let ctx = cvs.getContext('2d');
+                    ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let code = jsQR(imgData.data, imgData.width, imgData.height);
+                    if (code) {
+                        resDiv.innerHTML = `
+                            <b style="color:#00ff00;">Scanned Result:</b><br>
+                            <p style="color:#e0b0ff; margin:8px 0;">${code.data}</p>
+                            <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Link</button>
+                            <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
+                        `;
+                        return;
+                    }
+                }
+                requestAnimationFrame(tickCameraScan);
+            }
+        }
 
-function tickCameraScan() {
-if (video.readyState === video.HAVE_ENOUGH_DATA) {
-let cvs = document.createElement('canvas');
-cvs.width = video.videoWidth;
-cvs.height = video.videoHeight;
-let ctx = cvs.getContext('2d');
-ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
-let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
-let code = jsQR(imgData.data, imgData.width, imgData.height);
-if (code) {
-resDiv.innerHTML = &lt;b style="color:#00ff00;"&gt;Scanned Result:&lt;/b&gt;&lt;br&gt; &lt;p style="color:var(--neon-primary); margin:8px 0;"&gt;${code.data}</p>
-<button class="btn" onclick="copyToClipboard('${code.data}')"&gt;📋 Copy Scanned Link&lt;/button&gt; &lt;button class="btn btn-delete" onclick="clearResult('qrScanResult')"&gt;🗑️ Delete Result&lt;/button&gt;;
-return;
-}
-}
-requestAnimationFrame(tickCameraScan);
-}
-}
+        function genBarcode() {
+            let txt = document.getElementById('bcText').value;
+            let col = document.getElementById('bcColor').value;
+            let resDiv = document.getElementById('bcResult');
+            if(!txt) { alert("Please enter text or numbers!"); return; }
+            resDiv.style.display = "block";
+            resDiv.innerHTML = `
+                <svg id="bcSvg"></svg><br>
+                <button class="btn" id="bcDlBtn">⬇️ Download Barcode Image</button>
+                <button class="btn btn-delete" onclick="clearResult('bcResult')">🗑️ Delete Result</button>
+            `;
+            try {
+                JsBarcode("#bcSvg", txt, {
+                    format: "CODE128",
+                    lineColor: col,
+                    background: "#030308",
+                    width: 2, height: 70, displayValue: true
+                });
+                
+                document.getElementById('bcDlBtn').onclick = function() {
+                    let svg = document.getElementById('bcSvg');
+                    let xml = new XMLSerializer().serializeToString(svg);
+                    let svg64 = btoa(xml);
+                    let image64 = 'data:image/svg+xml;base64,' + svg64;
+                    directDownloadBlob(image64, 'Barcode.svg');
+                };
+            } catch(e) {
+                resDiv.innerHTML = '<span style="color:red;">Invalid code structure!</span>';
+            }
+        }
 
-function genBarcode() {
-let txt = document.getElementById('bcText').value;
-let col = document.getElementById('bcColor').value;
-let resDiv = document.getElementById('bcResult');
-if(!txt) { alert("Please enter text or numbers!"); return; }
-resDiv.style.display = "block";
-resDiv.innerHTML = &lt;svg id="bcSvg"&gt;&lt;/svg&gt;&lt;br&gt; &lt;button class="btn" id="bcDlBtn"&gt;⬇️ Download Barcode Image&lt;/button&gt; &lt;button class="btn btn-delete" onclick="clearResult('bcResult')"&gt;🗑️ Delete Result&lt;/button&gt;;
-try {
-JsBarcode("#bcSvg", txt, {
-format: "CODE128",
-lineColor: col,
-background: "#030308",
-width: 2, height: 70, displayValue: true
-});
+        async function fetchTikTokMedia() {
+            let url = document.getElementById('ttUrl').value;
+            let resDiv = document.getElementById('ttResult');
+            if(!url) { alert("Please paste a TikTok Link!"); return; }
+            resDiv.style.display = "block";
+            resDiv.innerHTML = "Connecting to TikTok API...";
 
-document.getElementById('bcDlBtn').onclick = function() {
-let svg = document.getElementById('bcSvg');
-let xml = new XMLSerializer().serializeToString(svg);
-let svg64 = btoa(xml);
-let image64 = 'data:image/svg+xml;base64,' + svg64;
-directDownloadBlob(image64, 'Barcode.svg');
-};
-} catch(e) {
-resDiv.innerHTML = '<span style="color:red;">Invalid code structure!</span>';
-}
-}
+            try {
+                let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
+                let data = await resp.json();
+                if(data.code === 0) {
+                    let html = `<p style="color:#e0b0ff; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
+                    if(data.data.images && data.data.images.length > 0) {
+                        html += `<p style="color:#00ff00; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
+                        data.data.images.forEach((img, idx) => {
+                            html += `
+                                <div style="margin: 10px 0;">
+                                    <img src="${img}" style="width:100px; border-radius:6px;"><br>
+                                    <button class="btn" onclick="directDownloadBlob('${img}', 'TikTok_Photo_${idx+1}.jpg')">⬇️ Download Photo ${idx+1}</button>
+                                </div>
+                            `;
+                        });
+                    } else if(data.data.play) {
+                        html += `<video controls src="${data.data.play}" style="width:100%; border-radius:8px; margin: 8px 0;"></video>`;
+                        html += `<button class="btn" onclick="directDownloadBlob('${data.data.play}', 'TikTok_Video.mp4')">⬇️ Download Video File</button>`;
+                    }
+                    html += `<button class="btn btn-delete" onclick="clearResult('ttResult')">🗑️ Delete Results</button>`;
+                    resDiv.innerHTML = html;
+                } else {
+                    resDiv.innerHTML = `<span style="color:red;">Failed to retrieve video. Ensure the TikTok link is public.</span>`;
+                }
+            } catch(err) {
+                resDiv.innerHTML = `<span style="color:red;">Error connecting to TikTok Downloader API.</span>`;
+            }
+        }
 
-async function fetchTikTokMedia() {
-let url = document.getElementById('ttUrl').value;
-let resDiv = document.getElementById('ttResult');
-if(!url) { alert("Please paste a TikTok Link!"); return; }
-resDiv.style.display = "block";
-resDiv.innerHTML = "Connecting to TikTok API...";
+        function genWAUrl() {
+            let num = document.getElementById('waNum').value;
+            let msg = document.getElementById('waMsg').value;
+            let outDiv = document.getElementById('waUrlOut');
+            if(!num) { alert("Enter phone number!"); return; }
+            let link = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+            outDiv.style.display = "block";
+            outDiv.innerHTML = `
+                <a href="${link}" target="_blank" class="btn" style="margin-bottom:8px; display:block; text-decoration:none;">💬 Send WhatsApp Message</a>
+                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#221035; color:#fff;">📋 Copy WhatsApp Link</button>
+                <button class="btn btn-delete" onclick="clearResult('waUrlOut')">🗑️ Delete Result</button>
+            `;
+        }
 
-try {
-let resp = await fetch(https://www.tikwm.com/api/?url=${encodeURIComponent(url)}); let data = await resp.json(); if(data.code === 0) { let html =<p style="color:var(--neon-primary); font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}&lt;/p>;
-if(data.data.images && data.data.images.length > 0) {
-html += <p style="color:#00ff00; margin-bottom:6px;"&gt;Found ${data.data.images.length} Photos in Slide:</p>; data.data.images.forEach((img, idx) =&gt; { html +=
-<div style="margin: 10px 0;">
-<img src="${img}" style="width:100px; border-radius:6px;"&gt;&lt;br&gt; &lt;button class="btn" onclick="directDownloadBlob('${img}', 'TikTok_Photo_${idx+1}.jpg')"&gt;⬇️ Download Photo ${idx+1}</button>
-</div>
-; }); } else if(data.data.play) { html +=<video controls src="${data.data.play}" style="width:100%; border-radius:8px; margin: 8px 0;"&gt;&lt;/video>;
-html += <button class="btn" onclick="directDownloadBlob('${data.data.play}', 'TikTok_Video.mp4')">⬇️ Download Video File</button>; } html +=<button class="btn btn-delete" onclick="clearResult('ttResult')">🗑️ Delete Results</button>; resDiv.innerHTML = html; } else { resDiv.innerHTML =<span style="color:red;">Failed to retrieve video. Ensure the TikTok link is public.</span>; } } catch(err) { resDiv.innerHTML =<span style="color:red;">Error connecting to TikTok Downloader API.</span>`;
-}
-}
+        function genGroupQR() {
+            let url = document.getElementById('grpUrl').value;
+            let resDiv = document.getElementById('grpQrOut');
+            if(!url) { alert("Enter Group Link!"); return; }
+            resDiv.style.display = "block";
+            let qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`;
+            resDiv.innerHTML = `
+                <img src="${qrImgUrl}"><br>
+                <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
+                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#221035; color:#fff;">📋 Copy Group Link</button>
+                <button class="btn btn-delete" onclick="clearResult('grpQrOut')">🗑️ Delete Result</button>
+            `;
+        }
 
-function genWAUrl() {
-let num = document.getElementById('waNum').value;
-let msg = document.getElementById('waMsg').value;
-let outDiv = document.getElementById('waUrlOut');
-if(!num) { alert("Enter phone number!"); return; }
-let link = https://wa.me/${num}?text= {link}</p>
-<button class="btn" onclick="copyToClipboard('${link}')"&gt;📋 Copy WhatsApp Link&lt;/button&gt; &lt;button class="btn btn-delete" onclick="clearResult('waUrlOut')"&gt;🗑️ Delete Result&lt;/button&gt;;
-}
-
-function genGroupQR() {
-let url = document.getElementById('grpUrl').value;
-let resDiv = document.getElementById('grpQrOut');
-if(!url) { alert("Enter Group Link!"); return; }
-resDiv.style.display = "block";
-let qrImgUrl = https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}; resDiv.innerHTML =
-<img src=" {qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
-<button class="btn" onclick="copyToClipboard('${url}')" style="background:#333; color:#fff;"&gt;📋 Copy Group Link&lt;/button&gt; &lt;button class="btn btn-delete" onclick="clearResult('grpQrOut')"&gt;🗑️ Delete Result&lt;/button&gt;;
-}
-
-function splitCatalogImage() {
-let file = document.getElementById('splitInput').files[0];
-let out = document.getElementById('splitOut');
-if(!file) { alert("Select an image first!"); return; }
-out.style.display = "block";
-out.innerHTML = "Processing and splitting image...";
-let reader = new FileReader();
-reader.onload = function(e) {
-let img = new Image();
-img.onload = function() {
-let tileW = img.width / 3;
-let tileH = img.height / 2;
-out.innerHTML = "<p style='color:var(--neon-primary); margin-bottom:10px;'>Split into 6 Parts:</p>";
-for(let r=0; r<2; r++) {
-for(let c=0; c<3; c++) {
-let cvs = document.createElement('canvas');
-cvs.width = tileW; cvs.height = tileH;
-let ctx = cvs.getContext('2d');
-ctx.drawImage(img, ctileW, rtileH, tileW, tileH, 0, 0, tileW, tileH);
-let imgDataUrl = cvs.toDataURL('image/png');
-
-let tileDiv = document.createElement('div');
-tileDiv.style.margin = "10px 0";
-tileDiv.innerHTML = &lt;img src="${imgDataUrl}" style="width:120px;"><br>
-<button class="btn" onclick="directDownloadBlob('latex
-{imgDataUrl}', 'Grid_Tile_
-
-{r3 + c + 1}.png')">⬇️ Download Tile ${r3 + c + 1}</button>
-`;
-out.appendChild(tileDiv);
-}
-}
-let delBtn = document.createElement('button');
-delBtn.className = "btn btn-delete";
-delBtn.innerText = "🗑️ Delete All Tiles";
-delBtn.onclick = function() { clearResult('splitOut'); };
-out.appendChild(delBtn);
-};
-img.src = e.target.result;
-};
-reader.readAsDataURL(file);
-}
-</script>
+        function splitCatalogImage() {
+            let file = document.getElementById('splitInput').files[0];
+            let out = document.getElementById('splitOut');
+            if(!file) { alert("Select an image first!"); return; }
+            out.style.display = "block";
+            out.innerHTML = "Processing and splitting image...";
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = new Image();
+                img.onload = function() {
+                    let tileW = img.width / 3;
+                    let tileH = img.height / 2;
+                    out.innerHTML = "<p style='color:#e0b0ff; margin-bottom:10px;'>Split into 6 Parts:</p>";
+                    for(let r=0; r<2; r++) {
+                        for(let c=0; c<3; c++) {
+                            let cvs = document.createElement('canvas');
+                            cvs.width = tileW; cvs.height = tileH;
+                            let ctx = cvs.getContext('2d');
+                            ctx.drawImage(img, c*tileW, r*tileH, tileW, tileH, 0, 0, tileW, tileH);
+                            let imgDataUrl = cvs.toDataURL('image/png');
+                            
+                            let tileDiv = document.createElement('div');
+                            tileDiv.style.margin = "10px 0";
+                            tileDiv.innerHTML = `
+                                <img src="${imgDataUrl}" style="width:120px;"><br>
+                                <button class="btn" onclick="directDownloadBlob('${imgDataUrl}', 'Grid_Tile_${r*3 + c + 1}.png')">⬇️ Download Tile ${r*3 + c + 1}</button>
+                            `;
+                            out.appendChild(tileDiv);
+                        }
+                    }
+                    let delBtn = document.createElement('button');
+                    delBtn.className = "btn btn-delete";
+                    delBtn.innerText = "🗑️ Delete All Tiles";
+                    delBtn.onclick = function() { clearResult('splitOut'); };
+                    out.appendChild(delBtn);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
 </body>
-    </html>
+</html>
