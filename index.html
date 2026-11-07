@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilshan All In One - Cyber Hub</title>
+    <title>Dilshan All In One - Red Cyber Hub</title>
     <style>
         :root {
             --bg-color: #000000;
-            --card-bg: #0c0514;
-            --neon-purple: #9400D3;
-            --purple-glow: rgba(148, 0, 211, 0.6);
-            --cyber-green: #00ff66;
+            --card-bg: #120303;
+            --neon-red: #ff073a;
+            --red-glow: rgba(255, 7, 58, 0.6);
             --text-color: #f0f0f0;
-            --border-color: rgba(148, 0, 211, 0.5);
+            --border-color: rgba(255, 7, 58, 0.5);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; padding-bottom: 90px; }
 
         .marquee {
-            background: #05000a;
-            color: #dda0dd; padding: 10px 0; white-space: nowrap; overflow: hidden;
-            border-bottom: 2px solid var(--neon-purple); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
-            box-shadow: 0 0 15px var(--purple-glow);
+            background: #1a0005;
+            color: #ff8093; padding: 10px 0; white-space: nowrap; overflow: hidden;
+            border-bottom: 2px solid var(--neon-red); font-weight: bold; font-size: 0.95rem; letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--red-glow);
         }
         .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -32,18 +31,18 @@
         header {
             text-align: center; padding: 30px 20px; background: var(--card-bg);
             border: 1px solid var(--border-color); border-radius: 18px;
-            box-shadow: 0 0 25px var(--purple-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
+            box-shadow: 0 0 25px var(--red-glow); backdrop-filter: blur(12px); margin-bottom: 25px;
         }
         header h1 { 
-            color: #da70d6; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-purple); 
+            color: #ff335f; font-size: 2.4rem; text-shadow: 0 0 15px var(--neon-red); 
             text-transform: uppercase; letter-spacing: 1px;
         }
-        header p { color: #ba55d3; margin-top: 5px; font-size: 1.05rem; }
+        header p { color: #ff8093; margin-top: 5px; font-size: 1.05rem; }
 
         .section-title {
-            color: #da70d6; margin: 30px 0 15px 0; font-size: 1.4rem;
-            border-left: 5px solid var(--neon-purple); padding-left: 12px; text-transform: uppercase;
-            text-shadow: 0 0 10px var(--purple-glow);
+            color: #ff335f; margin: 30px 0 15px 0; font-size: 1.4rem;
+            border-left: 5px solid var(--neon-red); padding-left: 12px; text-transform: uppercase;
+            text-shadow: 0 0 10px var(--red-glow);
         }
 
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
@@ -52,51 +51,43 @@
             background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px;
             padding: 22px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.9);
         }
-        .card:hover { transform: translateY(-5px); border-color: #da70d6; box-shadow: 0 0 20px var(--purple-glow); }
-        .card h3 { color: #da70d6; margin-bottom: 10px; font-size: 1.2rem; }
-        .card p { color: #ba55d3; font-size: 0.9rem; margin-bottom: 15px; }
+        .card:hover { transform: translateY(-5px); border-color: #ff335f; box-shadow: 0 0 20px var(--red-glow); }
+        .card h3 { color: #ff335f; margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #ff8093; font-size: 0.9rem; margin-bottom: 15px; }
 
         input, select, textarea {
             width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
             border: 1px solid var(--border-color); background: #000000; color: #fff; outline: none; font-size: 0.95rem;
         }
-        input:focus { border-color: #da70d6; box-shadow: 0 0 10px var(--neon-purple); }
+        input:focus { border-color: #ff335f; box-shadow: 0 0 10px var(--neon-red); }
 
         .btn {
             display: inline-block; text-align: center; text-decoration: none;
-            width: 100%; padding: 12px; background: linear-gradient(45deg, #4b0082, var(--neon-purple));
+            width: 100%; padding: 12px; background: linear-gradient(45deg, #5c0011, var(--neon-red));
             border: none; color: #fff; font-weight: bold; border-radius: 8px; cursor: pointer;
             transition: 0.3s; text-transform: uppercase; font-size: 0.95rem; margin-top: 5px;
-            box-shadow: 0 0 10px rgba(148, 0, 211, 0.4);
+            box-shadow: 0 0 10px rgba(255, 7, 58, 0.4);
         }
-        .btn:hover { box-shadow: 0 0 15px #da70d6; color: #fff; }
+        .btn:hover { box-shadow: 0 0 15px #ff335f; color: #fff; }
 
         .btn-delete {
-            background: linear-gradient(45deg, #8b0000, #ff4d4d) !important;
+            background: linear-gradient(45deg, #400, #ff1a40) !important;
             color: #fff !important;
             margin-top: 8px;
         }
-        .btn-delete:hover { box-shadow: 0 0 15px #ff4d4d !important; }
+        .btn-delete:hover { box-shadow: 0 0 15px #ff1a40 !important; }
 
         .sub-tool { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
 
-        /* Cyber Green Terminal */
-        .terminal {
-            background: #000000; border: 1px solid var(--neon-purple); border-radius: 10px;
-            padding: 18px; font-family: 'Courier New', monospace; color: var(--cyber-green); margin-top: 15px; font-size: 0.85rem; line-height: 1.5;
-            box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.15);
-            text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);
-        }
-
         .uptime-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .uptime-box { background: rgba(148, 0, 211, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
-        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #da70d6; text-shadow: 0 0 10px var(--neon-purple); }
-        .uptime-lbl { font-size: 0.75rem; color: #ba55d3; text-transform: uppercase; margin-top: 4px; }
+        .uptime-box { background: rgba(255, 7, 58, 0.05); border: 1px solid var(--border-color); padding: 12px; text-align: center; border-radius: 8px; }
+        .uptime-num { font-size: 1.5rem; font-weight: bold; color: #ff335f; text-shadow: 0 0 10px var(--neon-red); }
+        .uptime-lbl { font-size: 0.75rem; color: #ff8093; text-transform: uppercase; margin-top: 4px; }
 
         .video-box { 
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
-            border-radius: 15px; border: 2px solid var(--neon-purple); 
-            box-shadow: 0 0 20px var(--purple-glow); margin-bottom: 25px; background: #000;
+            border-radius: 15px; border: 2px solid var(--neon-red); 
+            box-shadow: 0 0 20px var(--red-glow); margin-bottom: 25px; background: #000;
         }
         .video-box video { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -105,23 +96,23 @@
 
         .floating-audio {
             position: fixed; bottom: 15px; right: 15px; z-index: 999;
-            background: rgba(12, 5, 20, 0.95); border: 2px solid var(--neon-purple);
-            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--purple-glow);
+            background: rgba(18, 3, 3, 0.95); border: 2px solid var(--neon-red);
+            padding: 10px 15px; border-radius: 30px; box-shadow: 0 0 15px var(--red-glow);
             display: flex; align-items: center; gap: 10px;
         }
-        .floating-audio span { color: #da70d6; font-size: 0.82rem; font-weight: bold; }
+        .floating-audio span { color: #ff335f; font-size: 0.82rem; font-weight: bold; }
         .floating-audio audio { height: 30px; width: 190px; outline: none; }
 
         .res-output {
             margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.8);
-            border: 1px solid var(--neon-purple); border-radius: 8px; word-break: break-all;
+            border: 1px solid var(--neon-red); border-radius: 8px; word-break: break-all;
             font-size: 0.88rem; text-align: center;
         }
         .res-output img, .res-output canvas, .res-output video {
             max-width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border-color);
         }
 
-        footer { text-align: center; margin-top: 50px; color: #ba55d3; font-size: 0.85rem; }
+        footer { text-align: center; margin-top: 50px; color: #ff8093; font-size: 0.85rem; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -130,7 +121,7 @@
 
     <div class="marquee">
         <div class="marquee-content">
-            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • LUXURY CYBER HUB • OWNER: DILSHAN •
+            DILSHAN DEV • WEBSITE LIVE & ALL SYSTEMS OPERATIONAL • RED CYBER HUB • OWNER: DILSHAN •
         </div>
     </div>
 
@@ -138,7 +129,7 @@
         
         <header>
             <h1>DILSHAN ALL IN ONE</h1>
-            <p>Luxury Cybernetics & Utility Dashboard</p>
+            <p>Red Cybernetics & Utility Dashboard</p>
         </header>
 
         <div class="video-box">
@@ -174,7 +165,7 @@
                     <div class="uptime-lbl">Seconds</div>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 0.75rem; color: #ba55d3; margin-top: 10px;">SYSTEM ONLINE SINCE 07 NOVEMBER 2026 • 08:30 AM</p>
+            <p style="text-align: center; font-size: 0.75rem; color: #ff8093; margin-top: 10px;">SYSTEM ONLINE SINCE 07 NOVEMBER 2026 • 08:30 AM</p>
         </div>
 
         <div class="section-title">👑 OWNER CONTACT</div>
@@ -218,8 +209,8 @@
                 <button class="btn" onclick="toggleTool('qrTool')">Open Generator</button>
                 <div id="qrTool" class="sub-tool">
                     <input type="text" id="qrText" placeholder="Enter URL or Text">
-                    <label style="font-size:0.8rem; color:#da70d6;">QR Color:</label>
-                    <input type="color" id="qrColor" value="#9400D3">
+                    <label style="font-size:0.8rem; color:#ff335f;">QR Color:</label>
+                    <input type="color" id="qrColor" value="#ff073a">
                     <button class="btn" onclick="genQR()">Generate QR</button>
                     <div id="qrResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -232,7 +223,7 @@
                 <button class="btn" onclick="toggleTool('qrScannerTool')">Open Scanner</button>
                 <div id="qrScannerTool" class="sub-tool">
                     <button class="btn" onclick="startCameraScan()" style="margin-bottom:10px;">📹 Start Camera Scan</button>
-                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-purple);" autoplay></video>
+                    <video id="camVideo" style="display:none; width:100%; border-radius:8px; border:1px solid var(--neon-red);" autoplay></video>
                     <input type="file" id="qrInputFile" accept="image/*" onchange="scanQRImage(event)" style="margin-top:10px;">
                     <div id="qrScanResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -245,8 +236,8 @@
                 <button class="btn" onclick="toggleTool('barcodeTool')">Open Maker</button>
                 <div id="barcodeTool" class="sub-tool">
                     <input type="text" id="bcText" placeholder="Enter text or number...">
-                    <label style="font-size:0.8rem; color:#da70d6;">Barcode Color:</label>
-                    <input type="color" id="bcColor" value="#9400D3">
+                    <label style="font-size:0.8rem; color:#ff335f;">Barcode Color:</label>
+                    <input type="color" id="bcColor" value="#ff073a">
                     <button class="btn" onclick="genBarcode()">Generate Barcode</button>
                     <div id="bcResult" class="res-output" style="display:none;"></div>
                 </div>
@@ -262,7 +253,7 @@
                     <input type="number" id="passLen" value="12" min="6" max="32">
                     <input type="text" id="passOut" readonly placeholder="Result Password">
                     <button class="btn" onclick="genCustomPass()">Generate Password</button>
-                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#150025; color:#fff;">📋 Copy Password</button>
+                    <button class="btn" onclick="copyToClipboard(document.getElementById('passOut').value)" style="background:#2a050b; color:#fff;">📋 Copy Password</button>
                 </div>
             </div>
 
@@ -317,17 +308,6 @@
 
         </div>
 
-        <div class="section-title">💻 Developer Profile (DILSHAN DEV)</div>
-        <div class="card">
-            <h3>Visitor & System Scanner</h3>
-            <div class="terminal" id="terminalBox">
-                > whoami<br>
-                User: Dilshan Dev | System: Cyberpunk OS v3.0<br><br>
-                > scan --device<br>
-                <span id="visitorInfo">Analyzing hardware & network specs...</span>
-            </div>
-        </div>
-
     </div>
 
     <div class="floating-audio">
@@ -337,7 +317,7 @@
         </audio>
     </div>
 
-    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-purple); border-bottom: none;">
+    <div class="marquee" style="margin-top: 40px; border-top: 2px solid var(--neon-red); border-bottom: none;">
         <div class="marquee-content">
             POWERED BY DILSHAN DEV • ALL RIGHTS RESERVED • DILSHAN ALL IN ONE 2026 •
         </div>
@@ -369,53 +349,6 @@
         }
         setInterval(updateUptime, 1000);
         updateUptime();
-
-        // Advanced Visitor & System Scanner with IP, Battery, Timezone & Connection Status
-        async function loadVisitorInfo() {
-            let nAgt = navigator.userAgent;
-            let browser = "Unknown";
-            if (nAgt.indexOf("Chrome") != -1) browser = "Google Chrome";
-            else if (nAgt.indexOf("Safari") != -1) browser = "Apple Safari";
-            else if (nAgt.indexOf("Firefox") != -1) browser = "Mozilla Firefox";
-            else if (nAgt.indexOf("Edge") != -1) browser = "Microsoft Edge";
-
-            let deviceType = /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/.test(nAgt) ? "Mobile Device" : "Desktop Computer";
-            let onlineStatus = navigator.onLine ? "Online 🟢" : "Offline 🔴";
-            let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-            // Fetch IP Address
-            let ipAdd = "Fetching IP...";
-            try {
-                let ipResp = await fetch('https://api.ipify.org?format=json');
-                let ipData = await ipResp.json();
-                ipAdd = ipData.ip;
-            } catch(e) {
-                ipAdd = "Unavailable";
-            }
-
-            // Fetch Battery Level if supported
-            let batteryInfo = "Not Supported";
-            if(navigator.getBattery) {
-                try {
-                    let bat = await navigator.getBattery();
-                    batteryInfo = Math.floor(bat.level * 100) + "% " + (bat.charging ? "(Charging ⚡)" : "(Discharging)");
-                } catch(e) {}
-            }
-
-            let infoHTML = `
-                🌐 IP Address : ${ipAdd}<br>
-                🔋 Battery Level : ${batteryInfo}<br>
-                💻 Device Type : ${deviceType}<br>
-                🌐 Browser : ${browser}<br>
-                🖥️ Platform : ${navigator.platform}<br>
-                📐 Screen Resolution : ${window.screen.width} x ${window.screen.height}<br>
-                🌐 Language : ${navigator.language}<br>
-                ⏰ Timezone : ${timezone}<br>
-                🟢 Connection Status : ${onlineStatus}
-            `;
-            document.getElementById('visitorInfo').innerHTML = infoHTML;
-        }
-        loadVisitorInfo();
 
         function toggleTool(id) {
             let el = document.getElementById(id);
@@ -489,7 +422,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}" id="qrImg"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'QR_Code.png')">⬇️ Download QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#150025; color:#fff;">📋 Copy Content/Link</button>
+                <button class="btn" onclick="copyToClipboard('${txt}')" style="background:#2a050b; color:#fff;">📋 Copy Content/Link</button>
                 <button class="btn btn-delete" onclick="clearResult('qrResult')">🗑️ Delete Result</button>
             `;
         }
@@ -513,7 +446,7 @@
                     if(code) {
                         resDiv.innerHTML = `
                             <b style="color:#00ff66;">Scanned Result:</b><br>
-                            <p style="color:#da70d6; margin:8px 0;">${code.data}</p>
+                            <p style="color:#ff335f; margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Result</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
@@ -557,7 +490,7 @@
                     if (code) {
                         resDiv.innerHTML = `
                             <b style="color:#00ff66;">Scanned Result:</b><br>
-                            <p style="color:#da70d6; margin:8px 0;">${code.data}</p>
+                            <p style="color:#ff335f; margin:8px 0;">${code.data}</p>
                             <button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy Scanned Link</button>
                             <button class="btn btn-delete" onclick="clearResult('qrScanResult')">🗑️ Delete Result</button>
                         `;
@@ -610,7 +543,7 @@
                 let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
                 let data = await resp.json();
                 if(data.code === 0) {
-                    let html = `<p style="color:#da70d6; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
+                    let html = `<p style="color:#ff335f; font-weight:bold; margin-bottom:8px;">${data.data.title || 'TikTok Media'}</p>`;
                     if(data.data.images && data.data.images.length > 0) {
                         html += `<p style="color:#00ff66; margin-bottom:6px;">Found ${data.data.images.length} Photos in Slide:</p>`;
                         data.data.images.forEach((img, idx) => {
@@ -644,7 +577,7 @@
             outDiv.style.display = "block";
             outDiv.innerHTML = `
                 <a href="${link}" target="_blank" class="btn" style="margin-bottom:8px; display:block; text-decoration:none;">💬 Send WhatsApp Message</a>
-                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#150025; color:#fff;">📋 Copy WhatsApp Link</button>
+                <button class="btn" onclick="copyToClipboard('${link}')" style="background:#2a050b; color:#fff;">📋 Copy WhatsApp Link</button>
                 <button class="btn btn-delete" onclick="clearResult('waUrlOut')">🗑️ Delete Result</button>
             `;
         }
@@ -658,7 +591,7 @@
             resDiv.innerHTML = `
                 <img src="${qrImgUrl}"><br>
                 <button class="btn" onclick="directDownloadBlob('${qrImgUrl}', 'Group_QR.png')">⬇️ Download Group QR Image</button>
-                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#150025; color:#fff;">📋 Copy Group Link</button>
+                <button class="btn" onclick="copyToClipboard('${url}')" style="background:#2a050b; color:#fff;">📋 Copy Group Link</button>
                 <button class="btn btn-delete" onclick="clearResult('grpQrOut')">🗑️ Delete Result</button>
             `;
         }
@@ -675,7 +608,7 @@
                 img.onload = function() {
                     let tileW = img.width / 3;
                     let tileH = img.height / 2;
-                    out.innerHTML = "<p style='color:#da70d6; margin-bottom:10px;'>Split into 6 Parts:</p>";
+                    out.innerHTML = "<p style='color:#ff335f; margin-bottom:10px;'>Split into 6 Parts:</p>";
                     for(let r=0; r<2; r++) {
                         for(let c=0; c<3; c++) {
                             let cvs = document.createElement('canvas');
