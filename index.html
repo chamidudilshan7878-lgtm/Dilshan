@@ -51,7 +51,7 @@
             position: relative;
         }
 
-        /* Watermark Scrolling Text in Background */
+        /* Watermark Background Text */
         .bg-watermark-container {
             position: fixed;
             top: 45%;
@@ -114,12 +114,27 @@
             z-index: 5;
         }
 
-        /* Top Action Bar (Theme Switch Only) */
-        .top-action-bar {
+        /* Navigation Bar with Menu & Theme Toggle */
+        .nav-header {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .menu-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .theme-btn {
@@ -135,11 +150,76 @@
             align-items: center;
             gap: 6px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
         }
 
-        .theme-btn:hover {
-            background: var(--btn-hover);
+        /* Slide-out Drawer Overlay & Menu */
+        .drawer-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            display: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .drawer-menu {
+            position: fixed;
+            top: 0; left: -280px; width: 280px; height: 100%;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            z-index: 201;
+            transition: left 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .drawer-menu.open { left: 0; }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .close-drawer {
+            cursor: pointer;
+            font-size: 1.4rem;
+        }
+
+        .drawer-links a {
+            display: block;
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Search Bar Layout */
+        .search-box-container {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .search-input:focus {
+            border-color: #888;
         }
 
         /* Header Card with Logo Style */
@@ -428,6 +508,8 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 </head>
 <body>
 
@@ -443,25 +525,42 @@
         </div>
     </div>
 
+    <!-- Slide-out Drawer Navigation Menu -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawerMenu()"></div>
+    <div class="drawer-menu" id="drawerMenu">
+        <div class="drawer-header">
+            <span>DILSHAN HUB</span>
+            <span class="close-drawer" onclick="closeDrawerMenu()">✕</span>
+        </div>
+        <div class="drawer-links">
+            <a href="#" onclick="closeDrawerMenu(); scrollToTools();">🛠️ All Tools</a>
+            <a href="https://t.me/DILSHAN7878" target="_blank">✈️ Telegram Support</a>
+            <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank">💬 WhatsApp Contact</a>
+        </div>
+    </div>
+
     <div class="container">
 
-        <!-- Top Action Bar (Theme Switch Only) -->
-        <div class="top-action-bar">
-            <button class="theme-btn" onclick="toggleTheme()" id="themeToggleBtn">
-                ☀️ Light Mode
-            </button>
+        <!-- Top Navigation Bar -->
+        <div class="nav-header">
+            <button class="menu-toggle-btn" onclick="openDrawerMenu()">☰</button>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeToggleBtn">☀️ Light Mode</button>
+        </div>
+
+        <!-- Search Bar Component -->
+        <div class="search-box-container">
+            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool..." onkeyup="filterTools()">
         </div>
         
         <!-- MAIN HUB DASHBOARD -->
         <div id="mainHubDashboard">
             
             <header>
-                <!-- Logo Image Added Above Title -->
                 <img src="icon-192.png" alt="Dilshan Logo" class="app-logo">
                 <h1>DILSHAN ALL IN ONE</h1>
             </header>
 
-            <!-- Video Feature Container with GitHub Raw Video Link -->
+            <!-- Video Feature Container -->
             <div class="feature-box">
                 <video src="https://github.com/chamidudilshan7878-lgtm/Dilshan/raw/refs/heads/main/video.mp4" autoplay loop muted playsinline></video>
             </div>
@@ -507,82 +606,216 @@
             <div class="card">
                 <h3>Contact Dilshan</h3>
                 <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
-                <a href="https://t.me/DILSHAN7878" target="_blank" class="btn" style="margin-bottom: 10px;">
-                    ✈️ TELEGRAM (@DILSHAN7878)
-                </a>
-                <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn">
-                    💬 WHATSAPP INBOX
-                </a>
+                <a href="https://t.me/DILSHAN7878" target="_blank" class="btn" style="margin-bottom: 10px;">✈️ TELEGRAM (@DILSHAN7878)</a>
+                <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn">💬 WHATSAPP INBOX</a>
             </div>
 
             <!-- Utility Tools Section -->
-            <div class="section-title">🛠️ UTILITY TOOLS & GENERATORS</div>
+            <div class="section-title" id="toolsSectionTitle">🛠️ UTILITY TOOLS & GENERATORS</div>
             
-            <div class="card">
-                <h3>🧮 Advanced Cyber Calculator</h3>
-                <p>Full Featured Calculator for All Calculations</p>
-                <button class="btn" onclick="openToolDashboard('calcTool')">OPEN TOOL</button>
-            </div>
+            <div id="toolsListContainer">
+                <div class="card tool-item">
+                    <h3>📄 PDF & Image Converter</h3>
+                    <p>Convert PDF to Images or Images to PDF</p>
+                    <button class="btn" onclick="openToolDashboard('pdfTool')">OPEN TOOL</button>
+                </div>
 
-            <div class="card">
-                <h3>WhatsApp Unban Tool</h3>
-                <p>Generate Official Appeal Emails Fast</p>
-                <button class="btn" onclick="openToolDashboard('unbanTool')">OPEN TOOL</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>🖼️ Background Remover</h3>
+                    <p>Remove Background from Photos Easily</p>
+                    <button class="btn" onclick="openToolDashboard('bgRemoveTool')">OPEN TOOL</button>
+                </div>
 
-            <div class="card">
-                <h3>Custom QR Generator</h3>
-                <p>Create Custom Color QR Codes</p>
-                <button class="btn" onclick="openToolDashboard('qrTool')">OPEN GENERATOR</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>🌐 Network Ping & Status Checker</h3>
+                    <p>Check Website Uptime and Server Response</p>
+                    <button class="btn" onclick="openToolDashboard('pingTool')">OPEN CHECKER</button>
+                </div>
 
-            <div class="card">
-                <h3>📷 Live & File QR Scanner</h3>
-                <p>Scan QR from Camera or Image File</p>
-                <button class="btn" onclick="openToolDashboard('qrScannerTool')">OPEN SCANNER</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>📱 Device Info & IP Checker</h3>
+                    <p>View your IP Address and Device Specs</p>
+                    <button class="btn" onclick="openToolDashboard('ipInfoTool')">OPEN CHECKER</button>
+                </div>
 
-            <div class="card">
-                <h3>🏷️ Barcode Maker</h3>
-                <p>Generate Custom Colored Barcodes</p>
-                <button class="btn" onclick="openToolDashboard('barcodeTool')">OPEN MAKER</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>🔐 Base64 / URL Encoder & Decoder</h3>
+                    <p>Encode or Decode Text Strings Instantly</p>
+                    <button class="btn" onclick="openToolDashboard('encoderTool')">OPEN TOOL</button>
+                </div>
 
-            <div class="card">
-                <h3>Password Generator</h3>
-                <p>Generate Strong Custom Passwords</p>
-                <button class="btn" onclick="openToolDashboard('passTool')">OPEN GENERATOR</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>📝 Text Case & Word Counter</h3>
+                    <p>Count Words, Characters and Change Case</p>
+                    <button class="btn" onclick="openToolDashboard('textCounterTool')">OPEN TOOL</button>
+                </div>
 
-            <div class="card">
-                <h3>🎵 Media / TikTok Downloader</h3>
-                <p>Direct Download Videos & Photos</p>
-                <button class="btn" onclick="openToolDashboard('dlTool')">OPEN DOWNLOADER</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>🎨 Color Picker & Converter</h3>
+                    <p>Convert HEX, RGB, HSL and Pick Colors</p>
+                    <button class="btn" onclick="openToolDashboard('colorPickerTool')">OPEN PICKER</button>
+                </div>
 
-            <div class="card">
-                <h3>WhatsApp URL Generator</h3>
-                <p>Direct Message Links for Phone Numbers</p>
-                <button class="btn" onclick="openToolDashboard('urlTool')">OPEN TOOL</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>🧮 Advanced Cyber Calculator</h3>
+                    <p>Full Featured Calculator for All Calculations</p>
+                    <button class="btn" onclick="openToolDashboard('calcTool')">OPEN TOOL</button>
+                </div>
 
-            <div class="card">
-                <h3>Group Link QR Tool</h3>
-                <p>Convert WhatsApp Group Links to QR</p>
-                <button class="btn" onclick="openToolDashboard('groupQrTool')">OPEN TOOL</button>
-            </div>
+                <div class="card tool-item">
+                    <h3>WhatsApp Unban Tool</h3>
+                    <p>Generate Official Appeal Emails Fast</p>
+                    <button class="btn" onclick="openToolDashboard('unbanTool')">OPEN TOOL</button>
+                </div>
 
-            <div class="card">
-                <h3>Catalogue Splitter</h3>
-                <p>Split Image into Grid Tiles</p>
-                <button class="btn" onclick="openToolDashboard('splitTool')">OPEN TOOL</button>
+                <div class="card tool-item">
+                    <h3>Custom QR Generator</h3>
+                    <p>Create Custom Color QR Codes</p>
+                    <button class="btn" onclick="openToolDashboard('qrTool')">OPEN GENERATOR</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>📷 Live & File QR Scanner</h3>
+                    <p>Scan QR from Camera or Image File</p>
+                    <button class="btn" onclick="openToolDashboard('qrScannerTool')">OPEN SCANNER</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>🏷️ Barcode Maker</h3>
+                    <p>Generate Custom Colored Barcodes</p>
+                    <button class="btn" onclick="openToolDashboard('barcodeTool')">OPEN MAKER</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>Password Generator</h3>
+                    <p>Generate Strong Custom Passwords</p>
+                    <button class="btn" onclick="openToolDashboard('passTool')">OPEN GENERATOR</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>🎵 Media / TikTok Downloader</h3>
+                    <p>Direct Download Videos & Photos</p>
+                    <button class="btn" onclick="openToolDashboard('dlTool')">OPEN DOWNLOADER</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>WhatsApp URL Generator</h3>
+                    <p>Direct Message Links for Phone Numbers</p>
+                    <button class="btn" onclick="openToolDashboard('urlTool')">OPEN TOOL</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>Group Link QR Tool</h3>
+                    <p>Convert WhatsApp Group Links to QR</p>
+                    <button class="btn" onclick="openToolDashboard('groupQrTool')">OPEN TOOL</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>Catalogue Splitter</h3>
+                    <p>Split Image into Grid Tiles</p>
+                    <button class="btn" onclick="openToolDashboard('splitTool')">OPEN TOOL</button>
+                </div>
             </div>
 
         </div>
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
 
-        <!-- 1. Cyber Calculator -->
+        <!-- NEW TOOL 1: PDF to Image / Image to PDF -->
+        <div id="pdfTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📄 PDF & Image Converter</h3>
+                <p><b>Option A: Images to PDF</b></p>
+                <input type="file" id="imgToPdfInput" accept="image/*" multiple>
+                <button class="btn" onclick="convertImagesToPdf()">CONVERT TO PDF</button>
+
+                <p style="margin-top:20px;"><b>Option B: PDF to Images</b></p>
+                <input type="file" id="pdfToImgInput" accept="application/pdf">
+                <button class="btn" onclick="convertPdfToImages()">CONVERT TO IMAGES</button>
+                
+                <div id="pdfResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL 2: Background Remover UI -->
+        <div id="bgRemoveTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🖼️ Background Remover</h3>
+                <p>Upload an image to process transparency.</p>
+                <input type="file" id="bgInput" accept="image/*">
+                <button class="btn" onclick="processBgRemove()">REMOVE BACKGROUND</button>
+                <div id="bgResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL 3: Network Ping & Status Checker -->
+        <div id="pingTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🌐 Network Ping & Status Checker</h3>
+                <input type="text" id="pingUrl" placeholder="https://example.com">
+                <button class="btn" onclick="checkNetworkPing()">CHECK STATUS & PING</button>
+                <div id="pingResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL 4: Device Info & IP Checker -->
+        <div id="ipInfoTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📱 Device Info & IP Checker</h3>
+                <button class="btn" onclick="fetchDeviceInfo()">GET MY DEVICE & IP DETAILS</button>
+                <div id="ipResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL 5: Base64 / URL Encoder & Decoder -->
+        <div id="encoderTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🔐 Base64 / URL Encoder & Decoder</h3>
+                <textarea id="encodeText" placeholder="Enter text here..."></textarea>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <button class="btn" onclick="runEncode('b64e')">Base64 Encode</button>
+                    <button class="btn" onclick="runEncode('b64d')">Base64 Decode</button>
+                    <button class="btn" onclick="runEncode('urle')">URL Encode</button>
+                    <button class="btn" onclick="runEncode('urld')">URL Decode</button>
+                </div>
+                <div id="encodeResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL 6: Text Case & Word Counter -->
+        <div id="textCounterTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📝 Text Case & Word Counter</h3>
+                <textarea id="counterText" placeholder="Type or paste text..." oninput="analyzeText()"></textarea>
+                <div id="counterStats" style="font-size:0.85rem; color:var(--text-sub); margin-bottom:10px;">
+                    Words: 0 | Characters: 0 | Lines: 0
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <button class="btn" onclick="changeCase('upper')">UPPERCASE</button>
+                    <button class="btn" onclick="changeCase('lower')">lowercase</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL 7: Color Picker & Converter -->
+        <div id="colorPickerTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🎨 Color Picker & Converter</h3>
+                <input type="color" id="mainColorPicker" value="#00ff66" onchange="convertColorValues()" style="height:50px;">
+                <div id="colorValuesOut" class="res-output">
+                    HEX: #00ff66<br>RGB: rgb(0, 255, 102)
+                </div>
+            </div>
+        </div>
+
+        <!-- Existing Tools Dashboards -->
         <div id="calcTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -609,7 +842,6 @@
             </div>
         </div>
 
-        <!-- 2. WhatsApp Unban Tool -->
         <div id="unbanTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -626,7 +858,6 @@
             </div>
         </div>
 
-        <!-- 3. Custom QR Generator -->
         <div id="qrTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -639,7 +870,6 @@
             </div>
         </div>
 
-        <!-- 4. Live Camera & File QR Scanner -->
         <div id="qrScannerTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -651,7 +881,6 @@
             </div>
         </div>
 
-        <!-- 5. Barcode Maker -->
         <div id="barcodeTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -664,7 +893,6 @@
             </div>
         </div>
 
-        <!-- 6. Password Generator -->
         <div id="passTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -677,7 +905,6 @@
             </div>
         </div>
 
-        <!-- 7. TikTok Downloader -->
         <div id="dlTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -688,7 +915,6 @@
             </div>
         </div>
 
-        <!-- 8. WhatsApp URL Generator -->
         <div id="urlTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -700,7 +926,6 @@
             </div>
         </div>
 
-        <!-- 9. Group Link QR Tool -->
         <div id="groupQrTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -711,7 +936,6 @@
             </div>
         </div>
 
-        <!-- 10. Catalogue Splitter -->
         <div id="splitTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -741,16 +965,41 @@
     </footer>
 
     <script>
-        // Service Worker Registration for PWA Support
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker registered!', reg))
-                    .catch(err => console.log('Service Worker registration failed:', err));
+                    .then(reg => console.log('Service Worker registered!'))
+                    .catch(err => console.log('Service Worker failed:', err));
             });
         }
 
-        // Theme Toggle Logic with localStorage memory
+        // Drawer Menu Functions
+        function openDrawerMenu() {
+            document.getElementById('drawerMenu').classList.add('open');
+            document.getElementById('drawerOverlay').style.display = 'block';
+        }
+
+        function closeDrawerMenu() {
+            document.getElementById('drawerMenu').classList.remove('open');
+            document.getElementById('drawerOverlay').style.display = 'none';
+        }
+
+        function scrollToTools() {
+            document.getElementById('toolsSectionTitle').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Real-time Tool Search Filter
+        function filterTools() {
+            let q = document.getElementById('toolSearchInput').value.toLowerCase();
+            let items = document.querySelectorAll('.tool-item');
+            items.forEach(item => {
+                let txt = item.innerText.toLowerCase();
+                item.style.display = txt.includes(q) ? 'block' : 'none';
+            });
+        }
+
+        // Theme Toggle Logic
         function toggleTheme() {
             const html = document.documentElement;
             const btn = document.getElementById('themeToggleBtn');
@@ -765,7 +1014,6 @@
             }
         }
 
-        // Load saved theme on page startup
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
             const btn = document.getElementById('themeToggleBtn');
@@ -775,7 +1023,7 @@
             }
         });
 
-        // Dedicated Tool Dashboard Routing Logic
+        // Navigation Routing
         function openToolDashboard(toolId) {
             document.getElementById('mainHubDashboard').style.display = 'none';
             document.querySelectorAll('.tool-dashboard-view').forEach(view => view.style.display = 'none');
@@ -789,7 +1037,7 @@
             window.scrollTo(0, 0);
         }
 
-        // Live System Uptime Clock
+        // System Uptime Clock
         function updateUptime() {
             let start = new Date("2026-11-07T08:30:00");
             let now = new Date();
@@ -812,6 +1060,162 @@
         }
         setInterval(updateUptime, 1000);
         updateUptime();
+
+        // 1. PDF & Image Converter Logic
+        function convertImagesToPdf() {
+            let files = document.getElementById('imgToPdfInput').files;
+            let out = document.getElementById('pdfResult');
+            if (!files.length) { alert("Select images!"); return; }
+            out.style.display = 'block'; out.innerText = 'Creating PDF...';
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            let count = 0;
+            Array.from(files).forEach((file, index) => {
+                let reader = new FileReader();
+                reader.onload = e => {
+                    if (index > 0) pdf.addPage();
+                    pdf.addImage(e.target.result, 'JPEG', 10, 10, 190, 0);
+                    count++;
+                    if (count === files.length) {
+                        pdf.save('ConvertedDocument.pdf');
+                        out.innerHTML = '✅ PDF Created and Downloaded Successfully!';
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function convertPdfToImages() {
+            let file = document.getElementById('pdfToImgInput').files[0];
+            let out = document.getElementById('pdfResult');
+            if (!file) { alert("Select a PDF file!"); return; }
+            out.style.display = 'block'; out.innerText = 'Extracting pages...';
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let typedarray = new Uint8Array(e.target.result);
+                pdfjsLib.getDocument(typedarray).promise.then(pdf => {
+                    out.innerHTML = `<p>Found ${pdf.numPages} Pages:</p>`;
+                    for(let i=1; i<=pdf.numPages; i++) {
+                        pdf.getPage(i).then(page => {
+                            let viewport = page.getViewport({ scale: 1 });
+                            let canvas = document.createElement('canvas');
+                            let ctx = canvas.getContext('2d');
+                            canvas.height = viewport.height; canvas.width = viewport.width;
+                            page.render({ canvasContext: ctx, viewport: viewport }).promise.then(() => {
+                                let imgUrl = canvas.toDataURL();
+                                out.innerHTML += `<div style="margin:10px 0;"><img src="${imgUrl}"><br><button class="btn" onclick="directDownloadBlob('${imgUrl}', 'Page-${i}.png')">⬇️ Download Page ${i}</button></div>`;
+                            });
+                        });
+                    }
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // 2. Background Remover Logic
+        function processBgRemove() {
+            let file = document.getElementById('bgInput').files[0];
+            let out = document.getElementById('bgResult');
+            if (!file) { alert("Please select an image!"); return; }
+            out.style.display = 'block'; out.innerText = 'Processing transparency...';
+            let reader = new FileReader();
+            reader.onload = e => {
+                let img = new Image();
+                img.onload = () => {
+                    let cvs = document.createElement('canvas');
+                    let ctx = cvs.getContext('2d');
+                    cvs.width = img.width; cvs.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let data = imgData.data;
+                    for (let i = 0; i < data.length; i += 4) {
+                        if (data[i] > 220 && data[i+1] > 220 && data[i+2] > 220) {
+                            data[i+3] = 0;
+                        }
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+                    let resUrl = cvs.toDataURL();
+                    out.innerHTML = `<img src="${resUrl}"><br><button class="btn" onclick="directDownloadBlob('${resUrl}', 'No-BG.png')">⬇️ Download Clean PNG</button>`;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 3. Network Ping & Status Checker
+        async function checkNetworkPing() {
+            let url = document.getElementById('pingUrl').value;
+            let out = document.getElementById('pingResult');
+            if (!url) { alert("Enter a valid URL!"); return; }
+            out.style.display = 'block'; out.innerText = 'Pinging host...';
+            let start = Date.now();
+            try {
+                let res = await fetch(url, { mode: 'no-cors' });
+                let time = Date.now() - start;
+                out.innerHTML = `<span style="color:var(--green-live);">✅ HOST ONLINE</span><br>Latency / Response Time: <b>${time} ms</b>`;
+            } catch(e) {
+                out.innerHTML = `<span style="color:#ff4444;">❌ HOST UNREACHABLE OR BLOCKED</span>`;
+            }
+        }
+
+        // 4. Device Info & IP Checker
+        async function fetchDeviceInfo() {
+            let out = document.getElementById('ipResult');
+            out.style.display = 'block'; out.innerText = 'Fetching specs...';
+            try {
+                let res = await fetch('https://api.ipify.org?format=json');
+                let data = await res.json();
+                let info = `<b>IP Address:</b> ${data.ip}<br>` +
+                           `<b>User Agent:</b> ${navigator.userAgent}<br>` +
+                           `<b>Screen Resolution:</b> ${window.screen.width} x ${window.screen.height}<br>` +
+                           `<b>Platform:</b> ${navigator.platform}<br>` +
+                           `<b>Language:</b> ${navigator.language}`;
+                out.innerHTML = info;
+            } catch(e) {
+                out.innerHTML = "Unable to fetch IP details.";
+            }
+        }
+
+        // 5. Base64 & URL Encoder/Decoder
+        function runEncode(type) {
+            let txt = document.getElementById('encodeText').value;
+            let out = document.getElementById('encodeResult');
+            if(!txt) { alert("Enter text!"); return; }
+            out.style.display = 'block';
+            try {
+                if(type === 'b64e') out.innerText = btoa(txt);
+                else if(type === 'b64d') out.innerText = atob(txt);
+                else if(type === 'urle') out.innerText = encodeURIComponent(txt);
+                else if(type === 'urld') out.innerText = decodeURIComponent(txt);
+            } catch(e) {
+                out.innerText = "Error decoding text!";
+            }
+        }
+
+        // 6. Text Counter & Case Transformer
+        function analyzeText() {
+            let txt = document.getElementById('counterText').value;
+            let words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+            let chars = txt.length;
+            let lines = txt ? txt.split('\n').length : 0;
+            document.getElementById('counterStats').innerText = `Words: ${words} | Characters: ${chars} | Lines: ${lines}`;
+        }
+
+        function changeCase(type) {
+            let field = document.getElementById('counterText');
+            if(type === 'upper') field.value = field.value.toUpperCase();
+            else if(type === 'lower') field.value = field.value.toLowerCase();
+            analyzeText();
+        }
+
+        // 7. Color Picker & Converter
+        function convertColorValues() {
+            let hex = document.getElementById('mainColorPicker').value;
+            let r = parseInt(hex.substring(1,3), 16);
+            let g = parseInt(hex.substring(3,5), 16);
+            let b = parseInt(hex.substring(5,7), 16);
+            document.getElementById('colorValuesOut').innerHTML = `<b>HEX:</b> ${hex}<br><b>RGB:</b> rgb(${r}, ${g}, ${b})`;
+        }
 
         // Calculator Logic
         let calcVal = "";
@@ -844,7 +1248,7 @@
             });
         }
 
-        // Unban Tool
+        // Existing Tools Script Support
         function sendUnban() {
             let num = document.getElementById('unbanNum').value;
             let email = document.getElementById('unbanEmail').value;
@@ -854,7 +1258,6 @@
             window.location.href = `mailto:support@whatsapp.com?subject=Unban Appeal for ${num}&body=${encodeURIComponent(body)}`;
         }
 
-        // QR Generator
         function genQR() {
             let txt = document.getElementById('qrText').value;
             let col = document.getElementById('qrColor').value.replace('#','');
@@ -865,7 +1268,6 @@
             resDiv.innerHTML = `<img src="${qrUrl}"><br><button class="btn" onclick="directDownloadBlob('${qrUrl}', 'QR.png')">⬇️ Download QR</button><button class="btn btn-danger" onclick="clearResult('qrResult')">🗑️ Delete</button>`;
         }
 
-        // QR Scanner
         function scanQRImage(event) {
             let file = event.target.files[0];
             let resDiv = document.getElementById('qrScanResult');
@@ -917,7 +1319,6 @@
             }
         }
 
-        // Barcode Maker
         function genBarcode() {
             let txt = document.getElementById('bcText').value;
             let col = document.getElementById('bcColor').value;
@@ -934,7 +1335,6 @@
             } catch(e) { resDiv.innerHTML = "Invalid Format!"; }
         }
 
-        // Password Generator
         function genCustomPass() {
             let pref = document.getElementById('passPrefix').value;
             let len = parseInt(document.getElementById('passLen').value) || 12;
@@ -944,7 +1344,6 @@
             document.getElementById('passOut').value = res;
         }
 
-        // TikTok Downloader
         async function fetchTikTokMedia() {
             let url = document.getElementById('ttUrl').value;
             let resDiv = document.getElementById('ttResult');
@@ -965,7 +1364,6 @@
             } catch(e) { resDiv.innerHTML = "API Connection Error."; }
         }
 
-        // WhatsApp URL Generator
         function genWAUrl() {
             let num = document.getElementById('waNum').value;
             let msg = document.getElementById('waMsg').value;
@@ -976,7 +1374,6 @@
             out.innerHTML = `<a href="${link}" target="_blank" class="btn" style="display:block; margin-bottom:8px;">💬 Open WhatsApp</a><button class="btn btn-danger" onclick="clearResult('waUrlOut')">🗑️ Delete</button>`;
         }
 
-        // Group Link QR
         function genGroupQR() {
             let url = document.getElementById('grpUrl').value;
             let resDiv = document.getElementById('grpQrOut');
@@ -986,7 +1383,6 @@
             resDiv.innerHTML = `<img src="${qrUrl}"><br><button class="btn" onclick="directDownloadBlob('${qrUrl}', 'GroupQR.png')">⬇️ Download QR</button><button class="btn btn-danger" onclick="clearResult('grpQrOut')">🗑️ Delete</button>`;
         }
 
-        // Catalogue Splitter
         function splitCatalogImage() {
             let file = document.getElementById('splitInput').files[0];
             let out = document.getElementById('splitOut');
