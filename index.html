@@ -51,6 +51,61 @@
             position: relative;
         }
 
+        /* Security Verification Gateway Overlay */
+        #securityGate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .gate-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .gate-card h2 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .gate-card p {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .captcha-box {
+            background: var(--inner-box);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .captcha-box input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
         /* Watermark Background Text */
         .bg-watermark-container {
             position: fixed;
@@ -513,6 +568,19 @@
 </head>
 <body>
 
+    <!-- Security Gate Verification Overlay (Robot Check) -->
+    <div id="securityGate">
+        <div class="gate-card">
+            <h2>🛡️ SECURITY VERIFICATION</h2>
+            <p>Please verify that you are a human before accessing Dilshan All In One Hub.</p>
+            <div class="captcha-box" onclick="toggleHumanCheck()">
+                <span style="font-size: 0.9rem; font-weight: 700;">I am not a robot</span>
+                <input type="checkbox" id="humanCheckbox" onclick="event.stopPropagation(); toggleHumanCheck();">
+            </div>
+            <button class="btn" id="proceedBtn" onclick="passSecurityGate()" style="opacity: 0.5; pointer-events: none;">PROCEED TO HUB</button>
+        </div>
+    </div>
+
     <!-- Watermark Background Text -->
     <div class="bg-watermark-container">
         <div class="bg-watermark-text">DILSHAN ALL IN ONE &nbsp;&bull;&nbsp; DILSHAN ALL IN ONE &nbsp;&bull;&nbsp; DILSHAN ALL IN ONE</div>
@@ -547,9 +615,9 @@
             <button class="theme-btn" onclick="toggleTheme()" id="themeToggleBtn">☀️ Light Mode</button>
         </div>
 
-        <!-- Search Bar Component -->
+        <!-- Smart Search Bar Component -->
         <div class="search-box-container">
-            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool..." onkeyup="filterTools()">
+            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. pdf, color, qr)..." onkeyup="filterTools()">
         </div>
         
         <!-- MAIN HUB DASHBOARD -->
@@ -614,6 +682,24 @@
             <div class="section-title" id="toolsSectionTitle">🛠️ UTILITY TOOLS & GENERATORS</div>
             
             <div id="toolsListContainer">
+                <div class="card tool-item">
+                    <h3>🎨 Image Color Extractor</h3>
+                    <p>Extract Color Palette & HEX/RGB Codes from Images</p>
+                    <button class="btn" onclick="openToolDashboard('colorExtractTool')">OPEN TOOL</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>⚖️ Smart Unit & Currency Converter</h3>
+                    <p>Convert Weight, Length, Temperature & Data Units</p>
+                    <button class="btn" onclick="openToolDashboard('unitConvTool')">OPEN TOOL</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>🎁 Random Giveaway / Name Picker</h3>
+                    <p>Pick Lucky Winners Randomly with Animation</p>
+                    <button class="btn" onclick="openToolDashboard('giveawayTool')">OPEN PICKER</button>
+                </div>
+
                 <div class="card tool-item">
                     <h3>📄 PDF & Image Converter</h3>
                     <p>Convert PDF to Images or Images to PDF</p>
@@ -720,6 +806,47 @@
         </div>
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
+
+        <!-- NEW TOOL A: Image Color Extractor -->
+        <div id="colorExtractTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🎨 Advanced Image Color Extractor</h3>
+                <input type="file" id="extractImgInput" accept="image/*">
+                <button class="btn" onclick="extractImageColors()">EXTRACT COLOR PALETTE</button>
+                <div id="extractResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL B: Smart Unit Converter -->
+        <div id="unitConvTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>⚖️ Multi-Unit & Smart Converter</h3>
+                <select id="convType" onchange="updateUnitOptions()">
+                    <option value="weight">Weight (kg, g, lbs, oz)</option>
+                    <option value="length">Length (m, cm, km, inches, feet)</option>
+                    <option value="data">Digital Data (MB, GB, TB, KB)</option>
+                </select>
+                <input type="number" id="convVal" placeholder="Enter value..." oninput="runUnitConversion()">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <select id="unitFrom" onchange="runUnitConversion()"></select>
+                    <select id="unitTo" onchange="runUnitConversion()"></select>
+                </div>
+                <div id="convResult" class="res-output" style="margin-top:15px; font-weight:bold;">Result: 0</div>
+            </div>
+        </div>
+
+        <!-- NEW TOOL C: Random Giveaway / Name Picker -->
+        <div id="giveawayTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🎁 Random Giveaway / Name Picker</h3>
+                <textarea id="giveawayNames" placeholder="Enter names or items separated by comma or new line..."></textarea>
+                <button class="btn" onclick="pickRandomWinner()">🎲 PICK WINNER</button>
+                <div id="giveawayResult" class="res-output" style="display:none; font-size:1.2rem; font-weight:bold; color:var(--green-live);"></div>
+            </div>
+        </div>
 
         <!-- NEW TOOL 1: PDF to Image / Image to PDF -->
         <div id="pdfTool" class="tool-dashboard-view">
@@ -974,6 +1101,29 @@
             });
         }
 
+        // Security Gate Verification Logic
+        function toggleHumanCheck() {
+            let chk = document.getElementById('humanCheckbox');
+            chk.checked = !chk.checked;
+            let btn = document.getElementById('proceedBtn');
+            if(chk.checked) {
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            } else {
+                btn.style.opacity = '0.5';
+                btn.style.pointerEvents = 'none';
+            }
+        }
+
+        function passSecurityGate() {
+            let chk = document.getElementById('humanCheckbox');
+            if(chk.checked) {
+                document.getElementById('securityGate').style.display = 'none';
+            } else {
+                alert("Please confirm you are not a robot!");
+            }
+        }
+
         // Drawer Menu Functions
         function openDrawerMenu() {
             document.getElementById('drawerMenu').classList.add('open');
@@ -989,13 +1139,18 @@
             document.getElementById('toolsSectionTitle').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Real-time Tool Search Filter
+        // Smart Partial Match / Fuzzy Tool Search Filter
         function filterTools() {
-            let q = document.getElementById('toolSearchInput').value.toLowerCase();
+            let q = document.getElementById('toolSearchInput').value.toLowerCase().trim();
             let items = document.querySelectorAll('.tool-item');
             items.forEach(item => {
                 let txt = item.innerText.toLowerCase();
-                item.style.display = txt.includes(q) ? 'block' : 'none';
+                // Partial and keyword matching support
+                if(q === "" || txt.includes(q)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
             });
         }
 
@@ -1021,6 +1176,7 @@
                 document.documentElement.setAttribute('data-theme', 'light');
                 btn.innerHTML = '🌙 Dark Mode';
             }
+            updateUnitOptions();
         });
 
         // Navigation Routing
@@ -1060,6 +1216,92 @@
         }
         setInterval(updateUptime, 1000);
         updateUptime();
+
+        // --- NEW TOOL 1: Image Color Extractor Logic ---
+        function extractImageColors() {
+            let file = document.getElementById('extractImgInput').files[0];
+            let out = document.getElementById('extractResult');
+            if(!file) { alert("Please select an image!"); return; }
+            out.style.display = 'block'; out.innerText = 'Extracting colors...';
+            let reader = new FileReader();
+            reader.onload = e => {
+                let img = new Image();
+                img.onload = () => {
+                    let cvs = document.createElement('canvas');
+                    let ctx = cvs.getContext('2d');
+                    cvs.width = 50; cvs.height = 50; // downsample for quick sampling
+                    ctx.drawImage(img, 0, 0, 50, 50);
+                    let imgData = ctx.getImageData(0, 0, 50, 50).data;
+                    let colors = [];
+                    for(let i=0; i<imgData.length; i+=4) {
+                        let r = imgData[i], g = imgData[i+1], b = imgData[i+2];
+                        let hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+                        if(!colors.includes(hex) && colors.length < 5) colors.push(hex);
+                    }
+                    let html = `<p><b>Extracted Color Palette:</b></p><div style="display:flex; gap:10px; justify-content:center; margin:10px 0;">`;
+                    colors.forEach(col => {
+                        html += `<div style="width:40px; height:40px; background:${col}; border-radius:8px; border:1px solid #fff;"></div>`;
+                    });
+                    html += `</div><p>${colors.join(' | ')}</p><button class="btn" onclick="copyToClipboard('${colors.join(', ')}')">📋 Copy Palette Codes</button>`;
+                    out.innerHTML = html;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // --- NEW TOOL 2: Smart Unit & Currency Converter Logic ---
+        const unitData = {
+            weight: { kg: 1, g: 0.001, lbs: 0.453592, oz: 0.0283495 },
+            length: { m: 1, cm: 0.01, km: 1000, inch: 0.0254, feet: 0.3048 },
+            data: { MB: 1, GB: 1024, TB: 1048576, KB: 0.000976562 }
+        };
+
+        function updateUnitOptions() {
+            let type = document.getElementById('convType').value;
+            let uFrom = document.getElementById('unitFrom');
+            let uTo = document.getElementById('unitTo');
+            let keys = Object.keys(unitData[type]);
+            uFrom.innerHTML = ""; uTo.innerHTML = "";
+            keys.forEach(k => {
+                uFrom.innerHTML += `<option value="${k}">${k}</option>`;
+                uTo.innerHTML += `<option value="${k}">${k}</option>`;
+            });
+            if(keys.length > 1) uTo.selectedIndex = 1;
+            runUnitConversion();
+        }
+
+        function runUnitConversion() {
+            let type = document.getElementById('convType').value;
+            let val = parseFloat(document.getElementById('convVal').value) || 0;
+            let from = document.getElementById('unitFrom').value;
+            let to = document.getElementById('unitTo').value;
+            let rates = unitData[type];
+            let baseVal = val * rates[from];
+            let finalVal = baseVal / rates[to];
+            document.getElementById('convResult').innerText = `Result: ${finalVal.toFixed(4)} ${to}`;
+        }
+
+        // --- NEW TOOL 3: Random Giveaway / Name Picker Logic ---
+        function pickRandomWinner() {
+            let raw = document.getElementById('giveawayNames').value;
+            let out = document.getElementById('giveawayResult');
+            let list = raw.split(/[\n,]+/).map(n => n.trim()).filter(n => n.length > 0);
+            if(list.length === 0) { alert("Please enter names or items!"); return; }
+            out.style.display = 'block';
+            out.innerText = "🎲 Rolling...";
+            let counter = 0;
+            let interval = setInterval(() => {
+                let randomItem = list[Math.floor(Math.random() * list.length)];
+                out.innerText = "🏆 " + randomItem;
+                counter++;
+                if(counter > 15) {
+                    clearInterval(interval);
+                    let winner = list[Math.floor(Math.random() * list.length)];
+                    out.innerHTML = `🎉 WINNER: <span style="color:#ffffff; background:#00ff66; padding:4px 10px; border-radius:6px; color:#000;">${winner}</span> 🎉`;
+                }
+            }, 100);
+        }
 
         // 1. PDF & Image Converter Logic
         function convertImagesToPdf() {
@@ -1387,7 +1629,7 @@
             let file = document.getElementById('splitInput').files[0];
             let out = document.getElementById('splitOut');
             if(!file) { alert("Select Image!"); return; }
-            out.style.display = "block"; out.innerHTML = "Splitting Image...";
+            out.style.display = 'block'; out.innerHTML = "Splitting Image...";
             let reader = new FileReader();
             reader.onload = e => {
                 let img = new Image();
