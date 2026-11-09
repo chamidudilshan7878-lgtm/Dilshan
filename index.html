@@ -717,24 +717,6 @@
                 </div>
 
                 <div class="card tool-item">
-                    <h3>▶️ YouTube MP3 / MP4 Downloader</h3>
-                    <p>Download YouTube Videos or Audio</p>
-                    <button class="btn" onclick="openToolDashboard('ytTool')">OPEN DOWNLOADER</button>
-                </div>
-
-                <div class="card tool-item">
-                    <h3>📸 Instagram Downloader</h3>
-                    <p>Download Reels, Photos & Videos</p>
-                    <button class="btn" onclick="openToolDashboard('igTool')">OPEN DOWNLOADER</button>
-                </div>
-
-                <div class="card tool-item">
-                    <h3>📘 Facebook Downloader</h3>
-                    <p>Download Facebook Videos</p>
-                    <button class="btn" onclick="openToolDashboard('fbTool')">OPEN DOWNLOADER</button>
-                </div>
-
-                <div class="card tool-item">
                     <h3>WhatsApp URL Generator</h3>
                     <p>Direct Message Links for Phone Numbers</p>
                     <button class="btn" onclick="openToolDashboard('urlTool')">OPEN TOOL</button>
@@ -989,43 +971,6 @@
                 <input type="text" id="ttUrl" placeholder="Paste TikTok Link here...">
                 <button class="btn" onclick="fetchTikTokMedia()">FETCH MEDIA</button>
                 <div id="ttResult" class="res-output" style="display:none;"></div>
-            </div>
-        </div>
-
-        <!-- YouTube Downloader -->
-        <div id="ytTool" class="tool-dashboard-view">
-            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
-            <div class="card">
-                <h3>▶️ YouTube Downloader</h3>
-                <input type="text" id="ytUrl" placeholder="Paste YouTube link...">
-                <select id="ytMode">
-                    <option value="auto">🎬 MP4 Video</option>
-                    <option value="audio">🎵 MP3 Audio</option>
-                </select>
-                <button class="btn" onclick="fetchMedia('yt')">GET DOWNLOAD LINKS</button>
-                <div id="ytResult" class="res-output" style="display:none;"></div>
-            </div>
-        </div>
-
-        <!-- Instagram Downloader -->
-        <div id="igTool" class="tool-dashboard-view">
-            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
-            <div class="card">
-                <h3>📸 Instagram Downloader</h3>
-                <input type="text" id="igUrl" placeholder="Paste Instagram link...">
-                <button class="btn" onclick="fetchMedia('ig')">GET DOWNLOAD LINKS</button>
-                <div id="igResult" class="res-output" style="display:none;"></div>
-            </div>
-        </div>
-
-        <!-- Facebook Downloader -->
-        <div id="fbTool" class="tool-dashboard-view">
-            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
-            <div class="card">
-                <h3>📘 Facebook Downloader</h3>
-                <input type="text" id="fbUrl" placeholder="Paste Facebook video link...">
-                <button class="btn" onclick="fetchMedia('fb')">GET DOWNLOAD LINKS</button>
-                <div id="fbResult" class="res-output" style="display:none;"></div>
             </div>
         </div>
 
@@ -1626,62 +1571,6 @@
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
-        }
-
-        // =====================================================
-        // YouTube / Instagram / Facebook Downloader (no backend)
-        // Link එක copy කරලා, downloader site එකක් open කරනවා.
-        // Site වෙනස් වුණොත් පහල list එක edit කරන්න.
-        // =====================================================
-        function ytNormalize(u) {
-            let m = u.match(/(?:youtu\.be\/|v=|shorts\/)([\w-]{11})/);
-            return m ? 'https://www.youtube.com/watch?v=' + m[1] : u;
-        }
-
-        const DL_SITES = {
-            yt: [
-                { name: 'SSYouTube (MP4 / MP3)', open: u => ytNormalize(u).replace('youtube.com', 'ssyoutube.com') },
-                { name: 'Cobalt Tools', open: () => 'https://cobalt.tools/' },
-                { name: 'Y2Mate', open: () => 'https://www.y2mate.com/' }
-            ],
-            ig: [
-                { name: 'SnapInsta', open: () => 'https://snapinsta.app/' },
-                { name: 'FastDL', open: () => 'https://fastdl.app/' },
-                { name: 'Cobalt Tools', open: () => 'https://cobalt.tools/' }
-            ],
-            fb: [
-                { name: 'FDown', open: () => 'https://fdown.net/' },
-                { name: 'SnapSave', open: () => 'https://snapsave.app/' },
-                { name: 'Cobalt Tools', open: () => 'https://cobalt.tools/' }
-            ]
-        };
-
-        const DL_DOMAINS = {
-            yt: /youtube\.com|youtu\.be/i,
-            ig: /instagram\.com/i,
-            fb: /facebook\.com|fb\.watch|fb\.com/i
-        };
-
-        function fetchMedia(prefix) {
-            let url = document.getElementById(prefix + 'Url').value.trim();
-            let out = document.getElementById(prefix + 'Result');
-            if (!url) { alert("Paste a link first!"); return; }
-            if (!DL_DOMAINS[prefix].test(url)) { alert("This link doesn't look right for this tool!"); return; }
-
-            if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
-
-            let html = '<p style="margin-bottom:10px;">✅ Link copied! Choose a site, then paste the link there:</p>';
-            DL_SITES[prefix].forEach((site, i) => {
-                html += `<button class="btn" style="margin-bottom:8px;" onclick="openDlSite('${prefix}', ${i})">🌐 ${site.name}</button>`;
-            });
-            html += `<button class="btn btn-danger" onclick="clearResult('${prefix}Result')">🗑️ Delete</button>`;
-            out.style.display = 'block';
-            out.innerHTML = html;
-        }
-
-        function openDlSite(prefix, i) {
-            let url = document.getElementById(prefix + 'Url').value.trim();
-            window.open(DL_SITES[prefix][i].open(url), '_blank', 'noopener');
         }
     </script>
 </body>
