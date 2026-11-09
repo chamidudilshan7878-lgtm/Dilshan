@@ -1404,7 +1404,7 @@
                     let cvs = document.createElement('canvas');
                     let ctx = cvs.getContext('2d');
                     cvs.width = img.width; cvs.height = img.height;
-                    cvs.drawImage(img, 0, 0);
+                    ctx.drawImage(img, 0, 0);
                     let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let data = imgData.data;
                     for (let i = 0; i < data.length; i += 4) {
@@ -1560,7 +1560,7 @@
                     let ctx = cvs.getContext('2d');
                     cvs.width = img.width; cvs.height = img.height;
                     cvs.drawImage(img, 0, 0);
-                    let imgData = cvs.getImageData(0, 0, cvs.width, cvs.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
                         resDiv.innerHTML = `<b>Scanned Result:</b><p style="margin:8px 0;">${code.data}</p><button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy</button><button class="btn btn-danger" onclick="clearResult('qrScanResult')">🗑️ Delete</button>`;
@@ -1587,7 +1587,7 @@
                     cvs.width = video.videoWidth; cvs.height = video.videoHeight;
                     let ctx = cvs.getContext('2d');
                     ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
-                    let imgData = cvs.getImageData(0, 0, cvs.width, cvs.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if (code) {
                         resDiv.innerHTML = `<b>Result:</b><p>${code.data}</p><button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy</button>`;
@@ -1687,6 +1687,22 @@
             };
             reader.readAsDataURL(file);
         }
+
+        // Netlify Badge ඉවත් කිරීම සඳහා ස්වයංක්‍රීය JavaScript කේතය
+        window.addEventListener('DOMContentLoaded', () => {
+            setInterval(() => {
+                let badge = document.querySelector('#netlify-badge') || document.querySelector('iframe[src*="netlify"]');
+                if (badge) {
+                    badge.remove();
+                }
+                document.querySelectorAll('a').forEach(el => {
+                    if(el.href && el.href.includes('netlify.com') && el.innerText.includes('Powered by')) {
+                        el.style.display = 'none';
+                        if(el.parentElement) el.parentElement.style.display = 'none';
+                    }
+                });
+            }, 500);
+        });
     </script>
 </body>
 </html>
