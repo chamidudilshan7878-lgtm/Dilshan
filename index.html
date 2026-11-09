@@ -535,7 +535,6 @@
         <div class="drawer-links">
             <a href="#" onclick="closeDrawerMenu(); scrollToTools();">🛠️ All Tools</a>
             <a href="https://t.me/DILSHAN7878" target="_blank">✈️ Telegram Support</a>
-            <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank">💬 WhatsApp Contact</a>
         </div>
     </div>
 
@@ -549,7 +548,7 @@
 
         <!-- Smart Search Bar Component -->
         <div class="search-box-container">
-            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. pdf, color, qr)..." onkeyup="filterTools()">
+            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. jpg, png, pdf, qr)..." onkeyup="filterTools()">
         </div>
         
         <!-- MAIN HUB DASHBOARD -->
@@ -560,7 +559,7 @@
                 <h1>DILSHAN ALL IN ONE</h1>
             </header>
 
-            <!-- Video Feature Container (Fixed Stuck Issue with auto-recovery listener) -->
+            <!-- Video Feature Container -->
             <div class="feature-box">
                 <video id="featureVideo" src="https://github.com/chamidudilshan7878-lgtm/Dilshan/raw/refs/heads/main/video.mp4" autoplay loop muted playsinline></video>
             </div>
@@ -605,15 +604,20 @@
             <div class="section-title">👑 OWNER CONTACT</div>
             <div class="card">
                 <h3>Contact Dilshan</h3>
-                <p>Reach out directly for inquiries, custom tools, or support via Telegram or WhatsApp below.</p>
-                <a href="https://t.me/DILSHAN7878" target="_blank" class="btn" style="margin-bottom: 10px;">✈️ TELEGRAM (@DILSHAN7878)</a>
-                <a href="https://wa.me/94768864772?text=Hi%20Dilshan" target="_blank" class="btn">💬 WHATSAPP INBOX</a>
+                <p>Reach out directly for inquiries, custom tools, or support via Telegram below.</p>
+                <a href="https://t.me/DILSHAN7878" target="_blank" class="btn">✈️ TELEGRAM (@DILSHAN7878)</a>
             </div>
 
             <!-- Utility Tools Section -->
             <div class="section-title" id="toolsSectionTitle">🛠️ UTILITY TOOLS & GENERATORS</div>
             
             <div id="toolsListContainer">
+                <div class="card tool-item">
+                    <h3>🔄 JPG & PNG Image Converter</h3>
+                    <p>Convert JPG images to PNG or PNG images to JPG format instantly</p>
+                    <button class="btn" onclick="openToolDashboard('imgConvTool')">OPEN TOOL</button>
+                </div>
+
                 <div class="card tool-item">
                     <h3>🎨 Image Color Extractor</h3>
                     <p>Extract Color Palette & HEX/RGB Codes from Images</p>
@@ -738,6 +742,22 @@
         </div>
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
+
+        <!-- NEW JPG <-> PNG IMAGE FORMAT CONVERTER TOOL -->
+        <div id="imgConvTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🔄 JPG & PNG Image Converter</h3>
+                <input type="file" id="imgConvInput" accept="image/jpeg, image/png">
+                <label style="font-size:0.8rem; color:var(--text-sub); display:block; margin:10px 0 5px 0;">Select Output Format:</label>
+                <select id="targetFormat">
+                    <option value="image/png">Convert to PNG</option>
+                    <option value="image/jpeg">Convert to JPG</option>
+                </select>
+                <button class="btn" onclick="convertImageFormat()">CONVERT & DOWNLOAD</button>
+                <div id="imgConvResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
 
         <!-- NEW TOOL A: Image Color Extractor -->
         <div id="colorExtractTool" class="tool-dashboard-view">
@@ -1139,6 +1159,50 @@
         setInterval(updateUptime, 1000);
         updateUptime();
 
+        // --- NEW: JPG & PNG Image Format Converter Logic ---
+        function convertImageFormat() {
+            let fileInput = document.getElementById('imgConvInput');
+            let targetFormat = document.getElementById('targetFormat').value;
+            let out = document.getElementById('imgConvResult');
+            
+            if(!fileInput.files || fileInput.files.length === 0) {
+                alert("Please select an image file first!");
+                return;
+            }
+
+            let file = fileInput.files[0];
+            out.style.display = 'block';
+            out.innerText = "Converting image...";
+
+            let reader = new FileReader();
+            reader.onload = e => {
+                let img = new Image();
+                img.onload = () => {
+                    let canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    let ctx = canvas.getContext('2d');
+                    
+                    // If converting to JPEG, fill white background in case of transparent PNG
+                    if(targetFormat === 'image/jpeg') {
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
+
+                    ctx.drawImage(img, 0, 0);
+                    
+                    let dataUrl = canvas.toDataURL(targetFormat, 0.92);
+                    let ext = targetFormat === 'image/png' ? 'png' : 'jpg';
+                    let filename = `converted-image.${ext}`;
+
+                    out.innerHTML = `<img src="${dataUrl}" style="max-height:150px;"><br>` +
+                                    `<button class="btn" style="margin-top:10px;" onclick="directDownloadBlob('${dataUrl}', '${filename}')">⬇️ DOWNLOAD CONVERTED IMAGE</button>`;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         // --- NEW TOOL 1: Image Color Extractor Logic ---
         function extractImageColors() {
             let file = document.getElementById('extractImgInput').files[0];
@@ -1444,7 +1508,7 @@
                     let cvs = document.createElement('canvas');
                     let ctx = cvs.getContext('2d');
                     cvs.width = img.width; cvs.height = img.height;
-                    ctx.drawImage(img, 0, 0);
+                    cvs.drawImage(img, 0, 0);
                     let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
