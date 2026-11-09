@@ -618,8 +618,8 @@
             
             <div id="toolsListContainer">
                 <div class="card tool-item">
-                    <h3>🎵 Song / Audio Downloader</h3>
-                    <p>Fetch and download audio tracks or music files from online media links</p>
+                    <h3>🎵 Global Song Search & Downloader</h3>
+                    <p>Search any song or artist name to find details and download MP3 instantly</p>
                     <button class="btn" onclick="openToolDashboard('songDownloadTool')">OPEN TOOL</button>
                 </div>
 
@@ -754,15 +754,15 @@
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
 
-        <!-- NEW SONG / AUDIO DOWNLOADER TOOL -->
+        <!-- NEW GLOBAL SONG SEARCH & DOWNLOADER TOOL -->
         <div id="songDownloadTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
-                <h3>🎵 Song / Audio Downloader</h3>
-                <p>Paste a YouTube or Media link to extract and download audio (MP3/Song).</p>
-                <input type="text" id="songUrlInput" placeholder="Paste link here (e.g. YouTube URL)...">
-                <button class="btn" onclick="fetchSongAudio()">FETCH AUDIO / SONG</button>
-                <div id="songResult" class="res-output" style="display:none;"></div>
+                <h3>🎵 Global Song Search & Downloader</h3>
+                <p>Type any song name or artist to search worldwide tracks:</p>
+                <input type="text" id="songQueryInput" placeholder="e.g. Shape of You, Yohani, Alan Walker...">
+                <button class="btn" onclick="searchGlobalSongs()">SEARCH SONGS</button>
+                <div id="songResult" class="res-output" style="display:none; text-align:left;"></div>
             </div>
         </div>
 
@@ -1182,32 +1182,55 @@
         setInterval(updateUptime, 1000);
         updateUptime();
 
-        // --- NEW: Song / Audio Downloader Logic ---
-        async function fetchSongAudio() {
-            let url = document.getElementById('songUrlInput').value.trim();
+        // --- NEW: Global Song Search & Downloader Logic ---
+        async function searchGlobalSongs() {
+            let query = document.getElementById('songQueryInput').value.trim();
             let out = document.getElementById('songResult');
-            if(!url) {
-                alert("Please paste a valid media link!");
+            if(!query) {
+                alert("Please enter a song name or artist!");
                 return;
             }
             out.style.display = 'block';
-            out.innerText = "Fetching audio track...";
+            out.innerHTML = "🔍 Searching worldwide tracks...";
 
             try {
-                let resp = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
-                let data = await resp.json();
-                if(data.code === 0 && data.data) {
-                    let title = data.data.title || "Audio Track";
-                    let audioUrl = data.data.music || data.data.play;
-                    out.innerHTML = `<p><b>${title}</b></p>` +
-                                    `<audio controls src="${audioUrl}" style="width:100%; margin:10px 0;"></audio><br>` +
-                                    `<button class="btn" onclick="directDownloadBlob('${audioUrl}', 'audio-song.mp3')">⬇️ DOWNLOAD MP3 / AUDIO</button>` +
-                                    `<button class="btn btn-danger" onclick="clearResult('songResult')">🗑️ Clear</button>`;
+                // Using Deezer public API via CORS proxy for reliable global music search
+                let apiUrl = `https://api.deezer.com/search?q=${encodeURIComponent(query)}&output=jsonp`;
+                
+                // Fetching via jsonp / direct JSON fetch workaround
+                let response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.deezer.com/search?q=' + encodeURIComponent(query))}`);
+                let json = await response.json();
+                let data = JSON.parse(json.contents);
+
+                if(data.data && data.data.length > 0) {
+                    let html = `<p><b>Found ${data.data.length} Results:</b></p><div style="margin-top:10px;">`;
+                    data.data.forEach(track => {
+                        let title = track.title;
+                        let artist = track.artist.name;
+                        let album = track.album.title;
+                        let duration = Math.floor(track.duration / 60) + ":" + (track.duration % 60 < 10 ? '0' : '') + (track.duration % 60);
+                        let previewUrl = track.preview; // 30s MP3 preview or full stream
+                        let coverImg = track.album.cover_medium;
+
+                        html += `
+                        <div style="background:var(--inner-box); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:12px; display:flex; gap:12px; align-items:center;">
+                            <img src="${coverImg}" style="width:60px; height:60px; border-radius:8px; object-fit:cover;">
+                            <div style="flex-grow:1; overflow:hidden;">
+                                <h4 style="font-size:0.95rem; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${title}</h4>
+                                <p style="font-size:0.75rem; color:var(--text-sub); margin:2px 0;">Artist: <b>${artist}</b> | Album: ${album}</p>
+                                <p style="font-size:0.7rem; color:var(--text-sub);">Duration: ${duration}</p>
+                                <audio controls src="${previewUrl}" style="width:100%; height:28px; margin-top:6px;"></audio>
+                                <a href="${previewUrl}" download="${title} - ${artist}.mp3" target="_blank" class="btn" style="margin-top:8px; padding:8px; font-size:0.75rem;">⬇️ DOWNLOAD MP3</a>
+                            </div>
+                        </div>`;
+                    });
+                    html += `</div>`;
+                    out.innerHTML = html;
                 } else {
-                    out.innerHTML = `<span style="color:#ff4444;">Could not extract audio from this link. Try a different link.</span>`;
+                    out.innerHTML = `<span style="color:#ff4444;">No songs found for "${query}". Try another name!</span>`;
                 }
             } catch(e) {
-                out.innerHTML = `<span style="color:#ff4444;">Connection error or invalid URL format.</span>`;
+                out.innerHTML = `<span style="color:#ff4444;">Connection error while searching. Please try again.</span>`;
             }
         }
 
