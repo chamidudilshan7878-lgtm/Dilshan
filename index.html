@@ -613,8 +613,8 @@
             
             <div id="toolsListContainer">
                 <div class="card tool-item">
-                    <h3>🎵 Global Song Search & Downloader</h3>
-                    <p>Search any song or artist name to find details and download MP3 instantly</p>
+                    <h3>🎵 Global Song & Artist Catalog</h3>
+                    <p>Search any artist name (e.g. Yohani, Alan Walker, Sanuka) or song to find all tracks instantly</p>
                     <button class="btn" onclick="openToolDashboard('songDownloadTool')">OPEN TOOL</button>
                 </div>
 
@@ -753,10 +753,10 @@
         <div id="songDownloadTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
-                <h3>🎵 Global Song Search & Downloader</h3>
-                <p>Type any song name or artist to search worldwide tracks:</p>
-                <input type="text" id="songQueryInput" placeholder="e.g. Shape of You, Yohani, Alan Walker...">
-                <button class="btn" onclick="searchGlobalSongs()">SEARCH SONGS</button>
+                <h3>🎵 Global Song & Artist Catalog</h3>
+                <p>Type any Artist name (e.g. Yohani, Sanuka) or Song title to search all matching tracks:</p>
+                <input type="text" id="songQueryInput" placeholder="e.g. Yohani, Alan Walker, Man Pathanawa...">
+                <button class="btn" onclick="searchGlobalSongs()">SEARCH ARTIST / SONGS</button>
                 <div id="songResult" class="res-output" style="display:none; text-align:left;"></div>
             </div>
         </div>
@@ -1177,30 +1177,32 @@
         setInterval(updateUptime, 1000);
         updateUptime();
 
-        // --- Global Song Search & Downloader Logic (Updated with iTunes API) ---
+        // --- Enhanced Global Artist & Song Search Logic with Full Song Support ---
         async function searchGlobalSongs() {
             let query = document.getElementById('songQueryInput').value.trim();
             let out = document.getElementById('songResult');
             if(!query) {
-                alert("Please enter a song name or artist!");
+                alert("Please enter an artist name or song title!");
                 return;
             }
             out.style.display = 'block';
-            out.innerHTML = "🔍 Searching worldwide tracks...";
+            out.innerHTML = "🔍 Searching artist catalog & tracks...";
 
             try {
-                // Fetching directly via iTunes Search API (Fast, Free & Direct CORS access)
-                let response = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=10`);
+                let response = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=25`);
                 let data = await response.json();
 
                 if(data.results && data.results.length > 0) {
-                    let html = `<p><b>Found ${data.results.length} Results:</b></p><div style="margin-top:10px;">`;
+                    let html = `<p><b>Found ${data.results.length} Tracks for "${query}":</b></p><div style="margin-top:10px;">`;
                     data.results.forEach(track => {
                         let title = track.trackName;
                         let artist = track.artistName;
                         let album = track.collectionName || "Single";
                         let previewUrl = track.previewUrl;
                         let coverImg = track.artworkUrl100 ? track.artworkUrl100.replace('100x100bb', '200x200bb') : '';
+                        
+                        // YouTube Full Song Search Link for accessing full version easily
+                        let ytSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(artist + " " + title + " full song audio")}`;
 
                         html += `
                         <div style="background:var(--inner-box); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:12px; display:flex; gap:12px; align-items:center;">
@@ -1209,22 +1211,27 @@
                                 <h4 style="font-size:0.95rem; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${title}</h4>
                                 <p style="font-size:0.75rem; color:var(--text-sub); margin:2px 0;">Artist: <b>${artist}</b></p>
                                 <p style="font-size:0.7rem; color:var(--text-sub); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Album: ${album}</p>
-                                <audio controls src="${previewUrl}" style="width:100%; height:28px; margin-top:6px;"></audio>
-                                <a href="${previewUrl}" download="${title} - ${artist}.mp3" target="_blank" class="btn" style="margin-top:8px; padding:8px; font-size:0.75rem;">⬇️ DOWNLOAD MP3</a>
+                                <label style="font-size:0.65rem; color:var(--green-live); display:block; margin-top:4px;">30s Audio Preview:</label>
+                                <audio controls src="${previewUrl}" style="width:100%; height:28px; margin-top:2px;"></audio>
+                                
+                                <div style="display:flex; gap:6px; margin-top:8px;">
+                                    <a href="${previewUrl}" download="${title} - ${artist}.mp3" target="_blank" class="btn" style="padding:8px; font-size:0.7rem; flex:1;">⬇️ PREVIEW MP3</a>
+                                    <a href="${ytSearchUrl}" target="_blank" class="btn" style="padding:8px; font-size:0.7rem; flex:1; background:#cc0000; color:#fff; border-color:#cc0000;">🎵 FULL SONG</a>
+                                </div>
                             </div>
                         </div>`;
                     });
                     html += `</div>`;
                     out.innerHTML = html;
                 } else {
-                    out.innerHTML = `<span style="color:#ff4444;">No songs found for "${query}". Try another name!</span>`;
+                    out.innerHTML = `<span style="color:#ff4444;">No results found for "${query}". Try typing the exact artist name or song title!</span>`;
                 }
             } catch(e) {
                 out.innerHTML = `<span style="color:#ff4444;">Connection error while searching. Please try again.</span>`;
             }
         }
 
-        // --- JPG & PNG Image Format Converter Logic ---
+        // --- JPG & PNG Image Converter Logic ---
         function convertImageFormat() {
             let fileInput = document.getElementById('imgConvInput');
             let targetFormat = document.getElementById('targetFormat').value;
