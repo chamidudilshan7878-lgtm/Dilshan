@@ -717,6 +717,24 @@
                 </div>
 
                 <div class="card tool-item">
+                    <h3>▶️ YouTube MP3 / MP4 Downloader</h3>
+                    <p>Download YouTube Videos or Audio</p>
+                    <button class="btn" onclick="openToolDashboard('ytTool')">OPEN DOWNLOADER</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>📸 Instagram Downloader</h3>
+                    <p>Download Reels, Photos & Videos</p>
+                    <button class="btn" onclick="openToolDashboard('igTool')">OPEN DOWNLOADER</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>📘 Facebook Downloader</h3>
+                    <p>Download Facebook Videos</p>
+                    <button class="btn" onclick="openToolDashboard('fbTool')">OPEN DOWNLOADER</button>
+                </div>
+
+                <div class="card tool-item">
                     <h3>WhatsApp URL Generator</h3>
                     <p>Direct Message Links for Phone Numbers</p>
                     <button class="btn" onclick="openToolDashboard('urlTool')">OPEN TOOL</button>
@@ -971,6 +989,43 @@
                 <input type="text" id="ttUrl" placeholder="Paste TikTok Link here...">
                 <button class="btn" onclick="fetchTikTokMedia()">FETCH MEDIA</button>
                 <div id="ttResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- YouTube Downloader -->
+        <div id="ytTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>▶️ YouTube Downloader</h3>
+                <input type="text" id="ytUrl" placeholder="Paste YouTube link...">
+                <select id="ytMode">
+                    <option value="auto">🎬 MP4 Video</option>
+                    <option value="audio">🎵 MP3 Audio</option>
+                </select>
+                <button class="btn" onclick="fetchMedia('yt')">FETCH MEDIA</button>
+                <div id="ytResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Instagram Downloader -->
+        <div id="igTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📸 Instagram Downloader</h3>
+                <input type="text" id="igUrl" placeholder="Paste Instagram link...">
+                <button class="btn" onclick="fetchMedia('ig')">FETCH MEDIA</button>
+                <div id="igResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Facebook Downloader -->
+        <div id="fbTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📘 Facebook Downloader</h3>
+                <input type="text" id="fbUrl" placeholder="Paste Facebook video link...">
+                <button class="btn" onclick="fetchMedia('fb')">FETCH MEDIA</button>
+                <div id="fbResult" class="res-output" style="display:none;"></div>
             </div>
         </div>
 
@@ -1571,6 +1626,54 @@
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
+        }
+
+        // =====================================================
+        // YouTube / Instagram / Facebook Downloader (Cobalt API)
+        // =====================================================
+        // ⚠️ ඔයාගේ Railway Cobalt service URL එක මෙතන දාන්න
+        // උදා: "https://cobalt-production-xxxx.up.railway.app/"
+        const COBALT_API = "";
+
+        async function fetchMedia(prefix) {
+            let url = document.getElementById(prefix + 'Url').value.trim();
+            let out = document.getElementById(prefix + 'Result');
+            if (!url) { alert("Paste a link first!"); return; }
+            if (!COBALT_API) { alert("COBALT_API is not configured in the code!"); return; }
+
+            let mode = prefix === 'yt' ? document.getElementById('ytMode').value : 'auto';
+            out.style.display = 'block';
+            out.innerText = 'Connecting...';
+
+            try {
+                let resp = await fetch(COBALT_API, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        url: url,
+                        downloadMode: mode,
+                        audioFormat: 'mp3',
+                        videoQuality: '720'
+                    })
+                });
+                let data = await resp.json();
+                let html = '';
+
+                if (data.status === 'tunnel' || data.status === 'redirect') {
+                    html = `<a href="${data.url}" target="_blank" rel="noopener" class="btn" style="margin-bottom:8px;">⬇️ Download ${data.filename || 'File'}</a>`;
+                } else if (data.status === 'picker') {
+                    data.picker.forEach((item, i) => {
+                        html += `<a href="${item.url}" target="_blank" rel="noopener" class="btn" style="margin-bottom:8px;">⬇️ Download ${item.type || 'Media'} ${i + 1}</a>`;
+                    });
+                } else {
+                    html = `<span style="color:#ff4444;">❌ ${(data.error && data.error.code) || 'Unable to fetch media.'}</span>`;
+                }
+
+                html += `<button class="btn btn-danger" onclick="clearResult('${prefix}Result')">🗑️ Delete</button>`;
+                out.innerHTML = html;
+            } catch (e) {
+                out.innerHTML = `<span style="color:#ff4444;">API Connection Error.</span>`;
+            }
         }
     </script>
 </body>
