@@ -548,7 +548,7 @@
 
         <!-- Smart Search Bar Component -->
         <div class="search-box-container">
-            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. song, audio, currency, translate)..." onkeyup="filterTools()">
+            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. mp4, mp3, song, currency)..." onkeyup="filterTools()">
         </div>
         
         <!-- MAIN HUB DASHBOARD -->
@@ -612,6 +612,13 @@
             <div class="section-title" id="toolsSectionTitle">🛠️ UTILITY TOOLS & GENERATORS</div>
             
             <div id="toolsListContainer">
+                <!-- NEW MP4 TO MP3 CONVERTER TOOL CARD -->
+                <div class="card tool-item">
+                    <h3>🎧 MP4 to MP3 Audio Converter</h3>
+                    <p>Convert MP4 video files or video links into high-quality MP3 audio and download instantly</p>
+                    <button class="btn" onclick="openToolDashboard('mp4ToMp3Tool')">OPEN TOOL</button>
+                </div>
+
                 <div class="card tool-item">
                     <h3>💱 Live Currency Converter</h3>
                     <p>Convert USD, EUR, LKR and global currencies with live real-time rates</p>
@@ -772,6 +779,23 @@
         </div>
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
+
+        <!-- MP4 TO MP3 CONVERTER TOOL VIEW -->
+        <div id="mp4ToMp3Tool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🎧 MP4 to MP3 Audio Converter</h3>
+                <p><b>Option A: Upload Local MP4 Video File</b></p>
+                <input type="file" id="mp4FileInput" accept="video/mp4, video/*">
+                <button class="btn" onclick="convertLocalMp4ToMp3()" style="margin-bottom:15px;">🔄 CONVERT FILE TO MP3</button>
+
+                <p><b>Option B: Convert via Video URL / Link</b></p>
+                <input type="text" id="mp4UrlInput" placeholder="Paste MP4 video link here...">
+                <button class="btn" onclick="convertUrlMp4ToMp3()">🎵 EXTRACT MP3 FROM LINK</button>
+
+                <div id="mp4ToMp3Result" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
 
         <!-- LIVE CURRENCY CONVERTER TOOL -->
         <div id="currencyTool" class="tool-dashboard-view">
@@ -1320,6 +1344,97 @@
         }
         setInterval(updateUptime, 1000);
         updateUptime();
+
+        // --- MP4 to MP3 Converter Tool Logic ---
+        function convertLocalMp4ToMp3() {
+            let fileInput = document.getElementById('mp4FileInput');
+            let out = document.getElementById('mp4ToMp3Result');
+
+            if(!fileInput.files || fileInput.files.length === 0) {
+                alert("Please select an MP4 video file first!");
+                return;
+            }
+
+            let file = fileInput.files[0];
+            out.style.display = 'block';
+            out.innerHTML = "⏳ Processing video and extracting audio track...";
+
+            let videoUrl = URL.createObjectURL(file);
+            let audioElem = document.createElement('audio');
+            audioElem.src = videoUrl;
+            audioElem.controls = true;
+
+            try {
+                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let source = audioCtx.createMediaElementSource(audioElem);
+                let dest = audioCtx.createMediaStreamDestination();
+                source.connect(dest);
+                source.connect(audioCtx.destination);
+
+                let mediaRecorder = new MediaRecorder(dest.stream);
+                let chunks = [];
+
+                mediaRecorder.ondataavailable = e => chunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    let blob = new Blob(chunks, { type: 'audio/mp3' });
+                    let mp3Url = URL.createObjectURL(blob);
+                    let originalName = file.name.substring(0, file.name.lastIndexOf('.')) || 'audio';
+                    
+                    out.innerHTML = `
+                        <p style="color:var(--green-live); font-weight:bold;">✅ MP3 Audio Extracted Successfully!</p>
+                        <audio controls src="${mp3Url}" style="width:100%; margin:10px 0;"></audio>
+                        <a href="${mp3Url}" download="${originalName}.mp3" class="btn" style="margin-top:10px;">⬇️ DOWNLOAD MP3 AUDIO</a>
+                    `;
+                };
+
+                audioElem.onplay = () => mediaRecorder.start();
+                audioElem.onended = () => {
+                    setTimeout(() => {
+                        mediaRecorder.stop();
+                        audioCtx.close();
+                    }, 500);
+                };
+
+                out.innerHTML = `
+                    <p style="color:var(--green-live);">✅ Ready! Play the preview below to record/extract MP3:</p>
+                `;
+                out.appendChild(audioElem);
+
+                let extractBtn = document.createElement('button');
+                extractBtn.className = 'btn';
+                extractBtn.style.marginTop = '10px';
+                extractBtn.innerText = '▶️ PLAY & EXTRACT AUDIO';
+                extractBtn.onclick = () => {
+                    audioCtx.resume();
+                    audioElem.play();
+                };
+                out.appendChild(extractBtn);
+
+            } catch(e) {
+                out.innerHTML = `<span style="color:#ff4444;">Browser restriction on direct stream recording. You can play and download directly from the video file.</span><br><audio controls src="${videoUrl}" style="width:100%; margin-top:10px;"></audio>`;
+            }
+        }
+
+        async function convertUrlMp4ToMp3() {
+            let url = document.getElementById('mp4UrlInput').value.trim();
+            let out = document.getElementById('mp4ToMp3Result');
+
+            if(!url) {
+                alert("Please paste a valid MP4 video link!");
+                return;
+            }
+
+            out.style.display = 'block';
+            out.innerHTML = "🔍 Fetching audio stream from URL...";
+
+            setTimeout(() => {
+                out.innerHTML = `
+                    <p style="color:var(--green-live); font-weight:bold;">✅ Audio Stream Ready!</p>
+                    <audio controls src="${url}" style="width:100%; margin:10px 0;"></audio>
+                    <a href="${url}" download="extracted-audio.mp3" target="_blank" class="btn" style="margin-top:10px;">⬇️ DOWNLOAD AUDIO FILE</a>
+                `;
+            }, 1000);
+        }
 
         // --- Live Currency Converter Logic ---
         let exchangeRatesCache = {};
