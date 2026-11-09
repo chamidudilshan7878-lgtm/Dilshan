@@ -613,6 +613,12 @@
             
             <div id="toolsListContainer">
                 <div class="card tool-item">
+                    <h3>📖 Wikipedia & World Info Search</h3>
+                    <p>Search any worldwide topic, artist, or history instantly via Wikipedia</p>
+                    <button class="btn" onclick="openToolDashboard('wikiTool')">OPEN SEARCH</button>
+                </div>
+
+                <div class="card tool-item">
                     <h3>🎵 Global Song & Artist Catalog</h3>
                     <p>Search any artist name (e.g. Yohani, Alan Walker, Sanuka) or song to find all tracks instantly</p>
                     <button class="btn" onclick="openToolDashboard('songDownloadTool')">OPEN TOOL</button>
@@ -748,6 +754,18 @@
         </div>
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
+
+        <!-- NEW WIKIPEDIA SEARCH TOOL -->
+        <div id="wikiTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📖 Wikipedia & World Info Search</h3>
+                <p>Type any keyword or name to search worldwide information:</p>
+                <input type="text" id="wikiQueryInput" placeholder="e.g. Yohani, Albert Einstein, Sri Lanka...">
+                <button class="btn" onclick="searchWikipedia()">SEARCH WIKIPEDIA</button>
+                <div id="wikiResult" class="res-output" style="display:none; text-align:left;"></div>
+            </div>
+        </div>
 
         <!-- NEW GLOBAL SONG SEARCH & DOWNLOADER TOOL -->
         <div id="songDownloadTool" class="tool-dashboard-view">
@@ -1177,6 +1195,45 @@
         setInterval(updateUptime, 1000);
         updateUptime();
 
+        // --- Wikipedia Search Logic ---
+        async function searchWikipedia() {
+            let query = document.getElementById('wikiQueryInput').value.trim();
+            let out = document.getElementById('wikiResult');
+            if(!query) {
+                alert("Please enter a search term!");
+                return;
+            }
+            out.style.display = 'block';
+            out.innerHTML = "🔍 Searching worldwide database...";
+
+            try {
+                let response = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`);
+                let data = await response.json();
+
+                if(data.query && data.query.search.length > 0) {
+                    let html = `<p><b>Top Results from Wikipedia:</b></p><div style="margin-top:10px;">`;
+                    data.query.search.slice(0, 5).forEach(item => {
+                        let title = item.title;
+                        let snippet = item.snippet.replace(/(<([^>]+)>)/ig, "");
+                        let pageUrl = `https://en.wikipedia.org/wiki/${encodeURIComponent(title)}`.replace(/%20/g, "_");
+
+                        html += `
+                        <div style="background:var(--inner-box); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:12px; text-align:left;">
+                            <h4 style="font-size:0.95rem; color:var(--text-main); margin-bottom:4px;">${title}</h4>
+                            <p style="font-size:0.78rem; color:var(--text-sub); margin-bottom:8px;">${snippet}...</p>
+                            <a href="${pageUrl}" target="_blank" class="btn" style="padding:8px; font-size:0.75rem; text-align:center;">🌐 READ FULL ON WIKIPEDIA</a>
+                        </div>`;
+                    });
+                    html += `</div>`;
+                    out.innerHTML = html;
+                } else {
+                    out.innerHTML = `<span style="color:#ff4444;">No Wikipedia articles found for "${query}".</span>`;
+                }
+            } catch(e) {
+                out.innerHTML = `<span style="color:#ff4444;">Connection error while searching Wikipedia.</span>`;
+            }
+        }
+
         // --- Enhanced Global Artist & Song Search Logic with Full Song Support ---
         async function searchGlobalSongs() {
             let query = document.getElementById('songQueryInput').value.trim();
@@ -1201,7 +1258,6 @@
                         let previewUrl = track.previewUrl;
                         let coverImg = track.artworkUrl100 ? track.artworkUrl100.replace('100x100bb', '200x200bb') : '';
                         
-                        // YouTube Full Song Search Link for accessing full version easily
                         let ytSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(artist + " " + title + " full song audio")}`;
 
                         html += `
