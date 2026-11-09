@@ -613,6 +613,12 @@
             
             <div id="toolsListContainer">
                 <div class="card tool-item">
+                    <h3>📚 Sinhala & English Medium Past Papers</h3>
+                    <p>Search and download O/L, A/L and School Term Past Papers instantly</p>
+                    <button class="btn" onclick="openToolDashboard('pastPaperTool')">OPEN TOOL</button>
+                </div>
+
+                <div class="card tool-item">
                     <h3>📖 Wikipedia & World Info Search</h3>
                     <p>Search any worldwide topic, artist, or history instantly via Wikipedia</p>
                     <button class="btn" onclick="openToolDashboard('wikiTool')">OPEN SEARCH</button>
@@ -754,6 +760,24 @@
         </div>
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
+
+        <!-- NEW PAST PAPERS SEARCH TOOL -->
+        <div id="pastPaperTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📚 Sinhala & English Medium Past Papers</h3>
+                <p>Type subject name, grade or exam (e.g. A/L ICT, O/L Mathematics, Grade 11 Science):</p>
+                <input type="text" id="paperQueryInput" placeholder="e.g. A/L Physics, O/L History...">
+                <label style="font-size:0.8rem; color:var(--text-sub); display:block; margin:10px 0 5px 0;">Select Medium:</label>
+                <select id="paperMedium">
+                    <option value="All Mediums">All Mediums (සිංහල / English)</option>
+                    <option value="Sinhala Medium">සිංහල මාධ්‍ය (Sinhala Medium)</option>
+                    <option value="English Medium">English Medium</option>
+                </select>
+                <button class="btn" onclick="searchPastPapers()">SEARCH PAST PAPERS</button>
+                <div id="paperResult" class="res-output" style="display:none; text-align:left;"></div>
+            </div>
+        </div>
 
         <!-- NEW WIKIPEDIA SEARCH TOOL -->
         <div id="wikiTool" class="tool-dashboard-view">
@@ -1194,6 +1218,50 @@
         }
         setInterval(updateUptime, 1000);
         updateUptime();
+
+        // --- Sinhala & English Medium Past Papers Search Logic ---
+        function searchPastPapers() {
+            let query = document.getElementById('paperQueryInput').value.trim();
+            let medium = document.getElementById('paperMedium').value;
+            let out = document.getElementById('paperResult');
+            
+            if(!query) {
+                alert("Please enter a subject or exam name!");
+                return;
+            }
+
+            out.style.display = 'block';
+            out.innerHTML = "🔍 Searching past papers database...";
+
+            let searchQuery = `${query} ${medium} past papers pdf sri lanka`;
+            let googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+            let pastPapersWikiUrl = `https://pastpapers.wiki/?s=${encodeURIComponent(query)}`;
+            let agaramCenUrl = `https://www.agaram.lk/?s=${encodeURIComponent(query)}`;
+
+            let html = `
+            <p><b>Search Results for "${query}" (${medium}):</b></p>
+            <div style="margin-top:10px;">
+                <div style="background:var(--inner-box); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:10px;">
+                    <h4 style="font-size:0.9rem; color:var(--text-main); margin-bottom:4px;">🌐 Google Direct Paper Search</h4>
+                    <p style="font-size:0.75rem; color:var(--text-sub); margin-bottom:8px;">Search across all official Sri Lankan school & exam databases.</p>
+                    <a href="${googleSearchUrl}" target="_blank" class="btn" style="padding:8px; font-size:0.75rem;">SEARCH ON GOOGLE</a>
+                </div>
+
+                <div style="background:var(--inner-box); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:10px;">
+                    <h4 style="font-size:0.9rem; color:var(--text-main); margin-bottom:4px;">📄 PastPapers.Wiki Repository</h4>
+                    <p style="font-size:0.75rem; color:var(--text-sub); margin-bottom:8px;">Download O/L & A/L papers in Sinhala, Tamil & English mediums.</p>
+                    <a href="${pastPapersWikiUrl}" target="_blank" class="btn" style="padding:8px; font-size:0.75rem;">VISIT PASTPAPERS.WIKI</a>
+                </div>
+
+                <div style="background:var(--inner-box); border:1px solid var(--border-color); border-radius:12px; padding:12px;">
+                    <h4 style="font-size:0.9rem; color:var(--text-main); margin-bottom:4px;">📚 Agaram Educational Hub</h4>
+                    <p style="font-size:0.75rem; color:var(--text-sub); margin-bottom:8px;">Find term test papers and provincial papers.</p>
+                    <a href="${agaramCenUrl}" target="_blank" class="btn" style="padding:8px; font-size:0.75rem;">VISIT AGARAM.LK</a>
+                </div>
+            </div>`;
+
+            out.innerHTML = html;
+        }
 
         // --- Wikipedia Search Logic ---
         async function searchWikipedia() {
