@@ -51,11 +51,6 @@
             position: relative;
         }
 
-        /* Netlify Badge සඟවා තැබීමට එකතු කළ CSS කේතය */
-        #netlify-badge, a[href*="netlify.com/"] {
-            display: none !important;
-        }
-
         /* Watermark Background Text */
         .bg-watermark-container {
             position: fixed;
@@ -1182,7 +1177,7 @@
         setInterval(updateUptime, 1000);
         updateUptime();
 
-        // --- NEW: Global Song Search & Downloader Logic ---
+        // --- Global Song Search & Downloader Logic ---
         async function searchGlobalSongs() {
             let query = document.getElementById('songQueryInput').value.trim();
             let out = document.getElementById('songResult');
@@ -1194,10 +1189,6 @@
             out.innerHTML = "🔍 Searching worldwide tracks...";
 
             try {
-                // Using Deezer public API via CORS proxy for reliable global music search
-                let apiUrl = `https://api.deezer.com/search?q=${encodeURIComponent(query)}&output=jsonp`;
-                
-                // Fetching via jsonp / direct JSON fetch workaround
                 let response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.deezer.com/search?q=' + encodeURIComponent(query))}`);
                 let json = await response.json();
                 let data = JSON.parse(json.contents);
@@ -1209,7 +1200,7 @@
                         let artist = track.artist.name;
                         let album = track.album.title;
                         let duration = Math.floor(track.duration / 60) + ":" + (track.duration % 60 < 10 ? '0' : '') + (track.duration % 60);
-                        let previewUrl = track.preview; // 30s MP3 preview or full stream
+                        let previewUrl = track.preview;
                         let coverImg = track.album.cover_medium;
 
                         html += `
@@ -1234,7 +1225,7 @@
             }
         }
 
-        // --- NEW: JPG & PNG Image Format Converter Logic ---
+        // --- JPG & PNG Image Format Converter Logic ---
         function convertImageFormat() {
             let fileInput = document.getElementById('imgConvInput');
             let targetFormat = document.getElementById('targetFormat').value;
@@ -1277,7 +1268,7 @@
             reader.readAsDataURL(file);
         }
 
-        // --- NEW TOOL 1: Image Color Extractor Logic ---
+        // --- Image Color Extractor Logic ---
         function extractImageColors() {
             let file = document.getElementById('extractImgInput').files[0];
             let out = document.getElementById('extractResult');
@@ -1310,7 +1301,7 @@
             reader.readAsDataURL(file);
         }
 
-        // --- NEW TOOL 2: Smart Unit & Currency Converter Logic ---
+        // --- Smart Unit Converter Logic ---
         const unitData = {
             weight: { kg: 1, g: 0.001, lbs: 0.453592, oz: 0.0283495 },
             length: { m: 1, cm: 0.01, km: 1000, inch: 0.0254, feet: 0.3048 },
@@ -1342,7 +1333,7 @@
             document.getElementById('convResult').innerText = `Result: ${finalVal.toFixed(4)} ${to}`;
         }
 
-        // --- NEW TOOL 3: Random Giveaway / Name Picker Logic ---
+        // --- Random Giveaway / Name Picker Logic ---
         function pickRandomWinner() {
             let raw = document.getElementById('giveawayNames').value;
             let out = document.getElementById('giveawayResult');
@@ -1363,7 +1354,7 @@
             }, 100);
         }
 
-        // 1. PDF & Image Converter Logic
+        // PDF & Image Converter Logic
         function convertImagesToPdf() {
             let files = document.getElementById('imgToPdfInput').files;
             let out = document.getElementById('pdfResult');
@@ -1414,7 +1405,7 @@
             reader.readAsArrayBuffer(file);
         }
 
-        // 2. Background Remover Logic
+        // Background Remover Logic
         function processBgRemove() {
             let file = document.getElementById('bgInput').files[0];
             let out = document.getElementById('bgResult');
@@ -1427,7 +1418,7 @@
                     let cvs = document.createElement('canvas');
                     let ctx = cvs.getContext('2d');
                     cvs.width = img.width; cvs.height = img.height;
-                    ctx.drawImage(img, 0, 0);
+                    cvs.drawImage(img, 0, 0);
                     let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let data = imgData.data;
                     for (let i = 0; i < data.length; i += 4) {
@@ -1444,7 +1435,7 @@
             reader.readAsDataURL(file);
         }
 
-        // 3. Network Ping & Status Checker
+        // Network Ping & Status Checker
         async function checkNetworkPing() {
             let url = document.getElementById('pingUrl').value;
             let out = document.getElementById('pingResult');
@@ -1460,7 +1451,7 @@
             }
         }
 
-        // 4. Device Info & IP Checker
+        // Device Info & IP Checker
         async function fetchDeviceInfo() {
             let out = document.getElementById('ipResult');
             out.style.display = 'block'; out.innerText = 'Fetching specs...';
@@ -1478,7 +1469,7 @@
             }
         }
 
-        // 5. Base64 & URL Encoder/Decoder
+        // Base64 & URL Encoder/Decoder
         function runEncode(type) {
             let txt = document.getElementById('encodeText').value;
             let out = document.getElementById('encodeResult');
@@ -1494,7 +1485,7 @@
             }
         }
 
-        // 6. Text Counter & Case Transformer
+        // Text Counter & Case Transformer
         function analyzeText() {
             let txt = document.getElementById('counterText').value;
             let words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
@@ -1510,7 +1501,7 @@
             analyzeText();
         }
 
-        // 7. Color Picker & Converter
+        // Color Picker & Converter
         function convertColorValues() {
             let hex = document.getElementById('mainColorPicker').value;
             let r = parseInt(hex.substring(1,3), 16);
@@ -1583,7 +1574,7 @@
                     let ctx = cvs.getContext('2d');
                     cvs.width = img.width; cvs.height = img.height;
                     cvs.drawImage(img, 0, 0);
-                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+                    let imgData = cvs.getImageData(0, 0, cvs.width, cvs.height);
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
                         resDiv.innerHTML = `<b>Scanned Result:</b><p style="margin:8px 0;">${code.data}</p><button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy</button><button class="btn btn-danger" onclick="clearResult('qrScanResult')">🗑️ Delete</button>`;
@@ -1710,22 +1701,6 @@
             };
             reader.readAsDataURL(file);
         }
-
-        // Netlify Badge ඉවත් කිරීම සඳහා ස්වයංක්‍රීය JavaScript කේතය
-        window.addEventListener('DOMContentLoaded', () => {
-            setInterval(() => {
-                let badge = document.querySelector('#netlify-badge') || document.querySelector('iframe[src*="netlify"]');
-                if (badge) {
-                    badge.remove();
-                }
-                document.querySelectorAll('a').forEach(el => {
-                    if(el.href && el.href.includes('netlify.com') && el.innerText.includes('Powered by')) {
-                        el.style.display = 'none';
-                        if(el.parentElement) el.parentElement.style.display = 'none';
-                    }
-                });
-            }, 500);
-        });
     </script>
 </body>
 </html>
