@@ -1177,7 +1177,7 @@
         setInterval(updateUptime, 1000);
         updateUptime();
 
-        // --- Global Song Search & Downloader Logic ---
+        // --- Global Song Search & Downloader Logic (Updated with iTunes API) ---
         async function searchGlobalSongs() {
             let query = document.getElementById('songQueryInput').value.trim();
             let out = document.getElementById('songResult');
@@ -1189,27 +1189,26 @@
             out.innerHTML = "🔍 Searching worldwide tracks...";
 
             try {
-                let response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.deezer.com/search?q=' + encodeURIComponent(query))}`);
-                let json = await response.json();
-                let data = JSON.parse(json.contents);
+                // Fetching directly via iTunes Search API (Fast, Free & Direct CORS access)
+                let response = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=10`);
+                let data = await response.json();
 
-                if(data.data && data.data.length > 0) {
-                    let html = `<p><b>Found ${data.data.length} Results:</b></p><div style="margin-top:10px;">`;
-                    data.data.forEach(track => {
-                        let title = track.title;
-                        let artist = track.artist.name;
-                        let album = track.album.title;
-                        let duration = Math.floor(track.duration / 60) + ":" + (track.duration % 60 < 10 ? '0' : '') + (track.duration % 60);
-                        let previewUrl = track.preview;
-                        let coverImg = track.album.cover_medium;
+                if(data.results && data.results.length > 0) {
+                    let html = `<p><b>Found ${data.results.length} Results:</b></p><div style="margin-top:10px;">`;
+                    data.results.forEach(track => {
+                        let title = track.trackName;
+                        let artist = track.artistName;
+                        let album = track.collectionName || "Single";
+                        let previewUrl = track.previewUrl;
+                        let coverImg = track.artworkUrl100 ? track.artworkUrl100.replace('100x100bb', '200x200bb') : '';
 
                         html += `
                         <div style="background:var(--inner-box); border:1px solid var(--border-color); border-radius:12px; padding:12px; margin-bottom:12px; display:flex; gap:12px; align-items:center;">
                             <img src="${coverImg}" style="width:60px; height:60px; border-radius:8px; object-fit:cover;">
                             <div style="flex-grow:1; overflow:hidden;">
                                 <h4 style="font-size:0.95rem; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${title}</h4>
-                                <p style="font-size:0.75rem; color:var(--text-sub); margin:2px 0;">Artist: <b>${artist}</b> | Album: ${album}</p>
-                                <p style="font-size:0.7rem; color:var(--text-sub);">Duration: ${duration}</p>
+                                <p style="font-size:0.75rem; color:var(--text-sub); margin:2px 0;">Artist: <b>${artist}</b></p>
+                                <p style="font-size:0.7rem; color:var(--text-sub); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Album: ${album}</p>
                                 <audio controls src="${previewUrl}" style="width:100%; height:28px; margin-top:6px;"></audio>
                                 <a href="${previewUrl}" download="${title} - ${artist}.mp3" target="_blank" class="btn" style="margin-top:8px; padding:8px; font-size:0.75rem;">⬇️ DOWNLOAD MP3</a>
                             </div>
@@ -1574,7 +1573,7 @@
                     let ctx = cvs.getContext('2d');
                     cvs.width = img.width; cvs.height = img.height;
                     cvs.drawImage(img, 0, 0);
-                    let imgData = cvs.getImageData(0, 0, cvs.width, cvs.height);
+                    let imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
                     let code = jsQR(imgData.data, imgData.width, imgData.height);
                     if(code) {
                         resDiv.innerHTML = `<b>Scanned Result:</b><p style="margin:8px 0;">${code.data}</p><button class="btn" onclick="copyToClipboard('${code.data}')">📋 Copy</button><button class="btn btn-danger" onclick="clearResult('qrScanResult')">🗑️ Delete</button>`;
