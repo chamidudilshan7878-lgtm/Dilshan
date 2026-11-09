@@ -548,7 +548,7 @@
 
         <!-- Smart Search Bar Component -->
         <div class="search-box-container">
-            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. song, audio, jpg, pdf)..." onkeyup="filterTools()">
+            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. song, audio, currency, translate)..." onkeyup="filterTools()">
         </div>
         
         <!-- MAIN HUB DASHBOARD -->
@@ -613,6 +613,18 @@
             
             <div id="toolsListContainer">
                 <div class="card tool-item">
+                    <h3>💱 Live Currency Converter</h3>
+                    <p>Convert USD, EUR, LKR and global currencies with live real-time rates</p>
+                    <button class="btn" onclick="openToolDashboard('currencyTool')">OPEN TOOL</button>
+                </div>
+
+                <div class="card tool-item">
+                    <h3>🌐 Multi-Language Translate & Voice Studio</h3>
+                    <p>Translate text to Sinhala, English, Tamil, Japanese, Korean & generate downloadable audio</p>
+                    <button class="btn" onclick="openToolDashboard('translateVoiceTool')">OPEN TOOL</button>
+                </div>
+
+                <div class="card tool-item">
                     <h3>📚 Sinhala & English Medium Past Papers</h3>
                     <p>Search and download O/L, A/L and School Term Past Papers instantly</p>
                     <button class="btn" onclick="openToolDashboard('pastPaperTool')">OPEN TOOL</button>
@@ -643,8 +655,8 @@
                 </div>
 
                 <div class="card tool-item">
-                    <h3>⚖️ Smart Unit & Currency Converter</h3>
-                    <p>Convert Weight, Length, Temperature & Data Units</p>
+                    <h3>⚖️ Smart Unit Converter</h3>
+                    <p>Convert Weight, Length & Data Units</p>
                     <button class="btn" onclick="openToolDashboard('unitConvTool')">OPEN TOOL</button>
                 </div>
 
@@ -761,7 +773,96 @@
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
 
-        <!-- NEW PAST PAPERS SEARCH TOOL -->
+        <!-- LIVE CURRENCY CONVERTER TOOL -->
+        <div id="currencyTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>💱 Live Currency Converter</h3>
+                <p>Convert world currencies using real-time exchange rates:</p>
+                <input type="number" id="currAmount" value="1" placeholder="Enter amount..." oninput="convertLiveCurrency()">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                    <div>
+                        <label style="font-size:0.75rem; color:var(--text-sub);">From:</label>
+                        <select id="currFrom" onchange="convertLiveCurrency()">
+                            <option value="USD" selected>USD - US Dollar</option>
+                            <option value="LKR">LKR - Sri Lankan Rupee</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="KRW">KRW - South Korean Won</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; color:var(--text-sub);">To:</label>
+                        <select id="currTo" onchange="convertLiveCurrency()">
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="LKR" selected>LKR - Sri Lankan Rupee</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="KRW">KRW - South Korean Won</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn" onclick="fetchLiveRates()">🔄 FETCH LATEST LIVE RATES</button>
+                <div id="currResult" class="res-output" style="font-size: 1.1rem; font-weight: bold; color: var(--green-live);">Result: Loading...</div>
+            </div>
+        </div>
+
+        <!-- MULTI-LANGUAGE TRANSLATE & VOICE STUDIO TOOL -->
+        <div id="translateVoiceTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>🌐 Multi-Language Translate & Voice Studio</h3>
+                <p>Type text in any language, translate it instantly, and listen/download audio:</p>
+                
+                <textarea id="tvInputText" placeholder="Type text here (e.g. සුබ උදෑසනක් / Good morning)..." style="height: 80px;"></textarea>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                    <div>
+                        <label style="font-size:0.75rem; color:var(--text-sub);">Source Language:</label>
+                        <select id="tvSourceLang">
+                            <option value="auto">Auto Detect</option>
+                            <option value="si">සිංහල (Sinhala)</option>
+                            <option value="en">English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                            <option value="ja">日本語 (Japanese)</option>
+                            <option value="ko">한국어 (Korean)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; color:var(--text-sub);">Translate To:</label>
+                        <select id="tvTargetLang">
+                            <option value="en">English</option>
+                            <option value="si">සිංහල (Sinhala)</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                            <option value="ja">日本語 (Japanese)</option>
+                            <option value="ko">한국어 (Korean)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="translateAndSpeakText()" style="margin-bottom:10px;">🔄 TRANSLATE TEXT</button>
+
+                <div id="tvTranslatedBox" style="display:none; background:var(--inner-box); border:1px solid var(--border-color); padding:10px; border-radius:8px; margin-bottom:10px; text-align:left;">
+                    <span style="font-size:0.75rem; color:var(--text-sub);">Translated Result:</span>
+                    <p id="tvTranslatedText" style="font-size:1rem; font-weight:bold; color:var(--text-main); margin-top:4px;"></p>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <button class="btn" onclick="playTranslatedVoice()">🔊 PLAY AUDIO</button>
+                    <button class="btn" onclick="recordTranslatedVoice()" style="background:var(--green-live); color:#000;">📥 RECORD & DOWNLOAD</button>
+                </div>
+
+                <div id="tvResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- PAST PAPERS SEARCH TOOL -->
         <div id="pastPaperTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -779,7 +880,7 @@
             </div>
         </div>
 
-        <!-- NEW WIKIPEDIA SEARCH TOOL -->
+        <!-- WIKIPEDIA SEARCH TOOL -->
         <div id="wikiTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -791,7 +892,7 @@
             </div>
         </div>
 
-        <!-- NEW GLOBAL SONG SEARCH & DOWNLOADER TOOL -->
+        <!-- GLOBAL SONG SEARCH & DOWNLOADER TOOL -->
         <div id="songDownloadTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -803,7 +904,7 @@
             </div>
         </div>
 
-        <!-- NEW JPG <-> PNG IMAGE FORMAT CONVERTER TOOL -->
+        <!-- JPG <-> PNG IMAGE FORMAT CONVERTER TOOL -->
         <div id="imgConvTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -819,7 +920,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL A: Image Color Extractor -->
+        <!-- TOOL A: Image Color Extractor -->
         <div id="colorExtractTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -830,7 +931,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL B: Smart Unit Converter -->
+        <!-- TOOL B: Smart Unit Converter -->
         <div id="unitConvTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -849,7 +950,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL C: Random Giveaway / Name Picker -->
+        <!-- TOOL C: Random Giveaway / Name Picker -->
         <div id="giveawayTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -860,7 +961,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL 1: PDF to Image / Image to PDF -->
+        <!-- TOOL 1: PDF to Image / Image to PDF -->
         <div id="pdfTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -877,7 +978,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL 2: Background Remover UI -->
+        <!-- TOOL 2: Background Remover UI -->
         <div id="bgRemoveTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -889,7 +990,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL 3: Network Ping & Status Checker -->
+        <!-- TOOL 3: Network Ping & Status Checker -->
         <div id="pingTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -900,7 +1001,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL 4: Device Info & IP Checker -->
+        <!-- TOOL 4: Device Info & IP Checker -->
         <div id="ipInfoTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -910,7 +1011,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL 5: Base64 / URL Encoder & Decoder -->
+        <!-- TOOL 5: Base64 / URL Encoder & Decoder -->
         <div id="encoderTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -926,7 +1027,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL 6: Text Case & Word Counter -->
+        <!-- TOOL 6: Text Case & Word Counter -->
         <div id="textCounterTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -942,7 +1043,7 @@
             </div>
         </div>
 
-        <!-- NEW TOOL 7: Color Picker & Converter -->
+        <!-- TOOL 7: Color Picker & Converter -->
         <div id="colorPickerTool" class="tool-dashboard-view">
             <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
             <div class="card">
@@ -1179,6 +1280,7 @@
                 btn.innerHTML = '🌙 Dark Mode';
             }
             updateUnitOptions();
+            fetchLiveRates();
         });
 
         // Navigation Routing
@@ -1218,6 +1320,141 @@
         }
         setInterval(updateUptime, 1000);
         updateUptime();
+
+        // --- Live Currency Converter Logic ---
+        let exchangeRatesCache = {};
+        async function fetchLiveRates() {
+            let out = document.getElementById('currResult');
+            out.innerText = "Connecting to live rates server...";
+            try {
+                let res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                let data = await res.json();
+                exchangeRatesCache = data.rates;
+                convertLiveCurrency();
+            } catch(e) {
+                out.innerText = "Error fetching live rates. Check internet connection.";
+            }
+        }
+
+        function convertLiveCurrency() {
+            let amount = parseFloat(document.getElementById('currAmount').value) || 0;
+            let from = document.getElementById('currFrom').value;
+            let to = document.getElementById('currTo').value;
+            let out = document.getElementById('currResult');
+
+            if(Object.keys(exchangeRatesCache).length === 0) {
+                out.innerText = "Rates loading...";
+                return;
+            }
+
+            // Convert via USD Base
+            let amountInUSD = amount;
+            if(from !== 'USD') {
+                amountInUSD = amount / exchangeRatesCache[from];
+            }
+            let finalVal = amountInUSD * exchangeRatesCache[to];
+            out.innerText = `${amount} ${from} = ${finalVal.toFixed(2)} ${to}`;
+        }
+
+        // --- Multi-Language Translate & Voice Studio Logic ---
+        async function translateAndSpeakText() {
+            let text = document.getElementById('tvInputText').value.trim();
+            let source = document.getElementById('tvSourceLang').value;
+            let target = document.getElementById('tvTargetLang').value;
+            let translatedBox = document.getElementById('tvTranslatedBox');
+            let translatedTextElem = document.getElementById('tvTranslatedText');
+
+            if(!text) {
+                alert("Please enter text to translate!");
+                return;
+            }
+
+            translatedBox.style.display = 'block';
+            translatedTextElem.innerText = "Translating...";
+
+            try {
+                let url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`;
+                let res = await fetch(url);
+                let data = await res.json();
+                let translated = data[0].map(item => item[0]).join("");
+                translatedTextElem.innerText = translated;
+            } catch(e) {
+                translatedTextElem.innerText = "Translation error. Please try again.";
+            }
+        }
+
+        function playTranslatedVoice() {
+            let text = document.getElementById('tvTranslatedText').innerText;
+            let lang = document.getElementById('tvTargetLang').value;
+
+            if(!text || text === "Translating..." || text.includes("error")) {
+                alert("Please translate text first!");
+                return;
+            }
+
+            let langMap = { 'en': 'en-US', 'si': 'si-LK', 'ta': 'ta-IN', 'ja': 'ja-JP', 'ko': 'ko-KR' };
+            let speechLang = langMap[lang] || 'en-US';
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = speechLang;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Speech synthesis not supported in this browser.");
+            }
+        }
+
+        async function recordTranslatedVoice() {
+            let text = document.getElementById('tvTranslatedText').innerText;
+            let lang = document.getElementById('tvTargetLang').value;
+            let out = document.getElementById('tvResult');
+
+            if(!text || text === "Translating..." || text.includes("error")) {
+                alert("Please translate text first!");
+                return;
+            }
+
+            let langMap = { 'en': 'en-US', 'si': 'si-LK', 'ta': 'ta-IN', 'ja': 'ja-JP', 'ko': 'ko-KR' };
+            let speechLang = langMap[lang] || 'en-US';
+
+            out.style.display = 'block';
+            out.innerHTML = "🎙️ Preparing audio recording...";
+
+            try {
+                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let dest = audioCtx.createMediaStreamDestination();
+                let mediaRecorder = new MediaRecorder(dest.stream);
+                let chunks = [];
+
+                mediaRecorder.ondataavailable = e => chunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    let blob = new Blob(chunks, { type: 'audio/webm' });
+                    let url = URL.createObjectURL(blob);
+                    out.innerHTML = `
+                        <p style="color:var(--green-live); font-weight:bold;">✅ Audio File Ready!</p>
+                        <audio controls src="${url}" style="width:100%; margin:10px 0;"></audio>
+                        <a href="${url}" download="translated-voice-${lang}.webm" class="btn" style="margin-top:10px;">⬇️ DOWNLOAD AUDIO FILE</a>
+                    `;
+                };
+
+                mediaRecorder.start();
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = speechLang;
+                utterance.onend = () => {
+                    setTimeout(() => {
+                        mediaRecorder.stop();
+                        audioCtx.close();
+                    }, 500);
+                };
+
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(utterance);
+                out.innerHTML = "🔊 Speaking and recording audio...";
+            } catch(e) {
+                out.innerHTML = `<span style="color:#ff4444;">Direct recording not fully supported on this mobile browser. Use Play Audio instead.</span>`;
+            }
+        }
 
         // --- Sinhala & English Medium Past Papers Search Logic ---
         function searchPastPapers() {
