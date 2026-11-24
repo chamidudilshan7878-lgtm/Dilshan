@@ -359,6 +359,47 @@
             margin-top: 10px;
         }
 
+        /* WhatsApp Pairing UI Styles */
+        .pair-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .pair-tab-btn.active {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border-color: var(--text-main);
+        }
+
+        .pair-code-display {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            padding: 14px;
+            margin: 12px 0;
+            background: var(--bg-color);
+            border: 1px dashed var(--green-live);
+            border-radius: 10px;
+            color: var(--green-live);
+            user-select: all;
+        }
+
+        .pair-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 10px 12px;
+            background: var(--inner-box);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 14px;
+            font-size: 0.8rem;
+        }
+
         /* Uptime Tracker Grid */
         .uptime-header {
             display: flex;
@@ -533,6 +574,7 @@
             <span class="close-drawer" onclick="closeDrawerMenu()">✕</span>
         </div>
         <div class="drawer-links">
+            <a href="#" onclick="closeDrawerMenu(); openToolDashboard('waPairTool');">📲 WhatsApp Pairer</a>
             <a href="#" onclick="closeDrawerMenu(); scrollToTools();">🛠️ All Tools</a>
             <a href="https://t.me/DILSHAN7878" target="_blank">✈️ Telegram Support</a>
         </div>
@@ -548,7 +590,7 @@
 
         <!-- Smart Search Bar Component -->
         <div class="search-box-container">
-            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. mp4, mp3, song, currency)..." onkeyup="filterTools()">
+            <input type="text" id="toolSearchInput" class="search-input" placeholder="🔍 Search any tool (e.g. whatsapp, pair, qr, mp3)..." onkeyup="filterTools()">
         </div>
         
         <!-- MAIN HUB DASHBOARD -->
@@ -612,6 +654,13 @@
             <div class="section-title" id="toolsSectionTitle">🛠️ UTILITY TOOLS & GENERATORS</div>
             
             <div id="toolsListContainer">
+                <!-- WHATSAPP PAIRING TOOL CARD -->
+                <div class="card tool-item">
+                    <h3>📲 WhatsApp Pairer (Code & QR)</h3>
+                    <p>Pair your WhatsApp account using a Phone Pairing Code or QR Code</p>
+                    <button class="btn" onclick="openToolDashboard('waPairTool')">OPEN PAIRER</button>
+                </div>
+
                 <!-- NEW MP4 TO MP3 CONVERTER TOOL CARD -->
                 <div class="card tool-item">
                     <h3>🎧 MP4 to MP3 Audio Converter</h3>
@@ -779,6 +828,42 @@
         </div>
 
         <!-- SEPARATE TOOL DASHBOARDS (Hidden Views) -->
+
+        <!-- WHATSAPP PAIRER DASHBOARD -->
+        <div id="waPairTool" class="tool-dashboard-view">
+            <button class="btn btn-back" onclick="closeToolDashboard()">← BACK TO DASHBOARD</button>
+            <div class="card">
+                <h3>📲 WhatsApp Pairer (Code & QR)</h3>
+                <p>Pair your WhatsApp account using an 8-character Pairing Code or QR Code.</p>
+
+                <div class="pair-status-row">
+                    <span><span class="live-dot" id="waStatusDot" style="width:9px; height:9px; background:#888; box-shadow:none;"></span> <strong id="waStatusLabel">Checking status...</strong></span>
+                    <button class="btn" style="width:auto; padding:6px 12px; font-size:0.72rem;" onclick="checkWaPairStatus()">🔄 REFRESH</button>
+                </div>
+
+                <div class="pair-tabs">
+                    <button class="btn pair-tab-btn active" id="waTabCode" onclick="switchWaPairTab('code')">🔢 Pairing Code</button>
+                    <button class="btn pair-tab-btn" id="waTabQr" onclick="switchWaPairTab('qr')">📷 QR Code</button>
+                </div>
+
+                <!-- Pairing Code Tab -->
+                <div id="waCodePanel">
+                    <label style="font-size:0.75rem; color:var(--text-sub);">WhatsApp Number (Country code + number, no +):</label>
+                    <input type="tel" id="waPairPhone" placeholder="94771234567">
+                    <button class="btn" onclick="fetchWaPairingCode()">⚡ GET PAIRING CODE</button>
+                </div>
+
+                <!-- QR Code Tab -->
+                <div id="waQrPanel" style="display:none;">
+                    <p style="margin-bottom:10px;">Generate a QR code and scan it via <b>WhatsApp → Linked Devices → Link a Device</b>.</p>
+                    <button class="btn" onclick="fetchWaQrCode()">📷 GENERATE QR CODE</button>
+                </div>
+
+                <button class="btn btn-danger" onclick="resetWaSession()">♻️ RESET SESSION</button>
+
+                <div id="waPairResult" class="res-output" style="display:none;"></div>
+            </div>
+        </div>
 
         <!-- MP4 TO MP3 CONVERTER TOOL VIEW -->
         <div id="mp4ToMp3Tool" class="tool-dashboard-view">
@@ -1312,6 +1397,9 @@
             document.getElementById('mainHubDashboard').style.display = 'none';
             document.querySelectorAll('.tool-dashboard-view').forEach(view => view.style.display = 'none');
             document.getElementById(toolId).style.display = 'block';
+            if (toolId === 'waPairTool') {
+                checkWaPairStatus();
+            }
             window.scrollTo(0, 0);
         }
 
@@ -1319,6 +1407,134 @@
             document.querySelectorAll('.tool-dashboard-view').forEach(view => view.style.display = 'none');
             document.getElementById('mainHubDashboard').style.display = 'block';
             window.scrollTo(0, 0);
+        }
+
+        // --- WhatsApp Pairer Logic (Code + QR) ---
+        function switchWaPairTab(tab) {
+            const codePanel = document.getElementById('waCodePanel');
+            const qrPanel = document.getElementById('waQrPanel');
+            const tabCode = document.getElementById('waTabCode');
+            const tabQr = document.getElementById('waTabQr');
+
+            if (tab === 'code') {
+                codePanel.style.display = 'block';
+                qrPanel.style.display = 'none';
+                tabCode.classList.add('active');
+                tabQr.classList.remove('active');
+            } else {
+                codePanel.style.display = 'none';
+                qrPanel.style.display = 'block';
+                tabQr.classList.add('active');
+                tabCode.classList.remove('active');
+            }
+        }
+
+        function renderWaStatusUI(connected, user) {
+            const dot = document.getElementById('waStatusDot');
+            const label = document.getElementById('waStatusLabel');
+            if (connected) {
+                dot.style.background = 'var(--green-live)';
+                dot.style.boxShadow = '0 0 8px var(--green-live)';
+                label.innerText = `Paired (${user || 'Connected'})`;
+            } else {
+                dot.style.background = '#ffaa00';
+                dot.style.boxShadow = 'none';
+                label.innerText = 'Not Paired';
+            }
+        }
+
+        async function checkWaPairStatus() {
+            try {
+                const res = await fetch('/api/pair/status');
+                const data = await res.json();
+                renderWaStatusUI(Boolean(data.connected), data.user);
+            } catch (e) {
+                renderWaStatusUI(false, null);
+            }
+        }
+
+        async function fetchWaPairingCode() {
+            const phone = document.getElementById('waPairPhone').value.replace(/\D/g, '');
+            const out = document.getElementById('waPairResult');
+
+            if (!phone || phone.length < 8) {
+                alert("Please enter a valid WhatsApp number with country code (e.g. 94771234567)!");
+                return;
+            }
+
+            out.style.display = 'block';
+            out.innerHTML = "⏳ Generating pairing code...";
+
+            try {
+                const res = await fetch('/api/pair/code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone })
+                });
+                const data = await res.json();
+
+                if (data.connected) {
+                    renderWaStatusUI(true, data.user);
+                    out.innerHTML = `<p style="color:var(--green-live); font-weight:bold;">✅ Already Paired (${data.user || 'Connected'})</p>`;
+                    return;
+                }
+
+                if (data.code) {
+                    out.innerHTML = `
+                        <p style="color:var(--green-live); font-weight:bold;">✅ Pairing Code for +${phone}</p>
+                        <div class="pair-code-display">${data.code}</div>
+                        <p style="font-size:0.75rem; margin-bottom:10px;">Open WhatsApp → Linked Devices → Link a Device → Link with phone number instead.</p>
+                        <button class="btn" onclick="copyToClipboard('${data.code}')">📋 COPY CODE</button>
+                    `;
+                } else {
+                    out.innerHTML = `<span style="color:#ff4444;">${data.error || 'Could not generate pairing code.'}</span>`;
+                }
+            } catch (e) {
+                out.innerHTML = `<span style="color:#ff4444;">Server request failed. Make sure server.js is running.</span>`;
+            }
+        }
+
+        async function fetchWaQrCode() {
+            const out = document.getElementById('waPairResult');
+            out.style.display = 'block';
+            out.innerHTML = "⏳ Fetching QR code...";
+
+            try {
+                const res = await fetch('/api/pair/qr');
+                const data = await res.json();
+
+                if (data.connected) {
+                    renderWaStatusUI(true, data.user);
+                    out.innerHTML = `<p style="color:var(--green-live); font-weight:bold;">✅ Already Paired (${data.user || 'Connected'})</p>`;
+                    return;
+                }
+
+                if (data.qrDataUrl) {
+                    out.innerHTML = `
+                        <p style="color:var(--green-live); font-weight:bold;">✅ Scan QR with WhatsApp</p>
+                        <img src="${data.qrDataUrl}" alt="WhatsApp QR Code">
+                        <p style="font-size:0.75rem;">WhatsApp → Linked Devices → Link a Device</p>
+                    `;
+                } else {
+                    out.innerHTML = `<span style="color:#ffaa00;">${data.error || 'QR not ready yet. Try again.'}</span>`;
+                }
+            } catch (e) {
+                out.innerHTML = `<span style="color:#ff4444;">Server request failed. Make sure server.js is running.</span>`;
+            }
+        }
+
+        async function resetWaSession() {
+            const out = document.getElementById('waPairResult');
+            out.style.display = 'block';
+            out.innerHTML = "♻️ Resetting WhatsApp session...";
+            try {
+                const res = await fetch('/api/pair/reset', { method: 'POST' });
+                const data = await res.json();
+                renderWaStatusUI(false, null);
+                out.innerHTML = `<p style="color:var(--green-live);">✅ ${data.message || 'Session reset.'}</p>`;
+            } catch (e) {
+                out.innerHTML = `<span style="color:#ff4444;">Failed to reset session.</span>`;
+            }
         }
 
         // System Uptime Clock
